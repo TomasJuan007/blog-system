@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ykse.blogs.dao.BlogsDao">
+	<resultMap id="BLOGSTABLE" type="com.ykse.blogs.bean.Blogs">
+		<id column="BLOGS_ID" property="blogsId" jdbcType="INTEGER" />
+		<result column="BLOGS_TITLE" property="blogsTitle" jdbcType="VARCHAR" />
+		<result column="BLOGS_CONTENT" property="blogsContent" jdbcType="VARCHAR" />
+		<result column="COMMENTCOUNT" property="commentCount" jdbcType="INTEGER" />
+		<result column="CREATETIME" property="createTime" jdbcType="TIMESTAMP" />
+		<association column="USER_ID" property="user" select="com.ykse.blogs.dao.UserDao.getUserById" />
+	</resultMap>
+	
+	<select id="getBlogsAll" resultMap="BLOGSTABLE">
+		SELECT 
+		blogstable.BLOGS_ID,
+		blogstable.BLOGS_TITLE,
+		blogstable.BLOGS_CONTENT,
+		blogstable.COMMENTCOUNT,
+		blogstable.USER_ID,
+		blogstable.CREATETIME
+		FROM BLOGSTABLE 
+		ORDER BY CREATETIME DESC
+    	LIMIT #{startRow}, #{endRow}      	 
+ 	</select>
+	
+	<select id="getBlogsById" parameterType="int" resultMap="BLOGSTABLE">
+		SELECT *
+		FROM BLOGSTABLE 
+		WHERE BLOGS_ID = #{blogsId}
+	</select>
+	
+	<insert id="saveBlogs" parameterType="blogs" useGeneratedKeys="true" keyProperty="Blogs_ID">
+		INSERT INTO BLOGSTABLE(BLOGS_TITLE, BLOGS_CONTENT, COMMENTCOUNT, CREATETIME, USER_ID)
+		VALUES(#{blogsTitle}, #{blogsContent}, #{commentCount}, now(), #{user.userId})
+	</insert>
+	
+	<select id="getBlogsCount" resultType="java.lang.Integer">
+    	SELECT COUNT(*) FROM BLOGSTABLE  
+  	</select>
+	
+   	<update id="updateBlogs" parameterType="blogs">
+		UPDATE BLOGSTABLE 
+		SET BLOGS_TITLE = #{blogsTitle}, 
+		BLOGS_CONTENT = #{blogsContent} 
+		WHERE BLOGS_ID = #{blogsId}
+	</update>
+	
+	<update id="deleteBlogsById" parameterType="int">
+		DELETE BLOGSTABLE  
+		WHERE BLOGS_ID = #{blogsId}
+	</update>
+
+	<update id="addCountById"  parameterType="int">
+		UPDATE BLOGSTABLE 
+		SET COMMENTCOUNT = COMMENTCOUNT + 1
+		WHERE BLOGS_ID = #{blogsId}
+	</update>
+	
+	<update id="subtractCountById"  parameterType="int">
+		UPDATE BLOGSTABLE 
+		SET COMMENTCOUNT = COMMENTCOUNT - 1
+		WHERE BLOGS_ID = #{blogsId}
+	</update>
+	
+</mapper>

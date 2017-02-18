@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.ykse.blogs.dao.CommentDao">
+	<resultMap id="COMMENTTABLE" type="com.ykse.blogs.bean.Comment">
+		<id column="COMMENT_ID" property="commentId" jdbcType="INTEGER" />
+		<result column="COMMENT_CONTENT" property="commentContent" jdbcType="VARCHAR" />
+		<result column="CREATETIME" property="createTime" jdbcType="TIMESTAMP" />
+		<association column="USER_ID" property="user" select="com.ykse.blogs.dao.UserDao.getUserById" />
+		<association column="BLOGS_ID" property="blogs" select="com.ykse.blogs.dao.BlogsDao.getBlogsById" />
+	</resultMap>
+	
+	<select id="getCommentById" parameterType="int" resultMap="COMMENTTABLE">
+		SELECT * FROM COMMENTTABLE WHERE COMMENT_ID = #{commentId}
+	</select>
+	
+	<select id="getCommentsByBlogsId" resultMap="COMMENTTABLE">
+		SELECT * FROM COMMENTTABLE WHERE BLOGS_ID = #{blogsId} LIMIT #{startRow}, #{endRow}
+	</select>
+	
+	<insert id="saveComment" parameterType="com.ykse.blogs.bean.Comment" useGeneratedKeys="true" keyProperty="COMMENT_ID">
+		INSERT INTO COMMENTTABLE(COMMENT_CONTENT, CREATETIME, USER_ID, BLOGS_ID)
+		VALUES(#{commentContent}, now(), #{user.userId}, #{blogs.blogsId})
+	</insert>
+	
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM COMMENTTABLE WHERE COMMENT_ID = #{commentId}
+	</delete>
+
+	<update id="updateComment">
+		UPDATE COMMENTTABLE
+		SET COMMENT_CONTENT = #{commentContent}
+		WHERE COMMENT_ID = #{commentId}
+	</update>
+</mapper>

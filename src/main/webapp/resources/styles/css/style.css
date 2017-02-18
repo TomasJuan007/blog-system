@@ -1,0 +1,33 @@
+body {
+	padding-top: 70px;
+}
+
+/* ProgressBar */
+#progressBar { border:solid 2px #86a5ad; background:#FFF url(../images/progressBar/progressBar_m.gif) no-repeat 10px 10px;}
+#progressBar { display:block; width:220px; position:fixed; top:50%; left:50%; margin-left:-110px; margin-top:-14px; padding:10px 10px 10px 50px; text-align:left; line-height:27px; font-weight:bold; position:absolute; z-index:2001;}
+#background { display:block; width:100%; height:100%; opacity:0.5; filter:alpha(opacity=50); background:#FFF; position:absolute; top:0; left:0; z-index:2000;}
+
+form.required-validate {margin-top: 10px}
+form span.error {color:red}
+table.table > tbody > tr.selected >td {background-color:#7cc5e5;}
+
+
+.bs-glyphicons{margin:0 -10px 20px;overflow:hidden}
+.bs-glyphicons-list{padding-left:0;list-style:none}
+.bs-glyphicons li{float:left;width:25%;height:115px;padding:10px;font-size:10px;line-height:1.4;text-align:center;background-color:#f9f9f9;border:1px solid #fff}
+.bs-glyphicons .glyphicon{margin-top:5px;margin-bottom:10px;font-size:24px}
+.bs-glyphicons .glyphicon-class{display:block;text-align:center;word-wrap:break-word}
+.bs-glyphicons li:hover{color:#fff;background-color:#563d7c}
+
+.bs-glyphicons a{float:left;width:25%;height:115px;padding:10px;font-size:10px;line-height:1.4;text-align:center;background-color:#f9f9f9;border:1px solid #fff;text-decoration: none;color:#333}
+.bs-glyphicons a:hover{color:#fff;background-color:#563d7c}
+
+@media (min-width:768px){
+	.bs-glyphicons{margin-right:0;margin-left:0}
+	.bs-glyphicons li{width:12.5%;font-size:12px}
+	.bs-glyphicons a{width:12.5%;font-size:12px}
+}
+
+.search-bar .form-control { display: inline-block; width: auto; vertical-align: middle; }
+.pagination { margin: 0px auto; }
+table.td-relative td { position: relative; }
