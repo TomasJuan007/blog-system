@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 错误信息统一处理
  * 
- * @author dianyu.fang
- * @version $Id: GlobalExceptionResolver.java, v 0.1 2016年11月17日 下午5:20:50 dainyu.fang Exp $
+ * @author huangtao
+ * @version $Id: GlobalExceptionResolver.java, v 0.1 2016年11月17日 下午5:20:50 huangtao Exp $
  */
 @Component
 public class GlobalExceptionResolver implements HandlerExceptionResolver {

@@ -14,8 +14,8 @@ import com.ykse.blogs.util.MD5Util;
 /**
  * 登录验证接口实现
  * 
- * @author dianyu.fang
- * @version $Id: LoginManagerImpl.java, v 0.1 2016年11月15日 下午4:20:31 dainyu.fang Exp $
+ * @author huangtao
+ * @version $Id: LoginManagerImpl.java, v 0.1 2016年11月15日 下午4:20:31 huangtao Exp $
  */
 @Service
 public class LoginManagerImpl implements LoginManager{

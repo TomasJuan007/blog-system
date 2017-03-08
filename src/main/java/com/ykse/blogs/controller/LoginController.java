@@ -20,8 +20,8 @@ import com.ykse.blogs.service.LoginManager;
  * 
  * <li>主要含：用户登录、注销拦截</li>
  * 
- * @author dianyu.fang
- * @version $Id: LoginController.java, v 0.1 2016年11月15日 下午4:23:34 dainyu.fang Exp $
+ * @author huangtao
+ * @version $Id: LoginController.java, v 0.1 2016年11月15日 下午4:23:34 huangtao Exp $
  */
 @Controller
 public class LoginController {

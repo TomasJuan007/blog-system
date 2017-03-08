@@ -11,8 +11,8 @@ import com.ykse.blogs.bean.Blogs;
 import com.ykse.blogs.service.BlogsService;
 
 /**
- * @author xuyu
- * @version $Id: UserServiceTest.java, v 0.1 2016年11月11日 下午3:08:34 xuyu Exp $
+ * @author huangtao
+ * @version $Id: UserServiceTest.java, v 0.1 2016年11月11日 下午3:08:34 huangtao Exp $
  */
 public class BLogsServiceTest extends SpringTestCase {
 

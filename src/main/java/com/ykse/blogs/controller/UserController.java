@@ -27,8 +27,8 @@ import net.sf.json.JSONObject;
  * 
  * <li>主要含：用户注册、修改用户信息</li>
  * 
- * @author dianyu.fang
- * @version $Id: UserController.java, v 0.1 2016年11月14日 下午4:26:50 dainyu.fang Exp $
+ * @author huangtao
+ * @version $Id: UserController.java, v 0.1 2016年11月14日 下午4:26:50 huangtao Exp $
  */
 @Controller
 @RequestMapping("/")
