@@ -11,12 +11,12 @@
 
 		<div class="form-group">
 			<label for="input-nickname">题目：</label>
-			<input type="text" name="blogs_title" class="form-control" id="input-nickname" placeholder="请输入帖子题目" required minlength="2" maxlength="50">
+			<input type="text" name="blogsTitle" class="form-control" id="input-nickname" placeholder="请输入帖子题目" required minlength="2" maxlength="50">
 			<div class="help-block with-errors"></div>
 		</div>
 		<div class="form-group">
 			<label for="input-nickname">内容：</label>
-			<textarea type="textarea" name="blogs_concent" style="width:100%;height:30%;" required minlength="2" maxlength="30000"></textarea>
+			<textarea type="textarea" name="blogsContent" style="width:100%;height:30%;" required minlength="2" maxlength="30000"></textarea>
 			<div class="help-block with-errors"></div>
 		</div>
 	</div>

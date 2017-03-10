@@ -14,7 +14,7 @@
 </ol>
 
 
-<form id="pagerForm" method="post" action="listBlogs/listComment">
+<form id="pagerForm" method="post" action="listComment">
 	<input type="hidden" name="pageNum" value="${page.currentPage }"/>
 	<input type="hidden" name="numPerPage" id="numPerPage" value="${page.numPerPage }" />
 	<input type="hidden" name="totalCount" id="totalCount" value="${page.totalCount }" />
@@ -28,7 +28,7 @@
 		
 		<div class="row search-bar">
 			<div class="col-sm-11" style="text-align: right;">
-				<a class="btn btn-success"  data-toggle="modal" data-target="#modal-dialog" href="listBlogs/addComment?userId=${userId}&blogsId=${blogsId}">发表评论</a>									
+				<a class="btn btn-success"  data-toggle="modal" data-target="#modal-dialog" href="addComment?userId=${userId}&blogsId=${blogsId}">发表评论</a>									
 			</div>
 		</div>
 		<table class="table table-hover td-relative">
@@ -71,7 +71,7 @@
 function deleteComment(id){
 	$.ajax({
 			type: 'delete',
-			url: '<%=basePath%>listBlogs/deleteComment?commentId='+id,
+			url: '<%=basePath%>deleteComment?commentId='+id,
 			dataType: 'text',
 			success:function(data){
 				if(data=="suc"){

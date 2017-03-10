@@ -3,15 +3,12 @@ package com.ykse.blogs.controller;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,44 +21,54 @@ import com.ykse.blogs.service.BlogsService;
 
 import net.sf.json.JSONObject;
 
+/**
+ *  博客控制器
+ * 
+ * <li>主要含：展示博客、添加博客、保存博客、获取修改的博客信息、修改博客、删除博客</li>
+ * 
+ * @author tao.huang
+ *@version $Id: BlogsController.java, v 0.1 2016年11月14日 下午5:32:34 tao.huang Exp $
+ */
 @Controller
 @RequestMapping("/listBlogs")
 public class BlogsController {
 
     @Autowired
-    private BlogsService      blogsService;
+    private BlogsService blogsService;
 
+    /**
+     * 展示博客
+     * 
+     * @param request
+     * @return
+     */
     @RequestMapping(value="")
     public ModelAndView getBlogs(HttpServletRequest request ) {
-        ModelAndView modelAndView = new ModelAndView("/blogs/listBlogs");
-        int startRow,endRow;
-        Pagination<Blogs> page = new Pagination<Blogs>();
-        String pageNum = (String)request.getParameter("pageNum");
-        String numPerPage = (String)request.getParameter("numPerPage");
-        String totalCount = (String)request.getParameter("totalCount");
-        Integer pagenum = (pageNum == null || pageNum == "")? 1 : Integer.parseInt(pageNum); 
-        Integer numperpage = (numPerPage == null || numPerPage == "")? 10 : Integer.parseInt(numPerPage); 
-//        Integer totalcount = (totalCount == null || totalCount == "")? blogsService.getBlogsCount() : Integer.parseInt(totalCount);        
-        page.setCurrentPage(pagenum);
-        page.setTotalCount(blogsService.getBlogsCount());
-        page.setNumPerPage(numperpage);
-        if (page.getCurrentPage() == null) {
-            page.setCurrentPage(1);
-        }
-        if (page.getNumPerPage() == null) {
-            page.setNumPerPage(10);
-        } 
-        startRow = (page.getCurrentPage() - 1) * page.getNumPerPage();
-        endRow = page.getNumPerPage();
-        List<Blogs> blogs = blogsService.getBlogsAll(startRow, endRow);
-        page.setContent(blogs);                    
-        page.calcutePage();
-        request.setAttribute("page", page);
-        return modelAndView;
+		ModelAndView modelAndView = new ModelAndView("/blogs/listBlogs");
+		
+		Pagination<Blogs> page = new Pagination<Blogs>();
+		String pageNum = (String) request.getParameter("pageNum");
+		String numPerPage = (String) request.getParameter("numPerPage");
+		Integer pagenum = (pageNum == null || pageNum == "")
+				? 1 : Integer.parseInt(pageNum);
+		Integer numperpage = (numPerPage == null || numPerPage == "")
+				? 10 : Integer.parseInt(numPerPage);
+		page.setCurrentPage(pagenum);
+		page.setNumPerPage(numperpage);
+		page.setTotalCount(blogsService.getBlogsCount());
+		page.calcutePage();
+		
+		int startRow = (page.getCurrentPage() - 1) * page.getNumPerPage();
+		int endRow = page.getNumPerPage();
+		List<Blogs> blogs = blogsService.getBlogsAll(startRow, endRow);
+		page.setContent(blogs);
+		request.setAttribute("page", page);
+		
+		return modelAndView;
     }
     
     /**
-     * 获取发帖子页面
+     * 添加博客
      * 
      * @return
      */
@@ -70,14 +77,21 @@ public class BlogsController {
         ModelAndView modelAndView = new ModelAndView("blogs/addBlogs");
         return modelAndView;
     }
+    
+    /**
+     * 保存博客
+     * 
+     * @param blogsTitle
+     * @param blogsContent
+     * @param httpSession
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/saveBlogs",method = RequestMethod.POST,produces = "application/json; charset=utf-8")
-    public String addBlogs(String blogs_title,String blogs_concent,HttpSession httpSession) {
-        
+    public String addBlogs(String blogsTitle,String blogsContent,HttpSession httpSession) {
         Blogs blogs = new Blogs();
-        blogs.setBlogsContent(blogs_concent);
-        blogs.setBlogsTitle(blogs_title);
-//        System.out.println(blogs_concent);
+        blogs.setBlogsTitle(blogsTitle);
+        blogs.setBlogsContent(blogsContent);
         blogs.setCommentCount(0);
         blogs.setCreateTime(new Timestamp(System.currentTimeMillis()));
         User user = (User)httpSession.getAttribute("User");
@@ -96,27 +110,39 @@ public class BlogsController {
         return result.toString();
     }
     
-    
-    @RequestMapping(value="/updateBlogs", method=RequestMethod.GET)    
+    /**
+     * 获取修改的博客信息
+     * 
+     * @param blogsId
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/getBlogsInfo", method=RequestMethod.GET)    
     public ModelAndView updateInfo(String blogsId, HttpServletRequest request){  
-        int blogsid = Integer.parseInt(blogsId);
-        request.setAttribute("BlogsId", blogsid);
-        Blogs blogs =  blogsService.getBlogsById(blogsid);
-        String blogsTitle = blogs.getBlogsTitle();
-        String blogsContent = blogs.getBlogsContent();
-        request.setAttribute("BlogsTitle", blogsTitle);
-        request.setAttribute("BlogsContent", blogsContent);
+        Blogs blogs =  blogsService.getBlogsById(Integer.parseInt(blogsId));
+        request.setAttribute("blogsId", blogs.getBlogsId());
+        request.setAttribute("blogsTitle", blogs.getBlogsTitle());
+        request.setAttribute("blogsContent", blogs.getBlogsContent());
         ModelAndView modelAndView = new ModelAndView("/blogs/updateBlogs");      
         return modelAndView;
     }
     
+    /**
+     * 修改博客
+     * 
+     * @param blogsTitle
+     * @param blogsContent
+     * @param blogsId
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/updateBlogs",method = RequestMethod.POST)
-    public String updateUser(String blogs_title,String blogs_concent,int blogs_id) {
+    public String updateBlog(String blogsTitle,String blogsContent,int blogsId) {
         Blogs blogs = new Blogs();
-        blogs.setBlogsContent(blogs_concent);
-        blogs.setBlogsTitle(blogs_title);
-        blogs.setBlogsId(blogs_id);
+        blogs.setBlogsId(blogsId);
+        blogs.setBlogsTitle(blogsTitle);
+        blogs.setBlogsContent(blogsContent);
+        
         JSONObject result = new JSONObject();
         if(blogsService.updateBlogs(blogs)){
             result.put("message", "更改成功！");
@@ -127,8 +153,6 @@ public class BlogsController {
         result.put("message", "更改失败！");
         result.put("statusCode", "300");
         result.put("dialog", "closeCurrent");
-        return result.toString();    
-        
-        
+        return result.toString();
     }
 }

@@ -1,11 +1,13 @@
 package com.ykse.blogs.controller;
 
 import java.util.List;
-import org.springframework.ui.Model;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,7 +32,7 @@ import net.sf.json.JSONObject;
  * @version $Id: CommentController.java, v 0.1 2016年11月14日 下午6:45:14 tao.huang Exp $
  */
 @Controller
-@RequestMapping("/listBlogs")
+@RequestMapping("/")
 public class CommentController {  
 	
     @Autowired
@@ -85,6 +87,14 @@ public class CommentController {
         return modelAndView;
     }
     
+    /**
+     * 获取保存评论信息
+     * 
+     * @param model
+     * @param userId
+     * @param blogsId
+     * @return
+     */
     @RequestMapping(value="/addComment", method=RequestMethod.GET)    
     public ModelAndView addComment(Model model, String userId, String blogsId){
         model.addAttribute("userId", userId);
@@ -92,11 +102,20 @@ public class CommentController {
         return new ModelAndView("/blogs/addComment");
     }
     
+    /**
+     * 保存评论
+     * 
+     * @param blogsId
+     * @param userId
+     * @param commentContent
+     * @param seesion
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value="/saveComment", method=RequestMethod.POST,produces = "application/json; charset=utf-8")    
-    public String setComment(String blogsId, String userId, String commentContent){
+    public String setComment(String blogsId, String userId, String commentContent, HttpSession seesion){
         Integer bid = (blogsId == null || blogsId == "") ? 1 : Integer.parseInt(blogsId);
-        Integer uid = (userId == null || userId == "") ? 1 : Integer.parseInt(userId);
+        Integer uid = ((User)seesion.getAttribute("User")).getUserId();
         
         Comment comment = new Comment();
         Blogs blogs = blogsService.getBlogsById(bid);
@@ -114,9 +133,15 @@ public class CommentController {
         result.put("message", "更改失败！");
         result.put("statusCode", "300");
         result.put("dialog", "closeCurrent");
-        return result.toString();    
+        return result.toString();
     }
     
+    /**
+     * 删除评论
+     * 
+     * @param commentId
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value="/deleteComment", method=RequestMethod.DELETE)    
     public String deleteComment(String commentId){
