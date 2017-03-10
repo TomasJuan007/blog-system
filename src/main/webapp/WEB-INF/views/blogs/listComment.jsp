@@ -1,3 +1,4 @@
+<%@page import="com.ykse.blogs.bean.Blogs,com.ykse.blogs.bean.User"%>
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
@@ -14,11 +15,10 @@
 </ol>
 
 
-<form id="pagerForm" method="post" action="listComment">
+<form id="pagerForm" method="get" action="listComment">
+	<input type="hidden" name="blogsId" value="${blogsId }"/>
 	<input type="hidden" name="pageNum" value="${page.currentPage }"/>
 	<input type="hidden" name="numPerPage" id="numPerPage" value="${page.numPerPage }" />
-	<input type="hidden" name="totalCount" id="totalCount" value="${page.totalCount }" />
-
 </form>
 
 <div class="row">
@@ -46,9 +46,20 @@
 					<td>${cmt.user.userName }</td>
 					<td>${cmt.commentContent }</td>
 					<td>${cmt.createTime }</td>
-					<td>
-						<a class="btn btn-danger" data-todo="ajaxTodo" title="确认该评论？" href="javascript:void(0);" onclick="deleteComment(${cmt.commentId})">删除评论</a>	
-					</td>					
+					
+					<%
+						User user = (User)session.getAttribute("User");
+						int userId = user.getUserId();
+						request.setAttribute("UserId", userId);
+					%>
+									
+					<c:choose>
+					<c:when test="${cmt.user.userId  == UserId}">
+						<td>
+							<a class="btn btn-danger" data-todo="ajaxTodo" title="确认删除该评论？" href="javascript:void(0);" onclick="deleteComment(${cmt.commentId})" data-ajax>删除评论</a>
+						</td>
+					</c:when>
+					</c:choose>
 				</tr>
 			</c:forEach>
 			</tbody>

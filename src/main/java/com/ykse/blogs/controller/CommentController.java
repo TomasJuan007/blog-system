@@ -49,7 +49,7 @@ public class CommentController {
      * @param request
      * @return
      */
-    @RequestMapping(value="/listComment", method=RequestMethod.GET)
+    @RequestMapping(value="/listComment")
     public ModelAndView getComments(String blogsId, HttpServletRequest request) {
         Integer bid = (blogsId == null || blogsId == "") ? 1 : Integer.parseInt(blogsId);
         Blogs blogs = blogsService.getBlogsById(bid);
@@ -143,7 +143,7 @@ public class CommentController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value="/deleteComment", method=RequestMethod.DELETE)    
+    @RequestMapping(value="/deleteComment")    
     public String deleteComment(String commentId){
         Integer cid = (commentId == null || commentId == "") ? 0 : Integer.parseInt(commentId);
         commentService.deleteComment(cid);

@@ -56,7 +56,7 @@
 							request.setAttribute("UserId", userId);
 						%>				
 						<c:choose>
-						<c:when test="${ts.user.userId  == UserId}">				
+						<c:when test="${ts.user.userId  == UserId}">
 							<a class="btn btn-warning" data-toggle="modal" data-target="#modal-dialog" href="listBlogs/getBlogsInfo?blogsId=${ts.blogsId}">修改</a>
 						</c:when>
 						</c:choose>
