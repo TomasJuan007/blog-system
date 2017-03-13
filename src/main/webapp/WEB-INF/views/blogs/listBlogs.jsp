@@ -49,16 +49,16 @@
 					<td>${ts.user.userName }</td>
 					<td><span class="label label-success">${ts.commentCount }</span></td>
 					<td>
-						<a class="btn btn-warning" href="listComment?blogsId=${ts.blogsId}" data-ajax>查看</a>	
+						<a class="btn btn-success" href="listComment?blogsId=${ts.blogsId}" data-ajax>查看</a>	
 						<%
 							User user = (User)session.getAttribute("User");
 							int userId = user.getUserId();
 							request.setAttribute("UserId", userId);
-						%>				
+						%>
 						<c:choose>
 						<c:when test="${ts.user.userId  == UserId}">
 							<a class="btn btn-warning" data-toggle="modal" data-target="#modal-dialog" href="getBlogsInfo?blogsId=${ts.blogsId}">修改</a>
-							<a class="btn btn-warning" data-toggle="modal" data-target="#modal-dialog" href="deleteBlog?blogsId=${ts.blogsId}">删除</a>
+							<a class="btn btn-danger" href="deleteBlog?blogsId=${ts.blogsId}" data-ajax>删除</a>
 						</c:when>
 						</c:choose>
  					</td>					

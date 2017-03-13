@@ -143,11 +143,21 @@ public class CommentController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value="/deleteComment")    
+    @RequestMapping(value="/deleteComment",produces = "application/json; charset=utf-8")    
     public String deleteComment(String commentId){
         Integer cid = (commentId == null || commentId == "") ? 0 : Integer.parseInt(commentId);
-        commentService.deleteComment(cid);
-        return "suc";
+        //commentService.deleteComment(cid);
+        JSONObject result = new JSONObject();
+        if(commentService.deleteComment(cid)){
+            result.put("message", "更改成功！");
+            result.put("statusCode", "200");
+            result.put("dialog", "true");
+            return result.toString();
+        }
+        result.put("message", "更改失败！");
+        result.put("statusCode", "300");
+        result.put("dialog", "closeCurrent");
+        return result.toString();
     }
     
 }  

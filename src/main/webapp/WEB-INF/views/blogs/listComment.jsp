@@ -28,7 +28,8 @@
 		
 		<div class="row search-bar">
 			<div class="col-sm-11" style="text-align: right;">
-				<a class="btn btn-success"  data-toggle="modal" data-target="#modal-dialog" href="addComment?userId=${userId}&blogsId=${blogsId}">发表评论</a>									
+				<a class="btn btn-primary" data-toggle="modal" data-target="#modal-dialog" href="addComment?userId=${userId}&blogsId=${blogsId}">发表评论</a>
+				<a class="btn btn-success" href="listComment?blogsId=${blogsId}" data-ajax>刷&nbsp;&nbsp;新</a>
 			</div>
 		</div>
 		<table class="table table-hover td-relative">
@@ -56,7 +57,7 @@
 					<c:choose>
 					<c:when test="${cmt.user.userId  == UserId}">
 						<td>
-							<a class="btn btn-danger" data-todo="ajaxTodo" title="确认删除该评论？" href="javascript:void(0);" onclick="deleteComment(${cmt.commentId})" data-ajax>删除评论</a>
+							<a class="btn btn-danger" href="deleteComment?commentId=${cmt.commentId}" data-ajax>删除评论</a>
 						</td>
 					</c:when>
 					</c:choose>
@@ -78,20 +79,3 @@
 		<div class="pagination" totalCount="${page.totalCount }"  numPerPage="${page.numPerPage }" pageNumShown="${page.totalPageNum }" currentPage="${page.currentPage }"></div>
 	</div>
 </div>
-<script type="text/javascript">
-function deleteComment(id){
-	$.ajax({
-			type: 'delete',
-			url: '<%=basePath%>deleteComment?commentId='+id,
-			dataType: 'text',
-			success:function(data){
-				if(data=="suc"){
-					alert("删除成功");
-					location.reload();
-				}
-			},
-			error:function(data){
-			}
-		});
-}
-</script>

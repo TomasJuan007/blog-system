@@ -72,7 +72,7 @@ public class BlogsController {
      * 
      * @return
      */
-    @RequestMapping(value="/addBlogs", method=RequestMethod.GET)    
+    @RequestMapping(value="/addBlogs", method=RequestMethod.GET)
     public ModelAndView getUserInfo(Model model){      
         ModelAndView modelAndView = new ModelAndView("blogs/addBlogs");
         return modelAndView;
@@ -117,7 +117,7 @@ public class BlogsController {
      * @param request
      * @return
      */
-    @RequestMapping(value="/getBlogsInfo", method=RequestMethod.GET)    
+    @RequestMapping(value="/getBlogsInfo", method=RequestMethod.GET)
     public ModelAndView updateInfo(String blogsId, HttpServletRequest request){  
         Blogs blogs =  blogsService.getBlogsById(Integer.parseInt(blogsId));
         request.setAttribute("blogsId", blogs.getBlogsId());
@@ -162,9 +162,9 @@ public class BlogsController {
      * @param blogId
      */
     @ResponseBody
-    @RequestMapping(value="/deleteBlog")    
-    public void deleteComment(String blogId){
-        Integer bid = (blogId == null || blogId == "") ? 0 : Integer.parseInt(blogId);
-        blogsService.deleteBlog(bid);
-    }
+    @RequestMapping(value="/deleteBlog", method=RequestMethod.GET)
+	public void deleteComment(String blogsId) {
+		Integer bid = (blogsId == null || blogsId == "") ? 0 : Integer.parseInt(blogsId);
+		blogsService.deleteBlog(bid);
+	}
 }
