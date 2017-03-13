@@ -34,8 +34,8 @@
 			<thead>
 			<tr>
 				<th>题目</th>
-				<th>发帖时间</th>
 				<th>发帖人</th>
+				<th>发帖时间</th>
 				<th>评论 / 赞</th>
 				<th style="width:120px;">选择功能</th>
 			</tr>
@@ -45,8 +45,8 @@
 
 				<tr>
 					<td>${ts.blogsTitle }</td>
-					<td>${ts.createTime }</td>
 					<td>${ts.user.userName }</td>
+					<td>${ts.createTime }</td>
 					<td>
 						<span class="label label-warning">${ts.commentCount }</span>
 						<span>/</span>

@@ -44,8 +44,8 @@
 			<tbody>
 			<c:forEach items="${page.content}" var="cmt">
 				<tr>
-					<td>${cmt.user.userName }</td>
 					<td>${cmt.commentContent }</td>
+					<td>${cmt.user.userName }</td>
 					<td>${cmt.createTime }</td>
 					
 					<%
