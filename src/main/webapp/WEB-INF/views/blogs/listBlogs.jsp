@@ -36,7 +36,7 @@
 				<th>题目</th>
 				<th>发帖时间</th>
 				<th>发帖人</th>
-				<th>总评论数</th>
+				<th>评论 / 赞</th>
 				<th style="width:120px;">选择功能</th>
 			</tr>
 			</thead>
@@ -47,7 +47,11 @@
 					<td>${ts.blogsTitle }</td>
 					<td>${ts.createTime }</td>
 					<td>${ts.user.userName }</td>
-					<td><span class="label label-success">${ts.commentCount }</span></td>
+					<td>
+						<span class="label label-warning">${ts.commentCount }</span>
+						<span>/</span>
+						<span class="label label-danger">${ts.commentCount }</span>
+					</td>
 					<td>
 						<a class="btn btn-success" href="listComment?blogsId=${ts.blogsId}" data-ajax>查看</a>	
 						<%
@@ -58,7 +62,7 @@
 						<c:choose>
 						<c:when test="${ts.user.userId  == UserId}">
 							<a class="btn btn-warning" data-toggle="modal" data-target="#modal-dialog" href="getBlogsInfo?blogsId=${ts.blogsId}">修改</a>
-							<a class="btn btn-danger" href="deleteBlog?blogsId=${ts.blogsId}" data-ajax>删除</a>
+							<a class="btn btn-danger" href="deleteBlog?blogsId=${ts.blogsId}" onclick="location.reload();" data-ajax>删除</a>
 						</c:when>
 						</c:choose>
  					</td>					

@@ -57,7 +57,7 @@
 					<c:choose>
 					<c:when test="${cmt.user.userId  == UserId}">
 						<td>
-							<a class="btn btn-danger" href="deleteComment?commentId=${cmt.commentId}" data-ajax>删除评论</a>
+							<a class="btn btn-danger" href="deleteComment?commentId=${cmt.commentId}" onclick="location.reload();" data-ajax>删除评论</a>
 						</td>
 					</c:when>
 					</c:choose>
