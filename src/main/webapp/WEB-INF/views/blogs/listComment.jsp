@@ -24,7 +24,7 @@
 <div class="row">
 	<div class="col-lg-12">
 		<h1 style="text-align:center">${blogsTitle}</h1>
-		<pre style="margin:5px;line-height:1.4em;">${blogsContent}</pre>
+		<pre style="margin:5px;line-height:1.4em;white-space:pre-wrap;">${blogsContent}</pre>
 		
 		<div class="row search-bar">
 			<div class="col-sm-11" style="text-align: right;">
