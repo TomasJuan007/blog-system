@@ -9,9 +9,11 @@ import com.ykse.blogs.bean.Blogs;
 public interface BlogsDao {
     
     /**
-     *  获取博客
-     * @param BlogsId
-     * @return Blogs
+     * 获取博客
+     * 
+     * @param startRow
+     * @param endRow
+     * @return
      */
     public List<Blogs> getBlogsAll(@Param("startRow") int startRow, @Param("endRow") int endRow);
     
@@ -44,7 +46,7 @@ public interface BlogsDao {
      * @param blogsId
      * @return
      */
-    public boolean deleteBlogsById(int blogsId);
+    public int deleteBlogsById(Integer blogsId);
 	
 	/**
      * 获取博客总数，用于分页

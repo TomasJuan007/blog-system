@@ -68,7 +68,7 @@
 			<span class="glyphicon-class">我的信息</span>
 		</a>
 	
-		<a href="listBlogs/addBlogs" data-toggle="modal" data-target="#modal-dialog">
+		<a href="addBlogs" data-toggle="modal" data-target="#modal-dialog">
 			<span class="glyphicon glyphicon-edit"></span>
 			<span class="glyphicon-class">写博客</span>
 		</a>

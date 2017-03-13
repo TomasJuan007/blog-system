@@ -33,12 +33,43 @@ public interface BlogsService {
      */
     public boolean updateBlogs(Blogs blogs);
     
+    /**
+     * 根据Id获取博客
+     * 
+     * @param blogsId
+     * @return
+     */
     public Blogs getBlogsById(int blogsId);
 
+    /**
+     * 根据Id删除博客
+     * 
+     * @param blogId
+     * @return
+     */
+    public boolean deleteBlog(Integer blogId);
+    
+    /**
+     * 根据Id增加评论数
+     * 
+     * @param blogsId
+     * @return
+     */
     public boolean addCountById(int blogsId);
     
+    /**
+     * 根据Id减评论数
+     * 
+     * @param blogsId
+     * @return
+     */
     public boolean subtractCountById(int blogsId);
     
+    /**
+     * 获取博客数
+     * 
+     * @return
+     */
     public Integer getBlogsCount();
     
 }

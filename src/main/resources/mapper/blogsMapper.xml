@@ -47,7 +47,7 @@
 	</update>
 	
 	<update id="deleteBlogsById" parameterType="int">
-		DELETE BLOGSTABLE  
+		DELETE FROM BLOGSTABLE  
 		WHERE BLOGS_ID = #{blogsId}
 	</update>
 

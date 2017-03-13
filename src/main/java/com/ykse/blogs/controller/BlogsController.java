@@ -30,7 +30,7 @@ import net.sf.json.JSONObject;
  *@version $Id: BlogsController.java, v 0.1 2016年11月14日 下午5:32:34 tao.huang Exp $
  */
 @Controller
-@RequestMapping("/listBlogs")
+@RequestMapping("/")
 public class BlogsController {
 
     @Autowired
@@ -42,7 +42,7 @@ public class BlogsController {
      * @param request
      * @return
      */
-    @RequestMapping(value="")
+    @RequestMapping(value="/listBlogs")
     public ModelAndView getBlogs(HttpServletRequest request ) {
 		ModelAndView modelAndView = new ModelAndView("/blogs/listBlogs");
 		
@@ -154,5 +154,17 @@ public class BlogsController {
         result.put("statusCode", "300");
         result.put("dialog", "closeCurrent");
         return result.toString();
+    }
+    
+    /**
+     * 删除博客
+     * 
+     * @param blogId
+     */
+    @ResponseBody
+    @RequestMapping(value="/deleteBlog")    
+    public void deleteComment(String blogId){
+        Integer bid = (blogId == null || blogId == "") ? 0 : Integer.parseInt(blogId);
+        blogsService.deleteBlog(bid);
     }
 }

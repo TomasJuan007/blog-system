@@ -24,9 +24,15 @@ public class BlogsServiceImpl implements BlogsService {
     }
 
     @Override
+    public boolean deleteBlog(Integer blogsId) {
+    	if(blogsDao.deleteBlogsById(blogsId) != 1)
+    		return false;
+    	return true;
+    }
+    
+    @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public boolean saveBlogs(Blogs blogs) {
-
         return blogsDao.saveBlogs(blogs);
     }
 

@@ -30,6 +30,11 @@ public class BLogsServiceTest extends SpringTestCase {
     }
 
     @Test
+    public void deleteBlogTest() {
+    	blogsService.deleteBlog(28);
+    }
+    
+    @Test
     public void addCountByIdTest() {
         blogsService.addCountById(1);
     }

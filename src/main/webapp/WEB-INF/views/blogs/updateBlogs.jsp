@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 
-<form method="post" action="listBlogs/updateBlogs" class="required-validate">
+<form method="post" action="updateBlogs" class="required-validate">
 	<input type="hidden" name="blogsId" value="<%=request.getAttribute("blogsId") %>"/>
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
