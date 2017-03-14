@@ -15,7 +15,7 @@
 </ol>
 
 
-<form id="pagerForm" method="get" action="listComment">
+<form id="pagerForm" method="get" action="listOwnComment">
 	<input type="hidden" name="blogsId" value="${blogsId }"/>
 	<input type="hidden" name="pageNum" value="${page.currentPage }"/>
 	<input type="hidden" name="numPerPage" id="numPerPage" value="${page.numPerPage }" />
@@ -29,14 +29,15 @@
 		<div class="row search-bar">
 			<div class="col-sm-11" style="text-align: right;">
 				<a class="btn btn-primary" data-toggle="modal" data-target="#modal-dialog" href="addComment?userId=${userId}&blogsId=${blogsId}">发表评论</a>
-				<a class="btn btn-success" href="listComment?blogsId=${blogsId}" data-ajax>刷&nbsp;&nbsp;新</a>
+				<a class="btn btn-warning" data-toggle="modal" data-target="#modal-dialog" href="getBlogsInfo?blogsId=${blogsId}">修改博客</a>
+				<a class="btn btn-success" href="listOwnComment?blogsId=${blogsId}" data-ajax>刷&nbsp;&nbsp;新</a>
 			</div>
 		</div>
 		<table class="table table-hover td-relative">
 			<thead>
 			<tr>
-				<th>用户</th>
 				<th>评论内容</th>
+				<th>用户</th>
 				<th>评论时间</th>
 				<th style="width:120px;">选择功能</th>
 			</tr>

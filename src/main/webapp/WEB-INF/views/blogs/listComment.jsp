@@ -35,8 +35,8 @@
 		<table class="table table-hover td-relative">
 			<thead>
 			<tr>
-				<th>用户</th>
 				<th>评论内容</th>
+				<th>用户</th>
 				<th>评论时间</th>
 				<th style="width:120px;">选择功能</th>
 			</tr>

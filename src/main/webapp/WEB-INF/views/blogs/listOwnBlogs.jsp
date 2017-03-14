@@ -13,7 +13,7 @@
 </ol>
 
 
-<form id="pagerForm" method="post" action="listBlogs">
+<form id="pagerForm" method="post" action="listOwnBlogs">
 	<input type="hidden" name="pageNum" value="${page.currentPage }"/>
 	<input type="hidden" name="numPerPage" id="numPerPage" value="${page.numPerPage }" />
 	<input type="hidden" name="totalCount" id="totalCount" value="${page.totalCount }" />
