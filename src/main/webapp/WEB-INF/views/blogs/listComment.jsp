@@ -10,7 +10,7 @@
 %>
 <ol class="breadcrumb">
 	<li><a href="index">首页</a></li>
-	<li><a href="<%=basePath%>listBlogs" data-history="repairOrder">所有博客</a></li>
+	<li><a onclick="window.location.reload()" data-history="repairOrder">博客</a></li>
 	<li class="active">${blogsTitle}</li>
 </ol>
 

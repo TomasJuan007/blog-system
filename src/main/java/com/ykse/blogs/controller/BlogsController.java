@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ykse.blogs.bean.Blogs;
 import com.ykse.blogs.bean.Pagination;
 import com.ykse.blogs.bean.User;
+import com.ykse.blogs.exception.BusinessException;
 import com.ykse.blogs.service.BlogsService;
 
 import net.sf.json.JSONObject;
@@ -24,7 +25,7 @@ import net.sf.json.JSONObject;
 /**
  *  博客控制器
  * 
- * <li>主要含：展示博客、添加博客、保存博客、获取修改的博客信息、修改博客、删除博客</li>
+ * <li>主要含：展示博客、展示个人博客、添加博客、保存博客、获取修改的博客信息、修改博客、删除博客</li>
  * 
  * @author tao.huang
  *@version $Id: BlogsController.java, v 0.1 2016年11月14日 下午5:32:34 tao.huang Exp $
@@ -43,8 +44,8 @@ public class BlogsController {
      * @return
      */
     @RequestMapping(value="/listBlogs")
-    public ModelAndView getBlogs(HttpServletRequest request ) {
-		ModelAndView modelAndView = new ModelAndView("/blogs/listBlogs");
+    public ModelAndView getBlogs(HttpServletRequest request) {
+    	ModelAndView modelAndView = new ModelAndView("/blogs/listBlogs");
 		
 		Pagination<Blogs> page = new Pagination<Blogs>();
 		String pageNum = (String) request.getParameter("pageNum");
@@ -61,6 +62,43 @@ public class BlogsController {
 		int startRow = (page.getCurrentPage() - 1) * page.getNumPerPage();
 		int endRow = page.getNumPerPage();
 		List<Blogs> blogs = blogsService.getBlogsAll(startRow, endRow);
+		page.setContent(blogs);
+		request.setAttribute("page", page);
+		
+		return modelAndView;
+    }
+    
+    /**
+     * 展示个人博客
+     * 
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/listOwnBlogs")
+    public ModelAndView getOwnBlogs(HttpServletRequest request, HttpSession session) {
+    	if(session.getAttribute("User") == null){
+            throw new BusinessException("Session失效,请重新登陆");
+        }
+        User user = (User)session.getAttribute("User");
+        Integer userId = user.getUserId();
+    	
+    	ModelAndView modelAndView = new ModelAndView("/blogs/listOwnBlogs");
+		
+		Pagination<Blogs> page = new Pagination<Blogs>();
+		String pageNum = (String) request.getParameter("pageNum");
+		String numPerPage = (String) request.getParameter("numPerPage");
+		Integer pagenum = (pageNum == null || pageNum == "")
+				? 1 : Integer.parseInt(pageNum);
+		Integer numperpage = (numPerPage == null || numPerPage == "")
+				? 10 : Integer.parseInt(numPerPage);
+		page.setCurrentPage(pagenum);
+		page.setNumPerPage(numperpage);
+		page.setTotalCount(blogsService.getBlogsCountByParam(userId));
+		page.calcutePage();
+		
+		int startRow = (page.getCurrentPage() - 1) * page.getNumPerPage();
+		int endRow = page.getNumPerPage();
+		List<Blogs> blogs = blogsService.getBlogsByParam(userId,startRow, endRow);
 		page.setContent(blogs);
 		request.setAttribute("page", page);
 		

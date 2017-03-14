@@ -58,7 +58,8 @@
 		<h1>Hello, <%= user.getUserName() %>！</h1>
 		<p>欢迎来到博客世界，让您更加热爱这妙不可言的时光与生活。</p>
 		<p>
-			<a class="btn btn-lg btn-primary" href="listBlogs" data-history="repairOrder" role="button">查看博客</a>
+			<a class="btn btn-lg btn-primary" href="listOwnBlogs" data-history="repairOrder" role="button">我的博客</a>
+			<a class="btn btn-lg btn-primary" href="listBlogs" data-history="repairOrder" role="button">所有博客</a>
 		</p>
 	</div>
 	

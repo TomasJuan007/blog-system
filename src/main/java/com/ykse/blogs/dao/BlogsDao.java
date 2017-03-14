@@ -8,6 +8,13 @@ import com.ykse.blogs.bean.Blogs;
 
 public interface BlogsDao {
     
+	/**
+	 * 根据ID获取博客内容
+	 * 
+	 * @return
+	 */
+	public Blogs getBlogsById(int blogsId);
+    
     /**
      * 获取博客
      * 
@@ -16,14 +23,32 @@ public interface BlogsDao {
      * @return
      */
     public List<Blogs> getBlogsAll(@Param("startRow") int startRow, @Param("endRow") int endRow);
-    
+   
     /**
-     * 根据ID获取博客内容
+     * 获取博客总数，用于分页
      * 
      * @return
      */
-    public Blogs getBlogsById(int blogsId);
+    public Integer getBlogsCount();
+    
+    /**
+     * 根据参数获取博客
+     * 
+     * @param blogs
+     * @param startRow
+     * @param endRow
+     * @return
+     */
+    public List<Blogs> getBlogsByParam(@Param("blogs") Blogs blogs, @Param("startRow") int startRow, @Param("endRow") int endRow);
    
+    /**
+     * 根据参数获取博客总数，用于分页
+     * 
+     * @param blogs
+     * @return
+     */
+    public Integer getBlogsCountByParam(@Param("blogs") Blogs blogs);
+    
     /**
      * 
      * 保存博客
@@ -48,13 +73,6 @@ public interface BlogsDao {
      */
     public int deleteBlogsById(Integer blogsId);
 	
-	/**
-     * 获取博客总数，用于分页
-     * 
-     * @return
-     */
-    public Integer getBlogsCount();
-    
     /**
      * 根据ID增加评论数
      * 
