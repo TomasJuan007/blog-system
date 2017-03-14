@@ -50,7 +50,7 @@
 						<span class="label label-danger">${ts.commentCount }</span>
 					</td>
 					<td>
-						<a class="btn btn-success" href="listComment?blogsId=${ts.blogsId}" data-ajax>查看</a>	
+						<a class="btn btn-success" href="listOwnComment?blogsId=${ts.blogsId}" data-ajax>查看</a>	
 						<a class="btn btn-warning" data-toggle="modal" data-target="#modal-dialog" href="getBlogsInfo?blogsId=${ts.blogsId}">修改</a>
 						<a class="btn btn-danger" href="deleteBlog?blogsId=${ts.blogsId}" onclick="location.reload();" data-ajax>删除</a>
 	 				</td>					

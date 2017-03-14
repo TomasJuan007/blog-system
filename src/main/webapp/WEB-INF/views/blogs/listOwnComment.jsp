@@ -10,7 +10,7 @@
 %>
 <ol class="breadcrumb">
 	<li><a href="index">首页</a></li>
-	<li><a href="listBlogs" data-history="repairOrder">所有博客</a></li>
+	<li><a href="listOwnBlogs" data-history="repairOrder">我的博客</a></li>
 	<li class="active">${blogsTitle}</li>
 </ol>
 

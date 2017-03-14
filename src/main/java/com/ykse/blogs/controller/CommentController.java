@@ -88,6 +88,51 @@ public class CommentController {
     }
     
     /**
+     * 展示评论（我的博客）
+     * 
+     * @param blogsId
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/listOwnComment")
+    public ModelAndView getOwnComments(String blogsId, HttpServletRequest request) {
+        Integer bid = (blogsId == null || blogsId == "") ? 1 : Integer.parseInt(blogsId);
+        Blogs blogs = blogsService.getBlogsById(bid);
+        
+        ModelAndView modelAndView = new ModelAndView("blogs/listOwnComment");
+        Pagination<Comment> page = new Pagination<Comment>();
+        
+        String pageNum = (String)request.getParameter("pageNum");
+        String numPerPage = (String)request.getParameter("numPerPage");
+        Integer pagenum = (pageNum == null || pageNum == "")? 1 : Integer.parseInt(pageNum); 
+        Integer numperpage = (numPerPage == null || numPerPage == "")? 10 : Integer.parseInt(numPerPage); 
+        page.setCurrentPage(pagenum);
+        page.setNumPerPage(numperpage);
+        page.setTotalCount(blogs.getCommentCount());
+       
+        int startRow, endRow;
+        startRow = (page.getCurrentPage() - 1) * page.getNumPerPage();
+        endRow = page.getNumPerPage();
+       
+        
+        List<Comment> comments = commentService.getCommentsByBlogsId(bid, startRow, endRow);
+        page.setContent(comments);
+        
+        String blogsTitle = blogs.getBlogsTitle();
+        String blogsContent = blogs.getBlogsContent();
+        
+        page.setTotalCount(blogs.getCommentCount());             
+        page.calcutePage();
+        Integer uid = blogs.getUser().getUserId();
+        request.setAttribute("page", page);
+        request.setAttribute("blogsId", bid);
+        request.setAttribute("userId", uid);
+        request.setAttribute("blogsTitle", blogsTitle);
+        request.setAttribute("blogsContent", blogsContent);
+        return modelAndView;
+    }
+    
+    /**
      * 获取保存评论信息
      * 
      * @param model
