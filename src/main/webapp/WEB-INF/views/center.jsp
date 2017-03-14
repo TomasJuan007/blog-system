@@ -26,3 +26,15 @@
 			<span class="glyphicon-class">发表博客</span>
 		</a>
 	</div>
+	
+	<pre align="center" style="border:none;font-size:20px;font-family:楷体"><b><<旋转中心>></b></pre>
+	<div class="bs-glyphicons">
+		<a href="star">
+			<span class="glyphicon glyphicon-fire"></span>
+			<span class="glyphicon-class">放射的星火</span>
+		</a>
+		<a href="cube">
+			<span class="glyphicon glyphicon-stop"></span>
+			<span class="glyphicon-class">旋转的方块</span>
+		</a>
+	</div>

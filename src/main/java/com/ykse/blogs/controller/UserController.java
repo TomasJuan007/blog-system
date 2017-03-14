@@ -34,7 +34,7 @@ import net.sf.json.JSONObject;
 @RequestMapping("/")
 public class UserController {  
 	
-    private final Logger LOG = LoggerFactory.getLogger(this.getClass());
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     
     @Autowired
     private UserService userService;
@@ -122,10 +122,10 @@ public class UserController {
                 }
                 user.setUserPassword(MD5Util.getEncryptedPwd(newPwd));
              } catch (NoSuchAlgorithmException e) {
-                 LOG.error("", e);
+                 LOGGER.error("", e);
                  throw new BusinessException(e.getMessage());
              } catch (UnsupportedEncodingException e) {
-                 LOG.error("", e);
+                 LOGGER.error("", e);
                  throw new BusinessException(e.getMessage());
              }
              // 判断是否修改密码成功
@@ -173,10 +173,10 @@ public class UserController {
         try {
             user.setUserPassword(MD5Util.getEncryptedPwd(user.getUserPassword()));
         } catch (NoSuchAlgorithmException e) {
-             LOG.error("", e);
+             LOGGER.error("", e);
              throw new BusinessException(e.getMessage());
         } catch (UnsupportedEncodingException e) {
-             LOG.error("", e);
+             LOGGER.error("", e);
              throw new BusinessException(e.getMessage());
         }
         if(userService.saveUser(user)){
@@ -236,10 +236,10 @@ public class UserController {
      * 
      * @return
      */
-    @RequestMapping(value="/contact", method=RequestMethod.GET)    
-    public ModelAndView getContact(){      
+    @RequestMapping(value="/contact", method=RequestMethod.GET)
+    public ModelAndView getContact() {
         ModelAndView modelAndView = new ModelAndView("contact");
-        return modelAndView;    
+        return modelAndView;
     }
     
     /**
@@ -247,9 +247,10 @@ public class UserController {
      * 
      * @return
      */
-    @RequestMapping(value="/center", method=RequestMethod.GET)    
-    public ModelAndView getCenter(){      
+    @RequestMapping(value="/center", method=RequestMethod.GET)
+    public ModelAndView getCenter() {
         ModelAndView modelAndView = new ModelAndView("center");
-        return modelAndView;    
+        return modelAndView;
     }
-}  
+    
+}
