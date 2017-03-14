@@ -41,7 +41,7 @@
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="chpwd" data-toggle="modal" data-target="#modal-dialog">修改密码</a></li>
+				<li><a href="center" data-history="repairOrder">个人中心</a></li>
 				<li><a href="logout">退出</a></li>
 			</ul>
 		</div>
@@ -56,7 +56,7 @@
 	<!-- Main component for a primary marketing message or call to action -->
 	<div class="jumbotron">
 		<h1>Hello, <%= user.getUserName() %>！</h1>
-		<p>欢迎来到博客世界，让您更加热爱这妙不可言的时光与生活。</p>
+		<p font-family:楷体">欢迎来到博客世界，让您更加热爱这妙不可言的时光与生活。</p>
 		<p>
 			<a class="btn btn-lg btn-primary" href="listOwnBlogs" data-history="repairOrder" role="button">我的博客</a>
 			<a class="btn btn-lg btn-primary" href="listBlogs" data-history="repairOrder" role="button">所有博客</a>
@@ -64,16 +64,10 @@
 	</div>
 	
 	<div class="bs-glyphicons">
-		<a href="userInfo" data-toggle="modal" data-target="#modal-dialog">
-			<span class="glyphicon glyphicon-user"></span>
-			<span class="glyphicon-class">我的信息</span>
-		</a>
-	
 		<a href="addBlogs" data-toggle="modal" data-target="#modal-dialog">
 			<span class="glyphicon glyphicon-edit"></span>
 			<span class="glyphicon-class">写博客</span>
 		</a>
-				
 	</div>
 	
 </div>

@@ -242,4 +242,14 @@ public class UserController {
         return modelAndView;    
     }
     
+    /**
+     *获取“个人中心”页面
+     * 
+     * @return
+     */
+    @RequestMapping(value="/center", method=RequestMethod.GET)    
+    public ModelAndView getCenter(){      
+        ModelAndView modelAndView = new ModelAndView("center");
+        return modelAndView;    
+    }
 }  

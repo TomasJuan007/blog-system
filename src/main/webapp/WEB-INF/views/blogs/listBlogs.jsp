@@ -54,6 +54,7 @@
 					</td>
 					<td>
 						<a class="btn btn-success" href="listComment?blogsId=${ts.blogsId}" data-ajax>查看</a>	
+						<!-- 
 						<%
 							User user = (User)session.getAttribute("User");
 							int userId = user.getUserId();
@@ -65,6 +66,7 @@
 							<a class="btn btn-danger" href="deleteBlog?blogsId=${ts.blogsId}" onclick="location.reload();" data-ajax>删除</a>
 						</c:when>
 						</c:choose>
+						 -->
  					</td>					
 				</tr>			
 			</c:forEach>
