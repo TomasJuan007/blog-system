@@ -50,7 +50,7 @@
 					<td>
 						<span class="label label-warning">${ts.commentCount }</span>
 						<span>/</span>
-						<span class="label label-danger">${ts.commentCount }</span>
+						<span class="label label-danger">${ts.support }</span>
 					</td>
 					<td>
 						<a class="btn btn-success" href="listComment?blogsId=${ts.blogsId}" data-ajax>查看</a>	
