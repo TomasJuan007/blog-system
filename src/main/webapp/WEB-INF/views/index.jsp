@@ -24,7 +24,7 @@
  	if(user != null){
  		((User) session.getAttribute("User")).getUserAccount();%>
 
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<div class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar">
 	<div class="container">
 		<div class="navbar-header">
 			<a class="navbar-brand " href="index" >我的主页</a>

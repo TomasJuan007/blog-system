@@ -14,9 +14,20 @@
 	<li class="active">${blogs.blogsTitle}</li>
 </ol>
 
+<form id="pagerForm" method="post" action="listComment">
+	<input type="hidden" name="blogsId" value="${blogs.blogsId }"/>
+	<input type="hidden" name="pageNum" value="${page.currentPage }"/>
+	<input type="hidden" name="numPerPage" id="numPerPage" value="${page.numPerPage }" />
+</form>
+
 <div class="row">
 	<div class="col-lg-12">
 		<h1 style="text-align:center">${blogs.blogsTitle}</h1>
+		<div style="text-align: right;">
+			<a class="btn btn-success" href="listComment?blogsId=${blogs.blogsId}" data-ajax>刷&nbsp;&nbsp;新</a>
+			<a class="btn btn-success" onclick="window.scrollTo(0,document.body.scrollHeight-comment1.scrollHeight-comment2.scrollHeight-comment3.scrollHeight-navbar.scrollHeight);">评论区</a>
+			<a class="btn btn-danger" onclick="location.reload();">返回</a>
+		</div>
 		<pre style="margin:5px;line-height:1.4em;white-space:pre-wrap;">${blogs.blogsContent}</pre>
 		
 		<div class="col-sm-12" style="text-align: center;">
@@ -24,13 +35,14 @@
 			<a class="btn btn-danger" href="dislike?blogsId=${blogs.blogsId}" data-ajax>踩(${blogs.nonsupport })</a>
 		</div>
 		
-		<div class="row search-bar">
+		<div class="row search-bar" id="comment1">
 			<div class="col-sm-12" style="text-align: right;">
 				<a class="btn btn-primary" data-toggle="modal" data-target="#modal-dialog" href="addComment?userId=${blogs.user.userId}&blogsId=${blogs.blogsId}">发表评论</a>
 				<a class="btn btn-success" href="listComment?blogsId=${blogs.blogsId}" data-ajax>刷&nbsp;&nbsp;新</a>
+				<a class="btn btn-success" onclick="window.scrollTo(0,0);">回顶部</a>
 			</div>
 		</div>
-		<table class="table table-hover td-relative">
+		<table class="table table-hover td-relative" id="comment2">
 			<thead>
 			<tr>
 				<th>评论内容</th>
@@ -69,7 +81,7 @@
 </div>
 
 
-<div class="row search-bar">
+<div class="row search-bar" id="comment3">
 	<div class="col-sm-4">
 		当前总共 ${page.totalCount } 条数据
 	</div>
