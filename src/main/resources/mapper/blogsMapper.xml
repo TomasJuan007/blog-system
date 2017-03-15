@@ -7,6 +7,9 @@
 		<result column="BLOGS_TITLE" property="blogsTitle" jdbcType="VARCHAR" />
 		<result column="BLOGS_CONTENT" property="blogsContent" jdbcType="VARCHAR" />
 		<result column="COMMENTCOUNT" property="commentCount" jdbcType="INTEGER" />
+		<result column="SUPPORT" property="support" jdbcType="INTEGER" />
+		<result column="NONSUPPORT" property="nonsupport" jdbcType="INTEGER" />
+		<result column="RATE" property="rate" jdbcType="DOUBLE" />
 		<result column="CREATETIME" property="createTime" jdbcType="TIMESTAMP" />
 		<association column="USER_ID" property="user" select="com.ykse.blogs.dao.UserDao.getUserById" />
 	</resultMap>
@@ -29,6 +32,9 @@
 		blogstable.BLOGS_TITLE,
 		blogstable.BLOGS_CONTENT,
 		blogstable.COMMENTCOUNT,
+		blogstable.SUPPORT,
+		blogstable.NONSUPPORT,
+		blogstable.RATE,
 		blogstable.USER_ID,
 		blogstable.CREATETIME
 		FROM BLOGSTABLE 
@@ -46,6 +52,9 @@
 		blogstable.BLOGS_TITLE,
 		blogstable.BLOGS_CONTENT,
 		blogstable.COMMENTCOUNT,
+		blogstable.SUPPORT,
+		blogstable.NONSUPPORT,
+		blogstable.RATE,
 		blogstable.USER_ID,
 		blogstable.CREATETIME
 		FROM BLOGSTABLE

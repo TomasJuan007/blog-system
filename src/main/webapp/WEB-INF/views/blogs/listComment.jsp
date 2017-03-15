@@ -11,25 +11,23 @@
 <ol class="breadcrumb">
 	<li><a href="index">首页</a></li>
 	<li><a href="listBlogs" data-history="repairOrder">所有博客</a></li>
-	<li class="active">${blogsTitle}</li>
+	<li class="active">${blogs.blogsTitle}</li>
 </ol>
-
-
-<form id="pagerForm" method="get" action="listComment">
-	<input type="hidden" name="blogsId" value="${blogsId }"/>
-	<input type="hidden" name="pageNum" value="${page.currentPage }"/>
-	<input type="hidden" name="numPerPage" id="numPerPage" value="${page.numPerPage }" />
-</form>
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 style="text-align:center">${blogsTitle}</h1>
-		<pre style="margin:5px;line-height:1.4em;white-space:pre-wrap;">${blogsContent}</pre>
+		<h1 style="text-align:center">${blogs.blogsTitle}</h1>
+		<pre style="margin:5px;line-height:1.4em;white-space:pre-wrap;">${blogs.blogsContent}</pre>
+		
+		<div class="col-sm-12" style="text-align: center;">
+			<a class="btn btn-success" href="like?blogsId=${blogs.blogsId}" data-ajax>顶(${blogs.support })</a>
+			<a class="btn btn-danger" href="dislike?blogsId=${blogs.blogsId}" data-ajax>踩(${blogs.nonsupport })</a>
+		</div>
 		
 		<div class="row search-bar">
-			<div class="col-sm-11" style="text-align: right;">
-				<a class="btn btn-primary" data-toggle="modal" data-target="#modal-dialog" href="addComment?userId=${userId}&blogsId=${blogsId}">发表评论</a>
-				<a class="btn btn-success" href="listComment?blogsId=${blogsId}" data-ajax>刷&nbsp;&nbsp;新</a>
+			<div class="col-sm-12" style="text-align: right;">
+				<a class="btn btn-primary" data-toggle="modal" data-target="#modal-dialog" href="addComment?userId=${blogs.user.userId}&blogsId=${blogs.blogsId}">发表评论</a>
+				<a class="btn btn-success" href="listComment?blogsId=${blogs.blogsId}" data-ajax>刷&nbsp;&nbsp;新</a>
 			</div>
 		</div>
 		<table class="table table-hover td-relative">

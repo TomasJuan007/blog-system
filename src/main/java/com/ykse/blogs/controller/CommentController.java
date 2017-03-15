@@ -69,21 +69,13 @@ public class CommentController {
         startRow = (page.getCurrentPage() - 1) * page.getNumPerPage();
         endRow = page.getNumPerPage();
        
-        
         List<Comment> comments = commentService.getCommentsByBlogsId(bid, startRow, endRow);
         page.setContent(comments);
         
-        String blogsTitle = blogs.getBlogsTitle();
-        String blogsContent = blogs.getBlogsContent();
-        
         page.setTotalCount(blogs.getCommentCount());             
         page.calcutePage();
-        Integer uid = blogs.getUser().getUserId();
         request.setAttribute("page", page);
-        request.setAttribute("blogsId", bid);
-        request.setAttribute("userId", uid);
-        request.setAttribute("blogsTitle", blogsTitle);
-        request.setAttribute("blogsContent", blogsContent);
+        request.setAttribute("blogs", blogs);
         return modelAndView;
     }
     
@@ -114,21 +106,13 @@ public class CommentController {
         startRow = (page.getCurrentPage() - 1) * page.getNumPerPage();
         endRow = page.getNumPerPage();
        
-        
         List<Comment> comments = commentService.getCommentsByBlogsId(bid, startRow, endRow);
         page.setContent(comments);
         
-        String blogsTitle = blogs.getBlogsTitle();
-        String blogsContent = blogs.getBlogsContent();
-        
         page.setTotalCount(blogs.getCommentCount());             
         page.calcutePage();
-        Integer uid = blogs.getUser().getUserId();
         request.setAttribute("page", page);
-        request.setAttribute("blogsId", bid);
-        request.setAttribute("userId", uid);
-        request.setAttribute("blogsTitle", blogsTitle);
-        request.setAttribute("blogsContent", blogsContent);
+        request.setAttribute("blogs", blogs);
         return modelAndView;
     }
     
