@@ -40,4 +40,15 @@ public class GameController {
         ModelAndView modelAndView = new ModelAndView("cube");
         return modelAndView;
     }
+    
+    /**
+     *获取“火星方块”页面
+     * 
+     * @return
+     */
+    @RequestMapping(value="/starcube", method=RequestMethod.GET)
+    public ModelAndView getStarCube() {
+        ModelAndView modelAndView = new ModelAndView("starcube");
+        return modelAndView;
+    }
 }  

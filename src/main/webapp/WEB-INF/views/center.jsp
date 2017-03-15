@@ -7,7 +7,6 @@
 			<span class="glyphicon glyphicon-user"></span>
 			<span class="glyphicon-class">个人信息</span>
 		</a>
-		<div class="bs-glyphicons">
 		<a href="chpwd" data-toggle="modal" data-target="#modal-dialog">
 			<span class="glyphicon glyphicon-edit"></span>
 			<span class="glyphicon-class">修改密码</span>
@@ -20,7 +19,10 @@
 			<span class="glyphicon glyphicon-file"></span>
 			<span class="glyphicon-class">我的博客</span>
 		</a>
-		<div class="bs-glyphicons">
+		<a href="listBlogs" data-history>
+			<span class="glyphicon glyphicon-briefcase"></span>
+			<span class="glyphicon-class">所有博客</span>
+		</a>
 		<a href="addBlogs" data-toggle="modal" data-target="#modal-dialog">
 			<span class="glyphicon glyphicon-edit"></span>
 			<span class="glyphicon-class">发表博客</span>
@@ -29,12 +31,16 @@
 	
 	<pre align="center" style="border:none;font-size:20px;font-family:楷体"><b><<旋转中心>></b></pre>
 	<div class="bs-glyphicons">
-		<a href="star">
-			<span class="glyphicon glyphicon-fire"></span>
-			<span class="glyphicon-class">放射的星火</span>
-		</a>
 		<a href="cube">
 			<span class="glyphicon glyphicon-stop"></span>
 			<span class="glyphicon-class">旋转的方块</span>
+		</a>
+		<a href="star">
+			<span class="glyphicon glyphicon-asterisk"></span>
+			<span class="glyphicon-class">放射的星火</span>
+		</a>
+		<a href="starcube">
+			<span class="glyphicon glyphicon-fire"></span>
+			<span class="glyphicon-class">火星方块</span>
 		</a>
 	</div>
