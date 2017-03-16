@@ -77,7 +77,7 @@ public class BlogsController {
     @RequestMapping(value="/listOwnBlogs")
     public ModelAndView getOwnBlogs(HttpServletRequest request, HttpSession session) {
     	if(session.getAttribute("User") == null){
-            throw new BusinessException("Session失效,请重新登陆");
+            throw new BusinessException("会话过期,请重新登陆！");
         }
         User user = (User)session.getAttribute("User");
         Integer userId = user.getUserId();
@@ -130,8 +130,6 @@ public class BlogsController {
         Blogs blogs = new Blogs();
         blogs.setBlogsTitle(blogsTitle);
         blogs.setBlogsContent(blogsContent);
-        blogs.setCommentCount(0);
-        blogs.setCreateTime(new Timestamp(System.currentTimeMillis()));
         User user = (User)httpSession.getAttribute("User");
         blogs.setUser(user);
         

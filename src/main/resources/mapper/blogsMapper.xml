@@ -73,8 +73,8 @@
   	</select>
   	
 	<insert id="saveBlogs" parameterType="blogs" useGeneratedKeys="true" keyProperty="Blogs_ID">
-		INSERT INTO BLOGSTABLE(BLOGS_TITLE, BLOGS_CONTENT, COMMENTCOUNT, CREATETIME, USER_ID)
-		VALUES(#{blogsTitle}, #{blogsContent}, #{commentCount}, now(), #{user.userId})
+		INSERT INTO BLOGSTABLE(BLOGS_TITLE, BLOGS_CONTENT, CREATETIME, USER_ID)
+		VALUES(#{blogsTitle}, #{blogsContent}, now(), #{user.userId})
 	</insert>
 	
    	<update id="updateBlogs" parameterType="blogs">
