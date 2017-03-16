@@ -89,15 +89,36 @@
 		WHERE BLOGS_ID = #{blogsId}
 	</update>
 
-	<update id="addCountById"  parameterType="int">
+	<update id="addCountById" parameterType="int">
 		UPDATE BLOGSTABLE 
 		SET COMMENTCOUNT = COMMENTCOUNT + 1
 		WHERE BLOGS_ID = #{blogsId}
 	</update>
 	
-	<update id="subtractCountById"  parameterType="int">
+	<update id="subtractCountById" parameterType="int">
 		UPDATE BLOGSTABLE 
 		SET COMMENTCOUNT = COMMENTCOUNT - 1
+		WHERE BLOGS_ID = #{blogsId}
+	</update>
+	
+	<update id="updateSupportCountById" parameterType="int">
+		UPDATE BLOGSTABLE 
+		SET SUPPORT = (
+			SELECT COUNT(*)
+			FROM STANDPOINTTABLE
+			WHERE BLOGS_ID = #{blogsId}
+			AND TYPE = 1),
+		NONSUPPORT = (
+			SELECT COUNT(*)
+			FROM STANDPOINTTABLE
+			WHERE BLOGS_ID = #{blogsId}
+			AND TYPE = 2)
+		WHERE BLOGS_ID = #{blogsId}
+	</update>
+	
+	<update id="updateSupportRateById">
+		UPDATE BLOGSTABLE 
+		SET RATE = #{rate}
 		WHERE BLOGS_ID = #{blogsId}
 	</update>
 	

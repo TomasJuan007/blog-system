@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ykse.blogs.bean.Blogs;
+import com.ykse.blogs.bean.Standpoint;
 import com.ykse.blogs.bean.User;
 import com.ykse.blogs.dao.BlogsDao;
+import com.ykse.blogs.dao.StandpointDao;
 import com.ykse.blogs.service.BlogsService;
 
 @Service
@@ -17,6 +19,9 @@ public class BlogsServiceImpl implements BlogsService {
 
     @Autowired
     private BlogsDao blogsDao;
+    
+    @Autowired
+    private StandpointDao standpointDao;
     
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -91,4 +96,26 @@ public class BlogsServiceImpl implements BlogsService {
                 return false;
         return true;
     }
+
+	@Override
+	@Transactional
+	public boolean vote(int blogsId, int userId, int type) {
+		Standpoint standpoint = new Standpoint();
+		Blogs blogs = new Blogs();
+		blogs.setBlogsId(blogsId);
+		User user = new User();
+		user.setUserId(userId);
+		standpoint.setBlogs(blogs);
+		standpoint.setUser(user);
+		standpoint.setType(type);
+		standpointDao.saveStandpoint(standpoint);
+		blogsDao.updateSupportCountById(blogsId);
+		
+		blogs = blogsDao.getBlogsById(blogsId);
+		int support = blogs.getSupport();
+		int nonsupport = blogs.getNonsupport();
+		int rate = support-nonsupport;
+		
+		return blogsDao.updateSupportRateById(blogsId, rate);
+	}
 }

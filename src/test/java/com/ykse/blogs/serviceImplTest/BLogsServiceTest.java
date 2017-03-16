@@ -19,29 +19,33 @@ public class BLogsServiceTest extends SpringTestCase {
     @Autowired
     private BlogsService blogsService;
 
-    @Test
+    //@Test
     public void getUserByIdTest() {
         List<Blogs> blogsList = blogsService.getBlogsAll(0, 1);
-        Iterator it = blogsList.iterator();
+        Iterator<Blogs> it = blogsList.iterator();
         while (it.hasNext()) {
             Blogs blogs = (Blogs) it.next();
             System.out.println(blogs.getBlogsId() + ":" + blogs.getBlogsTitle());
         }
     }
 
-    @Test
+    //@Test
     public void deleteBlogTest() {
     	blogsService.deleteBlog(28);
     }
     
-    @Test
+    //@Test
     public void addCountByIdTest() {
         blogsService.addCountById(1);
     }
     
-    @Test
+    //@Test
     public void subtractCountByIdTest() {
         blogsService.subtractCountById(1);
     }
     
+    @Test
+    public void voteTest() {
+        blogsService.vote(6,6,1);
+    }
 }

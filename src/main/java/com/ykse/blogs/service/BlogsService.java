@@ -5,6 +5,14 @@ import java.util.List;
 
 import com.ykse.blogs.bean.Blogs;
 
+/**
+ * 博客业务逻辑处理接口
+ * 
+ * <li>主要含：获取单个博客、获取博客列表、获取博客数等</li>
+ * 
+ * @author tao.huang
+ * @version $Id: BlogsService.java, v 0.1 2016年11月14日 下午5:00:00 tao.huang Exp$
+ */
 public interface BlogsService {
 	
 	/**
@@ -89,4 +97,13 @@ public interface BlogsService {
      * @return
      */
     public boolean subtractCountById(int blogsId);
+    
+    /**
+     * 投票
+     * 
+     * @param blogsId
+     * @param userId
+     * @param type
+     */
+    public boolean vote(int blogsId, int userId, int type);
 }

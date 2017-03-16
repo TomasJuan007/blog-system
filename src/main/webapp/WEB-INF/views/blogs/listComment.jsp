@@ -31,8 +31,8 @@
 		<pre style="margin:5px;line-height:1.4em;white-space:pre-wrap;">${blogs.blogsContent}</pre>
 		
 		<div class="col-sm-12" style="text-align: center;">
-			<a class="btn btn-success" href="like?blogsId=${blogs.blogsId}" data-ajax>顶(${blogs.support })</a>
-			<a class="btn btn-danger" href="dislike?blogsId=${blogs.blogsId}" data-ajax>踩(${blogs.nonsupport })</a>
+			<a class="btn btn-success" href="vote?blogsId=${blogs.blogsId}&type=1" onclick="location.reload()" data-ajax>顶(${blogs.support })</a>
+			<a class="btn btn-danger" href="vote?blogsId=${blogs.blogsId}&type=2" onclick="location.reload()" data-ajax>踩(${blogs.nonsupport })</a>
 		</div>
 		
 		<div class="row search-bar" id="comment1">
