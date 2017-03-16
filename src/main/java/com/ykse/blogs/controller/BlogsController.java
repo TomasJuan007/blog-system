@@ -112,8 +112,19 @@ public class BlogsController {
      * @return
      */
     @RequestMapping(value="/addBlogs", method=RequestMethod.GET)
-    public ModelAndView getUserInfo(Model model){      
+    public ModelAndView getModal(Model model){      
         ModelAndView modelAndView = new ModelAndView("blogs/addBlogs");
+        return modelAndView;
+    }
+    
+    /**
+     * 添加博客（个人中心-编辑器）
+     * 
+     * @return
+     */
+    @RequestMapping(value="/editBlogs", method=RequestMethod.GET)
+    public ModelAndView getPage(Model model){      
+        ModelAndView modelAndView = new ModelAndView("blogs/editor");
         return modelAndView;
     }
     
@@ -145,6 +156,30 @@ public class BlogsController {
         result.put("statusCode", "300");
         result.put("dialog", "closeCurrent");
         return result.toString();
+    }
+    
+    /**
+     * 保存博客（个人中心-编辑器）
+     * 
+     * @param blogsTitle
+     * @param blogsContent
+     * @param httpSession
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/submitBlogs",method = RequestMethod.POST,produces = "application/json; charset=utf-8")
+    public ModelAndView submitBlogs(String blogsTitle,String blogsContent,HttpSession httpSession) {
+    	
+    	ModelAndView modelAndView = new ModelAndView("/index");
+    	
+        Blogs blogs = new Blogs();
+        blogs.setBlogsTitle(blogsTitle);
+        blogs.setBlogsContent(blogsContent);
+        User user = (User)httpSession.getAttribute("User");
+        blogs.setUser(user);
+        blogsService.saveBlogs(blogs);
+        
+        return modelAndView;
     }
     
     /**

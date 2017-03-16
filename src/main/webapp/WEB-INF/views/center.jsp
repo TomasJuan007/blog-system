@@ -23,9 +23,9 @@
 			<span class="glyphicon glyphicon-briefcase"></span>
 			<span class="glyphicon-class">所有博客</span>
 		</a>
-		<a href="addBlogs" data-toggle="modal" data-target="#modal-dialog">
+		<a href="editBlogs">
 			<span class="glyphicon glyphicon-edit"></span>
-			<span class="glyphicon-class">发表博客</span>
+			<span class="glyphicon-class">编辑器</span>
 		</a>
 	</div>
 	
