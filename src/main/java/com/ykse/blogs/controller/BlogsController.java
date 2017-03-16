@@ -228,4 +228,28 @@ public class BlogsController {
 		Integer typeInt = Integer.parseInt(type);
         blogsService.vote(bid, userId, typeInt);
 	}
+    
+    /**
+     * 取消投票
+     * 
+     * @param blogsId
+     * @param type
+     * @param session
+     */
+    @ResponseBody
+    @RequestMapping(value="/cancelVote", method=RequestMethod.GET)
+	public void cancelVote(String blogsId, String type, HttpSession session) {
+    	if(session.getAttribute("User") == null){
+            throw new BusinessException("会话过期,请重新登陆！");
+        }
+        User user = (User)session.getAttribute("User");
+        Integer userId = user.getUserId();
+        
+		Integer bid = (blogsId == null || blogsId == "") ? 0 : Integer.parseInt(blogsId);
+		if("".equals(type)||type==null){
+			throw new ParameterException("请求参数异常！", null);
+		}
+		Integer typeInt = Integer.parseInt(type);
+        blogsService.cancelVote(bid, userId, typeInt);
+	}
 }

@@ -17,4 +17,12 @@ public interface StandpointDao {
 	 * @return
 	 */
 	public boolean saveStandpoint(Standpoint standpoint);
+	
+	/**
+	 * 取消立场
+	 * 
+	 * @param standpoint
+	 * @return
+	 */
+	public boolean deleteStandpoint(Standpoint standpoint);
 }

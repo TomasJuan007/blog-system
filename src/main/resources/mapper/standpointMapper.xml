@@ -13,4 +13,11 @@
 		INSERT INTO STANDPOINTTABLE(BLOGS_ID, USER_ID, TYPE)
 		VALUES(#{blogs.blogsId}, #{user.userId}, #{type})
 	</insert>
+	
+	<delete id="deleteStandpoint">
+		DELETE FROM STANDPOINTTABLE
+		WHERE BLOGS_ID = ${blogs.blogsId}
+		AND USER_ID = ${user.userId}
+		AND TYPE = ${type}
+	</delete>
 </mapper>

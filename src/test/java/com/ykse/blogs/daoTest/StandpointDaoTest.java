@@ -25,13 +25,23 @@ public class StandpointDaoTest extends SpringTestCase {
 	@Autowired
 	StandpointDao standpointDao;
 	
-	@Test
+	//@Test
 	public void saveStandpoint() {
 		Standpoint standpoint = new Standpoint();
 		standpoint.setBlogs(blogs);
 		standpoint.setUser(user);
 		standpoint.setType(2);
 		boolean sucess = standpointDao.saveStandpoint(standpoint);
+		Assert.assertTrue(sucess);
+	}
+	
+	@Test
+	public void deleteStandpoint() {
+		Standpoint standpoint = new Standpoint();
+		standpoint.setBlogs(blogs);
+		standpoint.setUser(user);
+		standpoint.setType(2);
+		boolean sucess = standpointDao.deleteStandpoint(standpoint);
 		Assert.assertTrue(sucess);
 	}
 }

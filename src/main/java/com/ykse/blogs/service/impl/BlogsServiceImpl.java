@@ -118,4 +118,26 @@ public class BlogsServiceImpl implements BlogsService {
 		
 		return blogsDao.updateSupportRateById(blogsId, rate);
 	}
+	
+	@Override
+	@Transactional
+	public boolean cancelVote(int blogsId, int userId, int type) {
+		Standpoint standpoint = new Standpoint();
+		Blogs blogs = new Blogs();
+		blogs.setBlogsId(blogsId);
+		User user = new User();
+		user.setUserId(userId);
+		standpoint.setBlogs(blogs);
+		standpoint.setUser(user);
+		standpoint.setType(type);
+		standpointDao.deleteStandpoint(standpoint);
+		blogsDao.updateSupportCountById(blogsId);
+		
+		blogs = blogsDao.getBlogsById(blogsId);
+		int support = blogs.getSupport();
+		int nonsupport = blogs.getNonsupport();
+		int rate = support-nonsupport;
+		
+		return blogsDao.updateSupportRateById(blogsId, rate);
+	}
 }

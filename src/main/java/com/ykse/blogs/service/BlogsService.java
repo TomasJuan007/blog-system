@@ -106,4 +106,13 @@ public interface BlogsService {
      * @param type
      */
     public boolean vote(int blogsId, int userId, int type);
+    
+    /**
+     * 取消投票
+     * 
+     * @param blogsId
+     * @param userId
+     * @param type
+     */
+    public boolean cancelVote(int blogsId, int userId, int type);
 }
