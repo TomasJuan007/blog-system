@@ -100,6 +100,8 @@ public class BlogsServiceImpl implements BlogsService {
 	@Override
 	@Transactional
 	public boolean vote(int blogsId, int userId, int type) {
+		
+		//计算并保存立场
 		Standpoint standpoint = new Standpoint();
 		Blogs blogs = new Blogs();
 		blogs.setBlogsId(blogsId);
@@ -109,19 +111,25 @@ public class BlogsServiceImpl implements BlogsService {
 		standpoint.setUser(user);
 		standpoint.setType(type);
 		standpointDao.saveStandpoint(standpoint);
+		
+		//在博客中（根据立场）更新投票
 		blogsDao.updateSupportCountById(blogsId);
 		
+		//计算支持率
 		blogs = blogsDao.getBlogsById(blogsId);
 		int support = blogs.getSupport();
 		int nonsupport = blogs.getNonsupport();
 		int rate = support-nonsupport;
 		
+		//在博客中更新支持率
 		return blogsDao.updateSupportRateById(blogsId, rate);
 	}
 	
 	@Override
 	@Transactional
 	public boolean cancelVote(int blogsId, int userId, int type) {
+		
+		//计算并删除立场
 		Standpoint standpoint = new Standpoint();
 		Blogs blogs = new Blogs();
 		blogs.setBlogsId(blogsId);
@@ -131,13 +139,17 @@ public class BlogsServiceImpl implements BlogsService {
 		standpoint.setUser(user);
 		standpoint.setType(type);
 		standpointDao.deleteStandpoint(standpoint);
+		
+		//在博客中（根据立场）更新投票
 		blogsDao.updateSupportCountById(blogsId);
 		
+		//计算支持率
 		blogs = blogsDao.getBlogsById(blogsId);
 		int support = blogs.getSupport();
 		int nonsupport = blogs.getNonsupport();
 		int rate = support-nonsupport;
 		
+		//在博客中更新支持率
 		return blogsDao.updateSupportRateById(blogsId, rate);
 	}
 }
