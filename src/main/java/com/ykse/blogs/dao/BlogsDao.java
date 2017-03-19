@@ -112,5 +112,5 @@ public interface BlogsDao {
      * @param rate
      * @return
      */
-    public boolean updateSupportRateById(@Param("blogsId") int blogsId, @Param("rate") int rate);
+    public boolean updateSupportRateById(@Param("blogsId") int blogsId, @Param("rate") Double rate);
 }

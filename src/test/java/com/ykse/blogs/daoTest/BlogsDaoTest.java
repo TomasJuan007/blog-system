@@ -48,7 +48,7 @@ public class BlogsDaoTest extends SpringTestCase {
 	
 	@Test
 	public void updateSupportRateByIdTest() {
-		boolean sucess = blogsDao.updateSupportRateById(6,98);
+		boolean sucess = blogsDao.updateSupportRateById(6,98.0);
 		Assert.assertTrue(sucess);
 	}
 }

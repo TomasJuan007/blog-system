@@ -119,8 +119,18 @@ public class BlogsServiceImpl implements BlogsService {
 		blogs = blogsDao.getBlogsById(blogsId);
 		int support = blogs.getSupport();
 		int nonsupport = blogs.getNonsupport();
-		int rate = support-nonsupport;
 		
+		//请开始你的表演
+		Double n = (double) (support + nonsupport);
+		Double p = support / n;
+		Double z = 1.96;
+
+		Double denominator = 1 + z * z / n;
+		Double avg = p + z * z / 2 * n;
+		Double deviation = z * Math.sqrt(p * (1 - p) / n + z * z / 4 * n * n);
+
+		Double rate = (avg - deviation) / denominator;
+
 		//在博客中更新支持率
 		return blogsDao.updateSupportRateById(blogsId, rate);
 	}
@@ -147,7 +157,18 @@ public class BlogsServiceImpl implements BlogsService {
 		blogs = blogsDao.getBlogsById(blogsId);
 		int support = blogs.getSupport();
 		int nonsupport = blogs.getNonsupport();
-		int rate = support-nonsupport;
+		
+		//请开始你的表演
+		Double n = (double) (support + nonsupport);
+		Double p = support / n;
+		Double z = 1.96;
+		
+		Double denominator = 1 + z*z/n;
+		Double avg = p + z*z/2*n;
+		Double deviation = z*Math.sqrt(p*(1-p)/n+z*z/4*n*n);
+		
+		Double rate = (avg - deviation) / denominator;
+		
 		
 		//在博客中更新支持率
 		return blogsDao.updateSupportRateById(blogsId, rate);
