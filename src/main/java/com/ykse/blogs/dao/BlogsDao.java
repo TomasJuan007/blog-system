@@ -58,6 +58,25 @@ public interface BlogsDao {
     public Integer getBlogsCountByParam(@Param("blogs") Blogs blogs);
     
     /**
+     * 获取博客（按热度）
+     * 
+     * @param startRow
+     * @param endRow
+     * @return
+     */
+    public List<Blogs> getHeatedBlogsAll(@Param("startRow") int startRow, @Param("endRow") int endRow);
+    
+    /**
+     * 根据参数获取博客（按热度）
+     * 
+     * @param blogs
+     * @param startRow
+     * @param endRow
+     * @return
+     */
+    public List<Blogs>  getHeatedBlogsByParam(@Param("blogs") Blogs blogs, @Param("startRow") int startRow, @Param("endRow") int endRow);
+    
+    /**
      * 
      * 保存博客
      * @param blogs

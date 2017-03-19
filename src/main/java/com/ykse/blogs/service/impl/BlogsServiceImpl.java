@@ -31,7 +31,10 @@ public class BlogsServiceImpl implements BlogsService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<Blogs> getBlogsAll(int startRow, int endRow) {
+    public List<Blogs> getBlogsAll(String type, int startRow, int endRow) {
+    	if ("1".equals(type)) {
+			return blogsDao.getHeatedBlogsAll(startRow, endRow);
+		}
         return blogsDao.getBlogsAll(startRow, endRow);
     }
     
@@ -43,11 +46,14 @@ public class BlogsServiceImpl implements BlogsService {
     
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
-    public List<Blogs> getBlogsByParam(Integer userId, int startRow, int endRow) {
+    public List<Blogs> getBlogsByParam(Integer userId, String type, int startRow, int endRow) {
     	User user = new User();
 		user.setUserId(userId);
 		Blogs blogs = new Blogs();
 		blogs.setUser(user);
+		if ("1".equals(type)) {
+			return blogsDao.getHeatedBlogsByParam(blogs, startRow, endRow);
+		}
         return blogsDao.getBlogsByParam(blogs, startRow, endRow);
     }
     

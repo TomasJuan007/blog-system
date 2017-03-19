@@ -45,7 +45,7 @@ public class BlogsController {
      * @return
      */
     @RequestMapping(value="/listBlogs")
-    public ModelAndView getBlogs(HttpServletRequest request) {
+    public ModelAndView getBlogs(HttpServletRequest request, String type) {
     	ModelAndView modelAndView = new ModelAndView("/blogs/listBlogs");
 		
 		Pagination<Blogs> page = new Pagination<Blogs>();
@@ -62,7 +62,7 @@ public class BlogsController {
 		
 		int startRow = (page.getCurrentPage() - 1) * page.getNumPerPage();
 		int endRow = page.getNumPerPage();
-		List<Blogs> blogs = blogsService.getBlogsAll(startRow, endRow);
+		List<Blogs> blogs = blogsService.getBlogsAll(type, startRow, endRow);
 		page.setContent(blogs);
 		request.setAttribute("page", page);
 		
@@ -76,7 +76,7 @@ public class BlogsController {
      * @return
      */
     @RequestMapping(value="/listOwnBlogs")
-    public ModelAndView getOwnBlogs(HttpServletRequest request, HttpSession session) {
+    public ModelAndView getOwnBlogs(HttpServletRequest request, HttpSession session, String type) {
     	if(session.getAttribute("User") == null){
             throw new BusinessException("会话过期,请重新登陆！");
         }
@@ -99,7 +99,7 @@ public class BlogsController {
 		
 		int startRow = (page.getCurrentPage() - 1) * page.getNumPerPage();
 		int endRow = page.getNumPerPage();
-		List<Blogs> blogs = blogsService.getBlogsByParam(userId,startRow, endRow);
+		List<Blogs> blogs = blogsService.getBlogsByParam(userId, type, startRow, endRow);
 		page.setContent(blogs);
 		request.setAttribute("page", page);
 		

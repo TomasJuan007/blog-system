@@ -67,6 +67,25 @@
 			<include refid="Where_Clause"/>
 		</where>
   	</select>
+ 	
+ 	<select id="getHeatedBlogsAll" resultMap="BLOGSTABLE">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM BLOGSTABLE 
+		ORDER BY RATE DESC
+    	LIMIT #{startRow}, #{endRow}      	 
+ 	</select>
+ 	
+	<select id="getHeatedBlogsByParam" resultMap="BLOGSTABLE">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM BLOGSTABLE
+		<where>
+			<include refid="Where_Clause"/>
+		</where>
+		ORDER BY RATE DESC
+    	LIMIT #{startRow}, #{endRow}
+ 	</select>
   	
 	<insert id="saveBlogs" parameterType="blogs" useGeneratedKeys="true" keyProperty="Blogs_ID">
 		INSERT INTO BLOGSTABLE(BLOGS_TITLE, BLOGS_CONTENT, CREATETIME, USER_ID)

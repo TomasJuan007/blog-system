@@ -19,9 +19,9 @@ public class BLogsServiceTest extends SpringTestCase {
     @Autowired
     private BlogsService blogsService;
 
-    //@Test
+    @Test
     public void getUserByIdTest() {
-        List<Blogs> blogsList = blogsService.getBlogsAll(0, 1);
+        List<Blogs> blogsList = blogsService.getBlogsAll(null, 0, 10);
         Iterator<Blogs> it = blogsList.iterator();
         while (it.hasNext()) {
             Blogs blogs = (Blogs) it.next();
@@ -44,7 +44,7 @@ public class BLogsServiceTest extends SpringTestCase {
         blogsService.subtractCountById(1);
     }
     
-    @Test
+    //@Test
     public void voteTest() {
         blogsService.vote(6,6,1);
     }

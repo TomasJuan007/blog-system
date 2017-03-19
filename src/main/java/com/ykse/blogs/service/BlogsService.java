@@ -31,7 +31,7 @@ public interface BlogsService {
      * @param userId
      * @return User
      */
-	public List<Blogs> getBlogsAll(int startRow, int endRow); 
+	public List<Blogs> getBlogsAll(String type, int startRow, int endRow); 
 	
 	/**
 	 * 获取博客数
@@ -48,7 +48,7 @@ public interface BlogsService {
 	 * @param endRow
 	 * @return
 	 */
-	public List<Blogs> getBlogsByParam(Integer userId, int startRow, int endRow);
+	public List<Blogs> getBlogsByParam(Integer userId, String type, int startRow, int endRow);
 	
 	/**
 	 * 根据参数获取博客数
