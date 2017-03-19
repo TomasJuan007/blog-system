@@ -14,6 +14,18 @@
 		<association column="USER_ID" property="user" select="com.ykse.blogs.dao.UserDao.getUserById" />
 	</resultMap>
 	
+	<sql id="Base_Column_List" >
+    	blogstable.BLOGS_ID,
+		blogstable.BLOGS_TITLE,
+		blogstable.BLOGS_CONTENT,
+		blogstable.COMMENTCOUNT,
+		blogstable.SUPPORT,
+		blogstable.NONSUPPORT,
+		blogstable.RATE,
+		blogstable.USER_ID,
+		blogstable.CREATETIME
+  	</sql>
+  
 	<sql id="Where_Clause">
 		<if test="blogs.user.userId != null">
 			and user_id = #{blogs.user.userId}
@@ -28,15 +40,7 @@
 	
 	<select id="getBlogsAll" resultMap="BLOGSTABLE">
 		SELECT 
-		blogstable.BLOGS_ID,
-		blogstable.BLOGS_TITLE,
-		blogstable.BLOGS_CONTENT,
-		blogstable.COMMENTCOUNT,
-		blogstable.SUPPORT,
-		blogstable.NONSUPPORT,
-		blogstable.RATE,
-		blogstable.USER_ID,
-		blogstable.CREATETIME
+		<include refid="Base_Column_List" />
 		FROM BLOGSTABLE 
 		ORDER BY CREATETIME DESC
     	LIMIT #{startRow}, #{endRow}      	 
@@ -48,15 +52,7 @@
   	
   	<select id="getBlogsByParam" resultMap="BLOGSTABLE">
 		SELECT
-		blogstable.BLOGS_ID,
-		blogstable.BLOGS_TITLE,
-		blogstable.BLOGS_CONTENT,
-		blogstable.COMMENTCOUNT,
-		blogstable.SUPPORT,
-		blogstable.NONSUPPORT,
-		blogstable.RATE,
-		blogstable.USER_ID,
-		blogstable.CREATETIME
+		<include refid="Base_Column_List" />
 		FROM BLOGSTABLE
 		<where>
 			<include refid="Where_Clause"/>
