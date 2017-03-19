@@ -124,12 +124,14 @@ public class BlogsServiceImpl implements BlogsService {
 		Double n = (double) (support + nonsupport);
 		Double p = support / n;
 		Double z = 1.96;
-
-		Double denominator = 1 + z * z / n;
-		Double avg = p + z * z / 2 * n;
-		Double deviation = z * Math.sqrt(p * (1 - p) / n + z * z / 4 * n * n);
-
-		Double rate = (avg - deviation) / denominator;
+		Double rate = 0.0;
+		if(n>0){
+			Double denominator = 1 + z*z/n;
+			Double avg = p + z*z/2*n;
+			Double deviation = z*Math.sqrt(p*(1-p)/n+z*z/4*n*n);		
+			
+			rate = (avg - deviation) / denominator;
+		}
 
 		//在博客中更新支持率
 		return blogsDao.updateSupportRateById(blogsId, rate);
@@ -162,13 +164,14 @@ public class BlogsServiceImpl implements BlogsService {
 		Double n = (double) (support + nonsupport);
 		Double p = support / n;
 		Double z = 1.96;
-		
-		Double denominator = 1 + z*z/n;
-		Double avg = p + z*z/2*n;
-		Double deviation = z*Math.sqrt(p*(1-p)/n+z*z/4*n*n);
-		
-		Double rate = (avg - deviation) / denominator;
-		
+		Double rate = 0.0;
+		if(n>0){
+			Double denominator = 1 + z*z/n;
+			Double avg = p + z*z/2*n;
+			Double deviation = z*Math.sqrt(p*(1-p)/n+z*z/4*n*n);		
+			
+			rate = (avg - deviation) / denominator;
+		}
 		
 		//在博客中更新支持率
 		return blogsDao.updateSupportRateById(blogsId, rate);

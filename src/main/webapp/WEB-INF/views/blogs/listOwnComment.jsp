@@ -32,8 +32,8 @@
 		<pre style="margin:5px;line-height:1.4em;white-space:pre-wrap;">${blogs.blogsContent}</pre>
 		
 		<div class="col-sm-12" style="text-align: center;">
-			<a class="btn btn-success" href="javascript:;">顶(${blogs.support })</a>
-			<a class="btn btn-danger" href="javascript:;">踩(${blogs.nonsupport })</a>
+			<a class="btn btn-success" title="这不是Bug，在“我的博客”模块不能顶" href="javascript:;">顶(${blogs.support })</a>
+			<a class="btn btn-danger" title="这不是Bug，在“我的博客”模块不能顶" href="javascript:;">踩(${blogs.nonsupport })</a>
 		</div>
 		
 		<div class="row search-bar" id="comment1">
