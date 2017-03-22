@@ -137,7 +137,7 @@ public class BlogsServiceImpl implements BlogsService {
 		Double n = (double) (support + nonsupport);
 		Double p = support / n;
 		Double z = 1.96;
-		Double rate = 0.0001*(blogs.getCommentCount()+blogs.getViewCount());
+		Double rate = 0.0;
 		if(n>0){
 			Double denominator = 1 + z*z/n;
 			Double avg = p + z*z/2*n;
@@ -177,7 +177,7 @@ public class BlogsServiceImpl implements BlogsService {
 		Double n = (double) (support + nonsupport);
 		Double p = support / n;
 		Double z = 1.96;
-		Double rate = 0.0001*(blogs.getCommentCount()+blogs.getViewCount());
+		Double rate = 0.0;
 		if(n>0){
 			Double denominator = 1 + z*z/n;
 			Double avg = p + z*z/2*n;
