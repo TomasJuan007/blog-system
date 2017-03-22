@@ -1,6 +1,5 @@
 package com.ykse.blogs.serviceImplTest;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.junit.Test;

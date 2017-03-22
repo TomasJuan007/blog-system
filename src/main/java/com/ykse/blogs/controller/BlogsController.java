@@ -1,6 +1,5 @@
 package com.ykse.blogs.controller;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
