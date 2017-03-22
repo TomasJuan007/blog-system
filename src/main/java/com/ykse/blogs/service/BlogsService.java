@@ -75,6 +75,14 @@ public interface BlogsService {
     public boolean updateBlogs(Blogs blogs);
     
     /**
+     * 修改博客阅读数
+     * 
+     * @param user 提供要修改的阅读数
+     * @return 操作结果，true为成功，false为失败
+     */
+    public boolean updateViewCount(Blogs blogs);
+    
+    /**
      * 根据Id删除博客
      * 
      * @param blogId

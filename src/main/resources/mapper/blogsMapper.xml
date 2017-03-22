@@ -6,6 +6,7 @@
 		<id column="BLOGS_ID" property="blogsId" jdbcType="INTEGER" />
 		<result column="BLOGS_TITLE" property="blogsTitle" jdbcType="VARCHAR" />
 		<result column="BLOGS_CONTENT" property="blogsContent" jdbcType="VARCHAR" />
+		<result column="VIEW_COUNT" property="viewCount" jdbcType="INTEGER" />
 		<result column="COMMENTCOUNT" property="commentCount" jdbcType="INTEGER" />
 		<result column="SUPPORT" property="support" jdbcType="INTEGER" />
 		<result column="NONSUPPORT" property="nonsupport" jdbcType="INTEGER" />
@@ -18,6 +19,7 @@
     	blogstable.BLOGS_ID,
 		blogstable.BLOGS_TITLE,
 		blogstable.BLOGS_CONTENT,
+		blogstable.VIEW_COUNT,
 		blogstable.COMMENTCOUNT,
 		blogstable.SUPPORT,
 		blogstable.NONSUPPORT,
@@ -95,7 +97,13 @@
    	<update id="updateBlogs" parameterType="blogs">
 		UPDATE BLOGSTABLE 
 		SET BLOGS_TITLE = #{blogsTitle}, 
-		BLOGS_CONTENT = #{blogsContent} 
+		BLOGS_CONTENT = #{blogsContent}
+		WHERE BLOGS_ID = #{blogsId}
+	</update>
+	
+	<update id="updateViewCount" parameterType="blogs">
+		UPDATE BLOGSTABLE 
+		SET VIEW_COUNT = #{viewCount}
 		WHERE BLOGS_ID = #{blogsId}
 	</update>
 	

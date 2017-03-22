@@ -35,7 +35,7 @@
 			<tr>
 				<th>题目</th>
 				<th>发帖时间</th>
-				<th>评论 / 赞</th>
+				<th>评论 /阅读/ 赞</th>
 				<th style="width:120px;">选择功能</th>
 			</tr>
 			</thead>
@@ -46,6 +46,8 @@
 					<td>${ts.createTime }</td>
 					<td>
 						<span class="label label-warning">${ts.commentCount }</span>
+						<span>/</span>
+						<span class="label label-success">${ts.viewCount }</span>
 						<span>/</span>
 						<span class="label label-danger">${ts.support }</span>
 					</td>

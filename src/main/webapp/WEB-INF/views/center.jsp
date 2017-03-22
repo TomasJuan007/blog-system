@@ -27,6 +27,10 @@
 			<span class="glyphicon glyphicon-edit"></span>
 			<span class="glyphicon-class">编辑器</span>
 		</a>
+		<a href="listBlogs?type=1" data-history>
+			<span class="glyphicon glyphicon-fire"></span>
+			<span class="glyphicon-class">热门博客</span>
+		</a>
 	</div>
 	
 	<pre align="center" style="border:none;font-size:20px;font-family:楷体"><b><<旋转中心>></b></pre>

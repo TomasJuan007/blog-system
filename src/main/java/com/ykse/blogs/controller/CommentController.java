@@ -53,6 +53,8 @@ public class CommentController {
     public ModelAndView getComments(String blogsId, HttpServletRequest request) {
         Integer bid = (blogsId == null || blogsId == "") ? 1 : Integer.parseInt(blogsId);
         Blogs blogs = blogsService.getBlogsById(bid);
+        blogs.setViewCount(blogs.getViewCount()+1);
+		blogsService.updateViewCount(blogs);
         
         ModelAndView modelAndView = new ModelAndView("blogs/listComment");
         Pagination<Comment> page = new Pagination<Comment>();

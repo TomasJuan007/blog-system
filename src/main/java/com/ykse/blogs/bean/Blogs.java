@@ -13,6 +13,9 @@ public class Blogs {
 	/** 帖子内容 */
 	private String blogsContent;
 
+	/** 帖子阅读数 */
+	private Integer viewCount;
+	
 	/** 帖子总评论数 */
 	private Integer commentCount;
 
@@ -55,7 +58,15 @@ public class Blogs {
         this.blogsContent = blogsContent;
     }
      
-    public Integer getCommentCount() {
+    public Integer getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(Integer viewCount) {
+		this.viewCount = viewCount;
+	}
+
+	public Integer getCommentCount() {
         return commentCount;
     }
 

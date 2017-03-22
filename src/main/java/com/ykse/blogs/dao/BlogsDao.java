@@ -93,6 +93,14 @@ public interface BlogsDao {
     public boolean updateBlogs(Blogs blogs);
     
     /**
+     * 
+     * 更新博客阅读数
+     * @param blogs
+     * @return
+     */
+    public boolean updateViewCount(Blogs blogs);
+    
+    /**
      * 根据ID删除博客
      * 
      * @param blogsId
