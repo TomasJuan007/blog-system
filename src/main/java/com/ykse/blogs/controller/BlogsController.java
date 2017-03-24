@@ -229,8 +229,8 @@ public class BlogsController {
     
     /**
      * 删除博客
-     * 
-     * @param blogId
+     *
+     * @param blogsId
      */
     @ResponseBody
     @RequestMapping(value="/deleteBlog", method=RequestMethod.GET)
@@ -292,4 +292,15 @@ public class BlogsController {
 		//取消投票
         blogsService.cancelVote(bid, userId, typeInt);
 	}
+
+    /**
+     * 跳转上传文件页面（个人中心-上传文件）
+     *
+     * @return
+     */
+    @RequestMapping(value="/uploadFile", method=RequestMethod.GET)
+    public ModelAndView uploadFile(Model model){
+        ModelAndView modelAndView = new ModelAndView("file");
+        return modelAndView;
+    }
 }

@@ -32,7 +32,15 @@
 			<span class="glyphicon-class">热门博客</span>
 		</a>
 	</div>
-	
+
+	<pre align="center" style="border:none;font-size:20px;font-family:楷体"><b><<工具中心>></b></pre>
+	<div class="bs-glyphicons">
+		<a href="uploadFile">
+			<span class="glyphicon glyphicon-file"></span>
+			<span class="glyphicon-class">上传文件</span>
+		</a>
+	</div>
+
 	<pre align="center" style="border:none;font-size:20px;font-family:楷体"><b><<旋转中心>></b></pre>
 	<div class="bs-glyphicons">
 		<a href="cube">
