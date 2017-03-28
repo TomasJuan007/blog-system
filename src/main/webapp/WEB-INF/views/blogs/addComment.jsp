@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<form method="post" action="listBlogs/saveComment" class="required-validate">
+<form method="post" action="saveComment" class="required-validate">
 <input type="hidden" name="blogsId" value=${blogsId } />
 <input type="hidden" name="userId" value=${userId } />
 	<div class="modal-header">

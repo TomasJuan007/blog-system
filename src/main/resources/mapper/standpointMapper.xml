@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ykse.blogs.dao.StandpointDao">
+	<resultMap id="STANDPOINTTABLE" type="com.ykse.blogs.bean.Standpoint">
+		<id column="STANDPOINT_ID" property="standpointId" jdbcType="INTEGER" />
+		<result column="TYPE" property="type" jdbcType="INTEGER" />
+		<association column="BLOGS_ID" property="blogs" select="com.ykse.blogs.dao.BlogsDao.getBlogsById" />
+		<association column="USER_ID" property="user" select="com.ykse.blogs.dao.UserDao.getUserById" />
+	</resultMap>
+  	
+	<insert id="saveStandpoint" parameterType="standpoint" useGeneratedKeys="true" keyProperty="STANDPOINT_ID">
+		INSERT INTO STANDPOINTTABLE(BLOGS_ID, USER_ID, TYPE)
+		VALUES(#{blogs.blogsId}, #{user.userId}, #{type})
+	</insert>
+	
+	<delete id="deleteStandpoint">
+		DELETE FROM STANDPOINTTABLE
+		WHERE BLOGS_ID = ${blogs.blogsId}
+		AND USER_ID = ${user.userId}
+		AND TYPE = ${type}
+	</delete>
+</mapper>

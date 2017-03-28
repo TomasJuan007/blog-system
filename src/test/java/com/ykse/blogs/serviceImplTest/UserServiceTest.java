@@ -10,8 +10,8 @@ import com.ykse.blogs.service.UserService;
 /**
  * 用户业务逻辑处理实现类单元测试
  * 
- * @author dianyu.fang
- * @version $Id: UserServiceTest.java, v 0.1 2016年11月14日 下午4:45:46 dainyu.fang Exp $
+ * @author huangtao
+ * @version $Id: UserServiceTest.java, v 0.1 2016年11月14日 下午4:45:46 huangtao Exp $
  */
 public class UserServiceTest extends SpringTestCase {
 	

@@ -14,8 +14,8 @@ import com.ykse.blogs.service.UserService;
 /**
  * 用户业务逻辑处理接口实现
  * 
- * @author dianyu.fang
- * @version $Id: UserServiceImpl.java, v 0.1 2016年11月14日 下午4:49:21 dainyu.fang Exp $
+ * @author huangtao
+ * @version $Id: UserServiceImpl.java, v 0.1 2016年11月14日 下午4:49:21 huangtao Exp $
  */
 @Service  
 public class UserServiceImpl implements UserService {

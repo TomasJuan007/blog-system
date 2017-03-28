@@ -2,4 +2,6 @@
 
 <h1 style="text-align:center">其它异常！</h1>
 
-<h4>${exMsg}</h4>
+<div class="jumbotron">
+	<h4 style="text-align:center">${exMsg}</h4>
+</div>

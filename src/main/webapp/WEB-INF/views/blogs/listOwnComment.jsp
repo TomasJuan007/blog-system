@@ -10,11 +10,11 @@
 %>
 <ol class="breadcrumb">
 	<li><a href="index">首页</a></li>
-	<li><a href="listBlogs" data-history="repairOrder">所有博客</a></li>
+	<li><a href="listOwnBlogs" data-history="repairOrder">我的博客</a></li>
 	<li class="active">${blogs.blogsTitle}</li>
 </ol>
 
-<form id="pagerForm" method="post" action="listComment">
+<form id="pagerForm" method="post" action="listOwnComment">
 	<input type="hidden" name="blogsId" value="${blogs.blogsId }"/>
 	<input type="hidden" name="pageNum" value="${page.currentPage }"/>
 	<input type="hidden" name="numPerPage" id="numPerPage" value="${page.numPerPage }" />
@@ -24,59 +24,22 @@
 	<div class="col-lg-12">
 		<h1 style="text-align:center">${blogs.blogsTitle}</h1>
 		<div style="text-align: right;">
-			<a class="btn btn-success" href="listComment?blogsId=${blogs.blogsId}" data-ajax>刷&nbsp;&nbsp;新</a>
+			<a class="btn btn-warning" data-toggle="modal" data-target="#modal-dialog" href="getBlogsInfo?blogsId=${blogs.blogsId}">修改博客</a>
+			<a class="btn btn-success" href="listOwnComment?blogsId=${blogs.blogsId}" data-ajax>刷&nbsp;&nbsp;新</a>
 			<a class="btn btn-success" onclick="window.scrollTo(0,document.body.scrollHeight-comment1.scrollHeight-comment2.scrollHeight-comment3.scrollHeight-navbar.scrollHeight);">评论区</a>
 			<a class="btn btn-danger" onclick="location.reload();">返回</a>
 		</div>
 		<pre style="margin:5px;line-height:1.4em;white-space:pre-wrap;">${blogs.blogsContent}</pre>
 		
 		<div class="col-sm-12" style="text-align: center;">
-			<script>
-			function addLike(blogsId) {
-				  var btn = document.getElementById("btn1");
-				  btn.value = btn.value.replace(/[^0-9]+/g, '');
-				  if (btn.className!="btn btn-success") {
-				    btn.value = parseInt(btn.value) + 1;
-				    btn.className = "btn btn-success";
-				    $.ajax({
-						url: '<%=basePath%>vote?blogsId='+blogsId+'&type=1'
-					})
-				  } else {
-				    btn.value = parseInt(btn.value) - 1;
-				    btn.className = "btn btn-warning";
-				    $.ajax({
-						url: '<%=basePath%>cancelVote?blogsId='+blogsId+'&type=1'
-					})
-				  }
-				  btn.value = '顶('+btn.value+')';
-				}
-			function addDislike(blogsId) {
-				  var btn = document.getElementById("btn2");
-				  btn.value = btn.value.replace(/[^0-9]+/g, '');
-				  if (btn.className!="btn btn-danger") {
-				    btn.value = parseInt(btn.value) + 1;
-				    btn.className = "btn btn-danger";
-				    $.ajax({
-						url: '<%=basePath%>vote?blogsId='+blogsId+'&type=2'
-					})
-				  } else {
-				    btn.value = parseInt(btn.value) - 1;
-				    btn.className = "btn btn-warning";
-				    $.ajax({
-						url: '<%=basePath%>cancelVote?blogsId='+blogsId+'&type=2'
-					})
-				  }
-				  btn.value = '踩('+btn.value+')';
-				}
-			</script>
-			<input class="btn btn-warning" id="btn1" type="button" onclick="addLike(${blogs.blogsId})" value="顶(${blogs.support })">
-			<input class="btn btn-warning" id="btn2" type="button" onclick="addDislike(${blogs.blogsId})" value="踩(${blogs.nonsupport })">
+			<a class="btn btn-success" title="不能在“我的博客”里给自己投票" href="javascript:;">顶(${blogs.support })</a>
+			<a class="btn btn-danger" title="不能在“我的博客”里给自己投票" href="javascript:;">踩(${blogs.nonsupport })</a>
 		</div>
 		
 		<div class="row search-bar" id="comment1">
 			<div class="col-sm-12" style="text-align: right;">
 				<a class="btn btn-primary" data-toggle="modal" data-target="#modal-dialog" href="addComment?userId=${blogs.user.userId}&blogsId=${blogs.blogsId}">发表评论</a>
-				<a class="btn btn-success" href="listComment?blogsId=${blogs.blogsId}" data-ajax>刷&nbsp;&nbsp;新</a>
+				<a class="btn btn-success" href="listOwnComment?blogsId=${blogs.blogsId}" data-ajax>刷&nbsp;&nbsp;新</a>
 				<a class="btn btn-success" onclick="window.scrollTo(0,0);">回顶部</a>
 			</div>
 		</div>

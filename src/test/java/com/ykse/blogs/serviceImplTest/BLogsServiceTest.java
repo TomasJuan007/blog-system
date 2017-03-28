@@ -11,8 +11,8 @@ import com.ykse.blogs.bean.Blogs;
 import com.ykse.blogs.service.BlogsService;
 
 /**
- * @author xuyu
- * @version $Id: UserServiceTest.java, v 0.1 2016年11月11日 下午3:08:34 xuyu Exp $
+ * @author huangtao
+ * @version $Id: UserServiceTest.java, v 0.1 2016年11月11日 下午3:08:34 huangtao Exp $
  */
 public class BLogsServiceTest extends SpringTestCase {
 
@@ -21,22 +21,31 @@ public class BLogsServiceTest extends SpringTestCase {
 
     @Test
     public void getUserByIdTest() {
-        List<Blogs> blogsList = blogsService.getBlogsAll(0, 1);
-        Iterator it = blogsList.iterator();
+        List<Blogs> blogsList = blogsService.getBlogsAll(null, 0, 10);
+        Iterator<Blogs> it = blogsList.iterator();
         while (it.hasNext()) {
             Blogs blogs = (Blogs) it.next();
             System.out.println(blogs.getBlogsId() + ":" + blogs.getBlogsTitle());
         }
     }
 
-    @Test
+    //@Test
+    public void deleteBlogTest() {
+    	blogsService.deleteBlog(28);
+    }
+    
+    //@Test
     public void addCountByIdTest() {
         blogsService.addCountById(1);
     }
     
-    @Test
+    //@Test
     public void subtractCountByIdTest() {
         blogsService.subtractCountById(1);
     }
     
+    //@Test
+    public void voteTest() {
+        blogsService.vote(6,6,1);
+    }
 }

@@ -8,7 +8,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ykse.blogs.bean.Blogs;
+import com.ykse.blogs.bean.Standpoint;
+import com.ykse.blogs.bean.User;
 import com.ykse.blogs.dao.BlogsDao;
+import com.ykse.blogs.dao.StandpointDao;
 import com.ykse.blogs.service.BlogsService;
 
 @Service
@@ -16,37 +19,79 @@ public class BlogsServiceImpl implements BlogsService {
 
     @Autowired
     private BlogsDao blogsDao;
-
-    @Override
-    @Transactional(propagation = Propagation.SUPPORTS)
-    public List<Blogs> getBlogsAll(int startRow, int endRow) {
-        return blogsDao.getBlogsAll(startRow, endRow);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public boolean saveBlogs(Blogs blogs) {
-
-        return blogsDao.saveBlogs(blogs);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public boolean updateBlogs(Blogs blogs) {
-
-        return blogsDao.updateBlogs(blogs);
-    }
-
+    
+    @Autowired
+    private StandpointDao standpointDao;
+    
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
     public Blogs getBlogsById(int blogsId) {
-        return blogsDao.getBlogsById(blogsId);
+    	return blogsDao.getBlogsById(blogsId);
     }
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
+    public List<Blogs> getBlogsAll(String type, int startRow, int endRow) {
+    	if ("1".equals(type)) {
+			return blogsDao.getHeatedBlogsAll(startRow, endRow);
+		}
+        return blogsDao.getBlogsAll(startRow, endRow);
+    }
+    
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public Integer getBlogsCount() {
-        return blogsDao.getBlogsCount();
+    	return blogsDao.getBlogsCount();
+    }
+    
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<Blogs> getBlogsByParam(Integer userId, String type, int startRow, int endRow) {
+    	User user = new User();
+		user.setUserId(userId);
+		Blogs blogs = new Blogs();
+		blogs.setUser(user);
+		if ("1".equals(type)) {
+			return blogsDao.getHeatedBlogsByParam(blogs, startRow, endRow);
+		}
+        return blogsDao.getBlogsByParam(blogs, startRow, endRow);
+    }
+    
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Integer getBlogsCountByParam(Integer userId) {
+    	User user = new User();
+		user.setUserId(userId);
+		Blogs blogs = new Blogs();
+		blogs.setUser(user);
+    	return blogsDao.getBlogsCountByParam(blogs);
+    }
+    
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public boolean saveBlogs(Blogs blogs) {
+    	return blogsDao.saveBlogs(blogs);
+    }
+    
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public boolean updateBlogs(Blogs blogs) {
+    	
+    	return blogsDao.updateBlogs(blogs);
+    }
+    
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public boolean updateViewCount(Blogs blogs) {
+    	
+    	return blogsDao.updateViewCount(blogs);
+    }
+
+    @Override
+    public boolean deleteBlog(Integer blogsId) {
+    	if(blogsDao.deleteBlogsById(blogsId) != 1)
+    		return false;
+    	return true;
     }
     
     @Override
@@ -64,4 +109,84 @@ public class BlogsServiceImpl implements BlogsService {
                 return false;
         return true;
     }
+
+	@Override
+	@Transactional
+	public boolean vote(int blogsId, int userId, int type) {
+		
+		//计算并保存立场
+		Standpoint standpoint = new Standpoint();
+		Blogs blogs = new Blogs();
+		blogs.setBlogsId(blogsId);
+		User user = new User();
+		user.setUserId(userId);
+		standpoint.setBlogs(blogs);
+		standpoint.setUser(user);
+		standpoint.setType(type);
+		standpointDao.saveStandpoint(standpoint);
+		
+		//在博客中（根据立场）更新投票
+		blogsDao.updateSupportCountById(blogsId);
+		
+		//计算支持率
+		blogs = blogsDao.getBlogsById(blogsId);
+		int support = blogs.getSupport();
+		int nonsupport = blogs.getNonsupport();
+		
+		//请开始你的表演
+		Double n = (double) (support + nonsupport);
+		Double p = support / n;
+		Double z = 1.96;
+		Double rate = 0.0;
+		if(n>0){
+			Double denominator = 1 + z*z/n;
+			Double avg = p + z*z/2*n;
+			Double deviation = z*Math.sqrt(p*(1-p)/n+z*z/4*n*n);		
+			
+			rate += (avg - deviation) / denominator;
+		}
+
+		//在博客中更新支持率
+		return blogsDao.updateSupportRateById(blogsId, rate);
+	}
+	
+	@Override
+	@Transactional
+	public boolean cancelVote(int blogsId, int userId, int type) {
+		
+		//计算并删除立场
+		Standpoint standpoint = new Standpoint();
+		Blogs blogs = new Blogs();
+		blogs.setBlogsId(blogsId);
+		User user = new User();
+		user.setUserId(userId);
+		standpoint.setBlogs(blogs);
+		standpoint.setUser(user);
+		standpoint.setType(type);
+		standpointDao.deleteStandpoint(standpoint);
+		
+		//在博客中（根据立场）更新投票
+		blogsDao.updateSupportCountById(blogsId);
+		
+		//计算支持率
+		blogs = blogsDao.getBlogsById(blogsId);
+		int support = blogs.getSupport();
+		int nonsupport = blogs.getNonsupport();
+		
+		//请开始你的表演
+		Double n = (double) (support + nonsupport);
+		Double p = support / n;
+		Double z = 1.96;
+		Double rate = 0.0;
+		if(n>0){
+			Double denominator = 1 + z*z/n;
+			Double avg = p + z*z/2*n;
+			Double deviation = z*Math.sqrt(p*(1-p)/n+z*z/4*n*n);		
+			
+			rate += (avg - deviation) / denominator;
+		}
+		
+		//在博客中更新支持率
+		return blogsDao.updateSupportRateById(blogsId, rate);
+	}
 }

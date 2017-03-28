@@ -7,8 +7,8 @@ import com.ykse.blogs.bean.User;
  * 
  * <pre>主要含：获取用户，更新用户，插入用户，更改用户密码</pre>
  * 
- * @author dianyu.fang
- * @version $Id: UserDao.java, v 0.1 2016年11月14日 下午5:24:10 dainyu.fang Exp $
+ * @author huangtao
+ * @version $Id: UserDao.java, v 0.1 2016年11月14日 下午5:24:10 huangtao Exp $
  */
 public interface UserDao {
 	
