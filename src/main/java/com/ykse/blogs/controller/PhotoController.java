@@ -1,5 +1,6 @@
 package com.ykse.blogs.controller;
 
+import com.ykse.blogs.util.DESUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.security.InvalidKeyException;
 
 @Controller
 @RequestMapping(value = "/")
@@ -44,6 +46,15 @@ public class PhotoController {
                     stream.write(i);
                 }
                 stream.flush();
+
+                File encryptFile = new File(dir.getAbsolutePath() + File.separator + "encrypt-" + file.getOriginalFilename());
+                BufferedOutputStream s = new BufferedOutputStream(new FileOutputStream(encryptFile));
+                DESUtil.encrypt(is,s);
+                s.close();
+                is.close();
+
+            } catch (InvalidKeyException e) {
+                e.printStackTrace();
             }
         } catch (IOException e) {
             System.out.println("error : " + e.getMessage());
