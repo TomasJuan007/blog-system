@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ykse.blogs.dao.FilesDao">
+	<resultMap id="FILESTABLE" type="com.ykse.blogs.bean.Files">
+		<id column="FILES_ID" property="filesId" jdbcType="INTEGER" />
+		<result column="BLOB_CONTENT" property="blob" jdbcType="BLOB" />
+		<result column="CREATETIME" property="createTime" jdbcType="TIMESTAMP" />
+		<association column="USER_ID" property="user" select="com.ykse.blogs.dao.UserDao.getUserById" />
+	</resultMap>
+
+	<insert id="saveBlob" parameterType="files" useGeneratedKeys="true" keyProperty="FILES_ID">
+		INSERT INTO FILESTABLE(USER_ID, BLOB_CONTENT, CREATETIME)
+		VALUES(#{user.userId}, #{blobContent}, now())
+	</insert>
+	
+</mapper>
