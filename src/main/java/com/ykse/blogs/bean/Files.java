@@ -1,6 +1,5 @@
 package com.ykse.blogs.bean;
 
-import java.sql.Blob;
 import java.sql.Timestamp;
 
 /**

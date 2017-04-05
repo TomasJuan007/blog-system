@@ -29,6 +29,7 @@
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Upload</button>
+                                <a href="listFiles" class="btn btn-primary">View</a>
                             </div>
                         </form>
                     </div>

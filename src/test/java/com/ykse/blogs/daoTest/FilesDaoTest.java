@@ -4,6 +4,7 @@ import com.ykse.blogs.baseTest.SpringTestCase;
 import com.ykse.blogs.bean.Files;
 import com.ykse.blogs.bean.User;
 import com.ykse.blogs.dao.FilesDao;
+import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import javax.sql.rowset.serial.SerialBlob;
 import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Blob;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/4/5.
@@ -51,5 +54,12 @@ public class FilesDaoTest extends SpringTestCase {
     } catch (Exception e) {
         e.printStackTrace();
     }
+    }
+
+    @Test
+    public void getAllFilesTest() {
+        List<Files> files = filesDao.getAllFiles(0,10);
+        Assert.assertNotNull(files);
+        System.out.println(files.get(0).getFileName());
     }
 }

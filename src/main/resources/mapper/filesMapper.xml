@@ -5,14 +5,34 @@
 	<resultMap id="FILESTABLE" type="com.ykse.blogs.bean.Files">
 		<id column="FILES_ID" property="filesId" jdbcType="INTEGER" />
 		<result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
-		<result column="BLOB_CONTENT" property="blob" jdbcType="BLOB" />
+		<result column="BLOB_CONTENT" property="blobContent" jdbcType="BLOB" />
 		<result column="CREATETIME" property="createTime" jdbcType="TIMESTAMP" />
 		<association column="USER_ID" property="user" select="com.ykse.blogs.dao.UserDao.getUserById" />
 	</resultMap>
+
+	<sql id="Base_Column_List" >
+		filestable.FILES_ID,
+		filestable.USER_ID,
+		filestable.FILE_NAME,
+		filestable.BLOB_CONTENT,
+		filestable.CREATETIME
+	</sql>
 
 	<insert id="saveBlob" parameterType="files" useGeneratedKeys="true" keyProperty="FILES_ID">
 		INSERT INTO FILESTABLE(USER_ID, FILE_NAME, BLOB_CONTENT, CREATETIME)
 		VALUES(#{user.userId}, #{fileName}, #{blobContent}, now())
 	</insert>
-	
+
+	<select id="getAllFiles" resultMap="FILESTABLE">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM FILESTABLE
+		ORDER BY CREATETIME DESC
+		LIMIT #{startRow}, #{endRow}
+	</select>
+
+	<select id="getFilesCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM FILESTABLE
+	</select>
 </mapper>

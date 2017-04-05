@@ -1,6 +1,7 @@
 package com.ykse.blogs.controller;
 
 import com.ykse.blogs.bean.Files;
+import com.ykse.blogs.bean.Pagination;
 import com.ykse.blogs.bean.User;
 import com.ykse.blogs.dao.FilesDao;
 import com.ykse.blogs.exception.BusinessException;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
@@ -27,6 +29,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/")
@@ -42,6 +45,36 @@ public class PhotoController {
         return "index";
     }
 
+    /**
+     * 展示文件
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/listFiles")
+    public ModelAndView getFiles(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("/listFiles");
+
+        Pagination<Files> page = new Pagination<>();
+        String pageNum = (String) request.getParameter("pageNum");
+        String numPerPage = (String) request.getParameter("numPerPage");
+        Integer pagenum = (pageNum == null || pageNum == "")
+                ? 1 : Integer.parseInt(pageNum);
+        Integer numperpage = (numPerPage == null || numPerPage == "")
+                ? 10 : Integer.parseInt(numPerPage);
+        page.setCurrentPage(pagenum);
+        page.setNumPerPage(numperpage);
+        page.setTotalCount(filesDao.getFilesCount());
+        page.calcutePage();
+
+        int startRow = (page.getCurrentPage() - 1) * page.getNumPerPage();
+        int endRow = page.getNumPerPage();
+        List<Files> files = filesDao.getAllFiles(startRow, endRow);
+        page.setContent(files);
+        request.setAttribute("page", page);
+
+        return modelAndView;
+    }
 
     @RequestMapping(value = "/uploadimgctlr", method = RequestMethod.POST)
     public String uploadImageCtlr(ModelMap model,
@@ -124,6 +157,30 @@ public class PhotoController {
         model.addAttribute("photo", latestUploadPhoto);
 
         return "file";
+    }
+
+    @RequestMapping("/viewFile")
+    public ModelAndView viewFile(String filesId, String userId) {
+        ModelAndView modelAndView = new ModelAndView("/listFiles");
+        getKey(userId);
+        Cipher cipher = null;
+        try {
+            cipher = Cipher.getInstance("DES");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            cipher.init(Cipher.DECRYPT_MODE, key);
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        }
+
+        //TODO: 由filesId得到解密后的file
+
+        return modelAndView;
     }
 
     /**
