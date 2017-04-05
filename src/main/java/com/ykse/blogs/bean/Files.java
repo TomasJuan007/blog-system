@@ -14,6 +14,9 @@ public class Files {
     /** 发帖人   */
     private User user;
 
+    /**文件名称 */
+    private String fileName;
+
     /**文件 */
     private Object blobContent;
 
@@ -35,6 +38,10 @@ public class Files {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public String getFileName() { return fileName; }
+
+    public void setFileName(String fileName) { this.fileName = fileName; }
 
     public Object getBlobContent() {
         return blobContent;

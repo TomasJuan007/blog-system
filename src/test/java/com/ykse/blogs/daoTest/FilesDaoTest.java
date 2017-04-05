@@ -25,6 +25,7 @@ public class FilesDaoTest extends SpringTestCase {
         User user = new User();
         user.setUserId(3);
         files.setUser(user);
+        files.setFileName("test");
     }
 
     @Autowired
