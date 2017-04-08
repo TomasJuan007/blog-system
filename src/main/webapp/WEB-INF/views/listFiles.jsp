@@ -84,12 +84,20 @@
                             int userId = user.getUserId();
                             request.setAttribute("UserId", userId);
                         %>
-                        <a class="btn btn-success" href="viewFile?filesId=${ts.filesId}&userId=UserId" data-ajax>查看文件（图片）</a>
+                        <a class="btn btn-success" href="viewFile?filesId=${ts.filesId}" data-ajax>查看文件（图片）</a>
                     </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
+
+        <c:if test="${ (photo != null) && !(photo eq '')}">
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="/resources/view/${ photo }" class="col-md-12"/>
+                </div>
+            </div>
+        </c:if>
 
     </div>
 

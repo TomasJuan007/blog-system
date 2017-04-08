@@ -1,5 +1,6 @@
 package com.ykse.blogs.bean;
 
+import java.sql.Blob;
 import java.sql.Timestamp;
 
 /**
@@ -17,7 +18,7 @@ public class Files {
     private String fileName;
 
     /**文件 */
-    private Object blobContent;
+    private byte[] blobContent;
 
     /** 创建时间 */
     private Timestamp createTime;
@@ -42,11 +43,11 @@ public class Files {
 
     public void setFileName(String fileName) { this.fileName = fileName; }
 
-    public Object getBlobContent() {
+    public byte[] getBlobContent() {
         return blobContent;
     }
 
-    public void setBlobContent(Object blobContent) { this.blobContent = blobContent; }
+    public void setBlobContent(byte[] blobContent) { this.blobContent = blobContent; }
 
     public Timestamp getCreateTime() {
         return createTime;

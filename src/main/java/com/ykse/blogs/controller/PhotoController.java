@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 import java.io.*;
+import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -80,105 +81,152 @@ public class PhotoController {
     public String uploadImageCtlr(ModelMap model,
                                   HttpServletRequest request,
                                   @RequestParam MultipartFile file,
-                                  HttpSession session){
+                                  HttpSession session) {
 
+        //检查当前用户
         if(session.getAttribute("User") == null){
             throw new BusinessException("会话过期,请重新登陆！");
         }
         User user = (User)session.getAttribute("User");
         Integer userId = user.getUserId();
 
+        //创建目录和文件
         String rootPath = request.getSession().getServletContext().getRealPath("/resources/");
         File dir = new File(rootPath + File.separator + "img");
         if (!dir.exists()) {
             dir.mkdirs();
         }
-
         File serverFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
         String latestUploadPhoto = file.getOriginalFilename();
 
-        //write uploaded image to disk
         try {
-            try (InputStream is = file.getInputStream();
-                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
-
-                int i;
-                while ((i = is.read()) != -1) {
-                    stream.write(i);
-                }
-                stream.flush();
-
-                //保存加密二进制文件
-                getKey(userId.toString());
-                Files files = new Files();
-
-                Cipher cipher = null;
-                try {
-                    cipher = Cipher.getInstance("DES");
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (NoSuchPaddingException e) {
-                    e.printStackTrace();
-                }
-                cipher.init(Cipher.ENCRYPT_MODE, key);
-
-                try {
-                    CipherInputStream cis = new CipherInputStream(is, cipher);
-
-                    byte[] buf = new byte[1024];
-                    StringBuffer sb = new StringBuffer();
-                    while ((cis.read(buf)) != -1) {
-                        sb.append(new String(buf));
-                        buf = new byte[1024];
-                    }
-                    Blob blob = new SerialBlob(sb.toString().getBytes());
-                    files.setBlobContent(blob);
-                    files.setUser(user);
-                    files.setFileName(latestUploadPhoto);
-                    filesDao.saveBlob(files);
-                    cis.close();
-                } catch (IOException e) {
-                    System.out.println("error : " + e.getMessage());
-                } catch (SerialException e) {
-                    e.printStackTrace();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                is.close();
-
-            } catch (InvalidKeyException e) {
-                e.printStackTrace();
+            //将上传文件写到磁盘
+            InputStream is = null;
+            is = file.getInputStream();
+            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+            int i;
+            while ((i = is.read()) != -1) {
+                stream.write(i);
             }
+            stream.flush();
+
+            //加密InputStream
+            getKey(userId.toString());
+            Cipher cipher = null;
+            cipher = Cipher.getInstance("DES");
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+            CipherInputStream cis = new CipherInputStream(is, cipher);
+
+            //转为byte数组
+            byte[] buf = new byte[1024];
+            StringBuffer sb = new StringBuffer();
+            while ((cis.read(buf)) != -1) {
+                sb.append(new String(buf));
+                buf = new byte[1024];
+            }
+            byte[] cipherByteArray = sb.toString().getBytes();
+            cis.close();
+
+            //序列化
+            ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(arrayOutputStream);
+            objectOutputStream.writeObject(cipherByteArray);
+            objectOutputStream.flush();
+            byte[] data = arrayOutputStream.toByteArray();
+
+            //持久化
+            Files files = new Files();
+            files.setBlobContent(data);
+            files.setUser(user);
+            files.setFileName(latestUploadPhoto);
+            filesDao.saveBlob(files);
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
-            System.out.println("error : " + e.getMessage());
+            e.printStackTrace();
         }
 
-        //send photo name to jsp
         model.addAttribute("photo", latestUploadPhoto);
 
         return "file";
     }
 
     @RequestMapping("/viewFile")
-    public ModelAndView viewFile(String filesId, String userId) {
+    public ModelAndView viewFile(ModelMap model,
+                                 HttpServletRequest request,
+                                 String filesId,
+                                 HttpSession session) {
+
         ModelAndView modelAndView = new ModelAndView("/listFiles");
-        getKey(userId);
+
+        //检查当前用户
+        if(session.getAttribute("User") == null){
+            throw new BusinessException("会话过期,请重新登陆！");
+        }
+        User user = (User)session.getAttribute("User");
+        Integer userId = user.getUserId();
+
+        //初始化cipher
+        getKey(userId.toString());
         Cipher cipher = null;
         try {
             cipher = Cipher.getInstance("DES");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            cipher.init(Cipher.DECRYPT_MODE, key);
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();
-        }
-
-        try {
-            cipher.init(Cipher.DECRYPT_MODE, key);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         }
 
-        //TODO: 由filesId得到解密后的file
+        //读数据库
+        Files files = filesDao.getFilesById(Integer.valueOf(filesId));
+        byte[] data = files.getBlobContent();
+        try {
+            //反序列化
+            InputStream is4Serialize = new ByteArrayInputStream(data);
+            ObjectInputStream ois = new ObjectInputStream(is4Serialize);
+            byte[] cipherByteArray = (byte[]) ois.readObject();
+            //取出文件
+            InputStream is = new ByteArrayInputStream(cipherByteArray);
+            CipherInputStream cis = new CipherInputStream(is, cipher);
+
+            //创建目录和文件
+            String rootPath = request.getSession().getServletContext().getRealPath("/resources/");
+            File dir = new File(rootPath + File.separator + "view");
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            File serverFile = new File(dir.getAbsolutePath() + File.separator + files.getFileName());
+            if (serverFile.exists())
+            {
+                serverFile.delete();
+            }
+
+            OutputStream os = new FileOutputStream(serverFile);
+            int len = 0;
+            byte[] buffer = new byte[1024];
+            while ((len = cis.read(buffer, 0, 1024)) != -1) {
+                os.write(buffer, 0, len);
+            }
+            cis.close();
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String name = files.getFileName();
+        model.addAttribute("photo", name);
 
         return modelAndView;
     }

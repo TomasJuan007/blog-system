@@ -31,4 +31,12 @@ public interface FilesDao {
      * @return
      */
     int getFilesCount();
+
+    /**
+     * 根据ID获取文件
+     *
+     * @param filesId
+     * @return
+     */
+    Files getFilesById(int filesId);
 }

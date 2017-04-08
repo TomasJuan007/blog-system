@@ -5,7 +5,7 @@
 	<resultMap id="FILESTABLE" type="com.ykse.blogs.bean.Files">
 		<id column="FILES_ID" property="filesId" jdbcType="INTEGER" />
 		<result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
-		<result column="BLOB_CONTENT" property="blobContent" jdbcType="BLOB" />
+		<result column="BLOB_CONTENT" property="blobContent" jdbcType="BINARY" />
 		<result column="CREATETIME" property="createTime" jdbcType="TIMESTAMP" />
 		<association column="USER_ID" property="user" select="com.ykse.blogs.dao.UserDao.getUserById" />
 	</resultMap>
@@ -34,5 +34,12 @@
 	<select id="getFilesCount" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 		FROM FILESTABLE
+	</select>
+
+	<select id="getFilesById" parameterType="int" resultMap="FILESTABLE">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM FILESTABLE
+		WHERE FILES_ID = #{filesId}
 	</select>
 </mapper>
