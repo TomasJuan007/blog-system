@@ -22,7 +22,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <form role="form" method="POST" action="/uploadimgctlr" enctype="multipart/form-data">
+                        <form role="form" method="POST" action="/uploadFile" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>File input</label>
                                 <input type="file" method="POST" accept=".jpg" name="file"/>
@@ -30,6 +30,7 @@
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Upload</button>
                                 <a href="listFiles" class="btn btn-primary">View</a>
+                                <a href="viewFile" class="btn btn-primary">Decrpt</a>
                             </div>
                         </form>
                     </div>

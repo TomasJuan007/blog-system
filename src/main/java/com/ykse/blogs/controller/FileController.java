@@ -5,6 +5,7 @@ import com.ykse.blogs.bean.Pagination;
 import com.ykse.blogs.bean.User;
 import com.ykse.blogs.dao.FilesDao;
 import com.ykse.blogs.exception.BusinessException;
+import com.ykse.blogs.util.FileEncryptUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,25 +17,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
-import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
 import java.io.*;
-import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.List;
 
 @Controller
 @RequestMapping(value = "/")
-public class PhotoController {
+public class FileController {
 
     @Autowired
     FilesDao filesDao;
@@ -77,7 +71,7 @@ public class PhotoController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/uploadimgctlr", method = RequestMethod.POST)
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public String uploadImageCtlr(ModelMap model,
                                   HttpServletRequest request,
                                   @RequestParam MultipartFile file,
@@ -109,46 +103,21 @@ public class PhotoController {
                 stream.write(i);
             }
             stream.flush();
+            is.close();
+            stream.close();
 
-            //加密InputStream
-            getKey(userId.toString());
-            Cipher cipher = null;
-            cipher = Cipher.getInstance("DES");
-            cipher.init(Cipher.ENCRYPT_MODE, key);
-            CipherInputStream cis = new CipherInputStream(is, cipher);
+            FileEncryptUtil fe = new FileEncryptUtil();
+            String pass = userId.toString();
+            fe.encrypt(serverFile,fe.md5s(pass)+fe.md5s(pass)+fe.md5s(pass));
 
-            //转为byte数组
-            byte[] buf = new byte[1024];
-            StringBuffer sb = new StringBuffer();
-            while ((cis.read(buf)) != -1) {
-                sb.append(new String(buf));
-                buf = new byte[1024];
-            }
-            byte[] cipherByteArray = sb.toString().getBytes();
-            cis.close();
 
-            //序列化
-            ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(arrayOutputStream);
-            objectOutputStream.writeObject(cipherByteArray);
-            objectOutputStream.flush();
-            byte[] data = arrayOutputStream.toByteArray();
+//            //持久化
+//            Files files = new Files();
+//            files.setBlobContent(data);
+//            files.setUser(user);
+//            files.setFileName(latestUploadPhoto);
+//            filesDao.saveBlob(files);
 
-            //持久化
-            Files files = new Files();
-            files.setBlobContent(data);
-            files.setUser(user);
-            files.setFileName(latestUploadPhoto);
-            filesDao.saveBlob(files);
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -173,31 +142,7 @@ public class PhotoController {
         User user = (User)session.getAttribute("User");
         Integer userId = user.getUserId();
 
-        //初始化cipher
-        getKey(userId.toString());
-        Cipher cipher = null;
         try {
-            cipher = Cipher.getInstance("DES");
-            cipher.init(Cipher.DECRYPT_MODE, key);
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        }
-
-        //读数据库
-        Files files = filesDao.getFilesById(Integer.valueOf(filesId));
-        byte[] data = files.getBlobContent();
-        try {
-            //反序列化
-            InputStream is4Serialize = new ByteArrayInputStream(data);
-            ObjectInputStream ois = new ObjectInputStream(is4Serialize);
-            byte[] cipherByteArray = (byte[]) ois.readObject();
-            //取出文件
-            InputStream is = new ByteArrayInputStream(cipherByteArray);
-            CipherInputStream cis = new CipherInputStream(is, cipher);
 
             //创建目录和文件
             String rootPath = request.getSession().getServletContext().getRealPath("/resources/");
@@ -205,43 +150,21 @@ public class PhotoController {
             if (!dir.exists()) {
                 dir.mkdirs();
             }
-            File serverFile = new File(dir.getAbsolutePath() + File.separator + files.getFileName());
-            if (serverFile.exists())
-            {
-                serverFile.delete();
-            }
+            File serverFile = new File(dir.getAbsolutePath() + File.separator + "001.gif");
+//            if (serverFile.exists())
+//            {
+//                serverFile.delete();
+//            }
+            FileEncryptUtil fe = new FileEncryptUtil();
+            String pass = userId.toString();
+            fe.decrypt(serverFile,fe.md5s(pass)+fe.md5s(pass)+fe.md5s(pass));
 
-            OutputStream os = new FileOutputStream(serverFile);
-            int len = 0;
-            byte[] buffer = new byte[1024];
-            while ((len = cis.read(buffer, 0, 1024)) != -1) {
-                os.write(buffer, 0, len);
-            }
-            cis.close();
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        String name = files.getFileName();
-        model.addAttribute("photo", name);
+        model.addAttribute("photo", "不知道");
 
         return modelAndView;
-    }
-
-    /**
-     * 根据参数生成KEY
-     */
-    private static void getKey(String strKey) {
-        try {
-            KeyGenerator _generator = KeyGenerator.getInstance("DES");
-            _generator.init(new SecureRandom(strKey.getBytes()));
-            key = _generator.generateKey();
-            _generator = null;
-        } catch (Exception e) {
-            throw new RuntimeException("Error initializing SqlMap class. Cause: " + e);
-        }
     }
 }
