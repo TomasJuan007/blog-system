@@ -4,9 +4,7 @@ import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -83,5 +81,25 @@ public class DESUtil {
         } catch (IOException e) {
             System.out.println("error : " + e.getMessage());
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+        File file = new File("D:\\graduation\\idea\\blogsystem\\target\\BlogsSystem-0.0.1-SNAPSHOT\\resources\\img\\002.gif");
+        InputStream is = new FileInputStream(file);
+
+        File dir = new File("D:\\graduation\\idea\\blogsystem\\target\\BlogsSystem-0.0.1-SNAPSHOT\\resources\\view");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File serverFile = new File(dir.getAbsolutePath() + File.separator + "001.gif");
+        if (serverFile.exists())
+        {
+            serverFile.delete();
+        }
+
+        BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(serverFile));
+
+        decrypt(is,os);
+
     }
 }
