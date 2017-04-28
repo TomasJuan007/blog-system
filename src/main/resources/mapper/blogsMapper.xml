@@ -29,8 +29,14 @@
   	</sql>
   
 	<sql id="Where_Clause">
-		<if test="blogs.user.userId != null">
+		<if test="blogs.user != null">
 			and user_id = #{blogs.user.userId}
+		</if>
+		<if test="blogs.blogsTitle != null">
+			and BLOGS_TITLE like concat('%',#{blogs.blogsTitle},'%')
+		</if>
+		<if test="blogs.blogsContent != null">
+			and BLOGS_CONTENT like concat('%',#{blogs.blogsContent},'%')
 		</if>
 	</sql>
 	

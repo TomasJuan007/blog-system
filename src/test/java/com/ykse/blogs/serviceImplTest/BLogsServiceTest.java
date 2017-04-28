@@ -3,6 +3,7 @@ package com.ykse.blogs.serviceImplTest;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -47,5 +48,13 @@ public class BLogsServiceTest extends SpringTestCase {
     //@Test
     public void voteTest() {
         blogsService.vote(6,6,1);
+    }
+
+    @Test
+    public void getByParamTest() {
+        Blogs blogs = new Blogs();
+        blogs.setBlogsContent("网");
+        List<Blogs> list = blogsService.getByParam(blogs,0,5);
+        Assert.assertNotNull(list);
     }
 }

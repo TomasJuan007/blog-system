@@ -33,13 +33,6 @@ public class FileController {
     @Autowired
     FilesDao filesDao;
 
-    private static Key key;
-
-    @RequestMapping( method = RequestMethod.GET)
-    public String get() {
-        return "index";
-    }
-
     /**
      * 展示文件
      *

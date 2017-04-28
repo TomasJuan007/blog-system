@@ -56,8 +56,13 @@ public class BlogsServiceImpl implements BlogsService {
 		}
         return blogsDao.getBlogsByParam(blogs, startRow, endRow);
     }
-    
-    @Override
+
+	@Override
+	public List<Blogs> getByParam(Blogs blogs, int startRow, int endRow) {
+		return blogsDao.getBlogsByParam(blogs, startRow, endRow);
+	}
+
+	@Override
     @Transactional(propagation = Propagation.SUPPORTS)
     public Integer getBlogsCountByParam(Integer userId) {
     	User user = new User();

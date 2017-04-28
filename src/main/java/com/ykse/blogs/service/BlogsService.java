@@ -27,8 +27,7 @@ public interface BlogsService {
      * 获取博客
      * @param endRow 
      * @param startRow 
-     * 
-     * @param userId
+     *
      * @return User
      */
 	public List<Blogs> getBlogsAll(String type, int startRow, int endRow); 
@@ -49,6 +48,16 @@ public interface BlogsService {
 	 * @return
 	 */
 	public List<Blogs> getBlogsByParam(Integer userId, String type, int startRow, int endRow);
+
+    /**
+     * 根据参数获取博客（用于搜索）
+     *
+     * @param blogs
+     * @param startRow
+     * @param endRow
+     * @return
+     */
+	public List<Blogs> getByParam(Blogs blogs, int startRow, int endRow);
 	
 	/**
 	 * 根据参数获取博客数
@@ -61,7 +70,7 @@ public interface BlogsService {
 	/**
      * 发布博客
      * 
-     * @param user 提供要修改的博客内容与标题
+     * @param blogs 提供要修改的博客内容与标题
      * @return 操作结果，true为成功，false为失败
      */
     public boolean saveBlogs(Blogs blogs);
@@ -69,7 +78,7 @@ public interface BlogsService {
     /**
      * 修改博客
      * 
-     * @param user 提供要修改的内容与标题
+     * @param blogs 提供要修改的内容与标题
      * @return 操作结果，true为成功，false为失败
      */
     public boolean updateBlogs(Blogs blogs);
@@ -77,7 +86,7 @@ public interface BlogsService {
     /**
      * 修改博客阅读数
      * 
-     * @param user 提供要修改的阅读数
+     * @param blogs 提供要修改的阅读数
      * @return 操作结果，true为成功，false为失败
      */
     public boolean updateViewCount(Blogs blogs);

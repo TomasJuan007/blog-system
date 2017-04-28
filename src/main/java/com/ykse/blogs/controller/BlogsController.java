@@ -303,4 +303,46 @@ public class BlogsController {
         ModelAndView modelAndView = new ModelAndView("file");
         return modelAndView;
     }
+
+    /**
+     * 搜索博客
+     * type=0 按标题
+     * type=1 按内容
+     *
+     * @param request
+     * @param type
+     * @param keyword
+     * @return
+     */
+    @RequestMapping(value="/searchBlogs")
+    public ModelAndView searchBlogs(HttpServletRequest request, String type, String keyword) {
+        ModelAndView modelAndView = new ModelAndView("/blogs/listBlogs");
+
+        Pagination<Blogs> page = new Pagination<Blogs>();
+        String pageNum = (String) request.getParameter("pageNum");
+        String numPerPage = (String) request.getParameter("numPerPage");
+        Integer pagenum = (pageNum == null || pageNum == "")
+                ? 1 : Integer.parseInt(pageNum);
+        Integer numperpage = (numPerPage == null || numPerPage == "")
+                ? 10 : Integer.parseInt(numPerPage);
+        page.setCurrentPage(pagenum);
+        page.setNumPerPage(numperpage);
+        page.setTotalCount(blogsService.getBlogsCount());
+        page.calcutePage();
+
+        int startRow = (page.getCurrentPage() - 1) * page.getNumPerPage();
+        int endRow = page.getNumPerPage();
+
+        Blogs blogs = new Blogs();
+        if ("0".equals(type)) {
+            blogs.setBlogsTitle(keyword);
+        }else{
+            blogs.setBlogsContent(keyword);
+        }
+        List<Blogs> list = blogsService.getByParam(blogs, startRow, endRow);
+        page.setContent(list);
+        request.setAttribute("page", page);
+
+        return modelAndView;
+    }
 }
