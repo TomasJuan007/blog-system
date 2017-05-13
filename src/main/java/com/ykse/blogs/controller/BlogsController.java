@@ -316,7 +316,7 @@ public class BlogsController {
      */
     @RequestMapping(value="/searchBlogs")
     public ModelAndView searchBlogs(HttpServletRequest request, String type, String keyword) {
-        ModelAndView modelAndView = new ModelAndView("/blogs/listBlogs");
+        ModelAndView modelAndView = new ModelAndView("/blogs/searchBlogs");
 
         Pagination<Blogs> page = new Pagination<Blogs>();
         String pageNum = (String) request.getParameter("pageNum");
@@ -327,8 +327,6 @@ public class BlogsController {
                 ? 10 : Integer.parseInt(numPerPage);
         page.setCurrentPage(pagenum);
         page.setNumPerPage(numperpage);
-        page.setTotalCount(blogsService.getBlogsCount());
-        page.calcutePage();
 
         int startRow = (page.getCurrentPage() - 1) * page.getNumPerPage();
         int endRow = page.getNumPerPage();
@@ -340,6 +338,10 @@ public class BlogsController {
             blogs.setBlogsContent(keyword);
         }
         List<Blogs> list = blogsService.getByParam(blogs, startRow, endRow);
+
+        page.setTotalCount(list.size());
+        page.calcutePage();
+
         page.setContent(list);
         request.setAttribute("page", page);
 
