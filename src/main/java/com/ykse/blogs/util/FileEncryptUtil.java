@@ -25,7 +25,7 @@ public class FileEncryptUtil {
         String pass2 = pass.substring(2, 4);
         String pass3 = pass.substring(4);
         File file = new File("D:\\graduation\\idea\\blogsystem\\target\\BlogsSystem-0.0.1-SNAPSHOT\\resources\\img\\001.gif");
-        da.encrypt(file, da.md5s(pass1)+da.md5s(pass2)+da.md5s(pass3));
+        da.encrypt(file,"",da.md5s(pass1)+da.md5s(pass2)+da.md5s(pass3));
         File EnFile = new File("D:\\graduation\\idea\\blogsystem\\target\\BlogsSystem-0.0.1-SNAPSHOT\\resources\\view\\001.gif");
         da.decrypt(EnFile, da.md5s(pass1)+da.md5s(pass2)+da.md5s(pass3));
     }
@@ -36,7 +36,7 @@ public class FileEncryptUtil {
      * DES密码一 D368DFE03120B5DF DES密码二 92A8FD8FEC2F0746 DES密码三 输出：
      * 对输入的文件加密后，保存到同一文件夹下增加了".tdes"扩展名的文件中。
      */
-    public void encrypt(File fileIn, String sKey) {
+    public void encrypt(File fileIn, String fileName, String sKey) {
         try {
             if (sKey.length() == 48) {
                 byte[] bytK1 = getKeyByStr(sKey.substring(0, 16));
@@ -48,10 +48,16 @@ public class FileEncryptUtil {
                 for (int i = 0; i < fileIn.length(); i++) {
                     bytIn[i] = (byte) fis.read();
                 }
+                fis.close();
                 // 加密
+                String rootPath = "D:\\graduation\\idea\\blogsystem\\target\\BlogsSystem-0.0.1-SNAPSHOT\\resources";
+                File dir = new File(rootPath + File.separator + "encrypt");
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
                 byte[] bytOut = encryptByDES(encryptByDES(encryptByDES(bytIn,
                         bytK1), bytK2), bytK3);
-                String fileOut = "D:\\graduation\\idea\\blogsystem\\target\\BlogsSystem-0.0.1-SNAPSHOT\\resources\\view\\001.gif";
+                String fileOut = rootPath+File.separator+"encrypt"+File.separator+fileName;
                 FileOutputStream fos = new FileOutputStream(fileOut);
                 for (int i = 0; i < bytOut.length; i++) {
                     fos.write((int) bytOut[i]);
@@ -73,9 +79,13 @@ public class FileEncryptUtil {
     public void decrypt(File fileIn, String sKey) {
         try {
             if (sKey.length() == 48) {
+                File dir = new File("D:\\graduation\\idea\\blogsystem\\target\\BlogsSystem-0.0.1-SNAPSHOT\\resources\\view");
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
                 JFileChooser chooser = new JFileChooser();
                 chooser.setCurrentDirectory(new File("."));
-                chooser.setSelectedFile(new File("D:\\graduation\\idea\\blogsystem\\target\\BlogsSystem-0.0.1-SNAPSHOT\\resources\\view\\002.gif"));
+                chooser.setSelectedFile(new File("D:\\graduation\\idea\\blogsystem\\target\\BlogsSystem-0.0.1-SNAPSHOT\\resources\\view\\MVC.jpg"));
                 byte[] bytK1 = getKeyByStr(sKey.substring(0, 16));
                 byte[] bytK2 = getKeyByStr(sKey.substring(16, 32));
                 byte[] bytK3 = getKeyByStr(sKey.substring(32, 48));

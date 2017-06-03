@@ -55,7 +55,6 @@ public class UserController {
      * 检查用户是否已经存在
      * 
      * @param userAccount
-     * @param model
      * @return
      */
     @RequestMapping(value = "/checkUser", method = RequestMethod.GET)
@@ -90,11 +89,14 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView("chpwd");   
         return modelAndView;
     }
-    
+
     /**
      * 保存修改的密码
-     * 
-     * @param model
+     *
+     * @param oldPwd
+     * @param newPwd
+     * @param rnewPassword
+     * @param session
      * @return
      */
     @RequestMapping(value="/savePsw", method=RequestMethod.POST, produces = "application/json; charset=utf-8")

@@ -18,7 +18,7 @@ public interface UserDao {
      * @param userId
      * @return User
      */
-	public User getUserById(Integer userId);
+	User getUserById(Integer userId);
 	
 	/**
      * 根据用户账号获取用户
@@ -26,7 +26,7 @@ public interface UserDao {
      * @param userAccount
      * @return User
      */
-	public User getUserByAccount(String userAccount);
+	User getUserByAccount(String userAccount);
 	
 	/**
 	 * 插入用户
@@ -34,7 +34,7 @@ public interface UserDao {
 	 * @param user
 	 * @return 插入的数据条数
 	 */
-	public int saveUser(User user);
+	int saveUser(User user);
 	
 	/**
 	 * 更新用户
@@ -42,7 +42,7 @@ public interface UserDao {
 	 * @param user
 	 * @return 更新的数据条数
 	 */
-	public int updateUser(User user);
+	int updateUser(User user);
 	
 	/**
 	 * 修改用户密码
@@ -50,6 +50,6 @@ public interface UserDao {
 	 * @param user
 	 * @return 更新的数据条数
 	 */
-	public int changePsw(User user);
+	int changePsw(User user);
 	
 }

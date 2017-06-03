@@ -84,7 +84,7 @@ public class FileController {
             dir.mkdirs();
         }
         File serverFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
-        String latestUploadPhoto = file.getOriginalFilename();
+        String fileName = file.getOriginalFilename();
 
         try {
             //将上传文件写到磁盘
@@ -101,7 +101,7 @@ public class FileController {
 
             FileEncryptUtil fe = new FileEncryptUtil();
             String pass = userId.toString();
-            fe.encrypt(serverFile,fe.md5s(pass)+fe.md5s(pass)+fe.md5s(pass));
+            fe.encrypt(serverFile, fileName, fe.md5s(pass)+fe.md5s(pass)+fe.md5s(pass));
 
 
 //            //持久化
@@ -115,7 +115,7 @@ public class FileController {
             e.printStackTrace();
         }
 
-        model.addAttribute("photo", latestUploadPhoto);
+        model.addAttribute("photo", fileName);
 
         return "file";
     }
@@ -139,11 +139,11 @@ public class FileController {
 
             //创建目录和文件
             String rootPath = request.getSession().getServletContext().getRealPath("/resources/");
-            File dir = new File(rootPath + File.separator + "view");
+            File dir = new File(rootPath + File.separator + "encrypt");
             if (!dir.exists()) {
                 dir.mkdirs();
             }
-            File serverFile = new File(dir.getAbsolutePath() + File.separator + "001.gif");
+            File serverFile = new File(dir.getAbsolutePath() + File.separator + "MVC.jpg");
 //            if (serverFile.exists())
 //            {
 //                serverFile.delete();
