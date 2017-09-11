@@ -44,8 +44,8 @@ public class FileController {
         ModelAndView modelAndView = new ModelAndView("/listFiles");
 
         Pagination<Files> page = new Pagination<>();
-        String pageNum = (String) request.getParameter("pageNum");
-        String numPerPage = (String) request.getParameter("numPerPage");
+        String pageNum = request.getParameter("pageNum");
+        String numPerPage = request.getParameter("numPerPage");
         Integer pagenum = (pageNum == null || pageNum == "")
                 ? 1 : Integer.parseInt(pageNum);
         Integer numperpage = (numPerPage == null || numPerPage == "")
