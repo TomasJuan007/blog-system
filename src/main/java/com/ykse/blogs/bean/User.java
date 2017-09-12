@@ -7,10 +7,10 @@ public class User {
     /** 用户编号，主键  */
 	private Integer        userId;
 	
-	/** 用户账号，以邮箱形式，唯一  */
+	/** 用户姓名   */
     private String         userName;
     
-    /** 用户姓名   */
+    /** 用户账号，以邮箱形式，唯一  */
     private String         userAccount;
     
     /** 用户登录密码   */

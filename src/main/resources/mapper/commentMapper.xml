@@ -11,11 +11,15 @@
 	</resultMap>
 	
 	<select id="getCommentById" parameterType="int" resultMap="COMMENTTABLE">
-		SELECT * FROM COMMENTTABLE WHERE COMMENT_ID = #{commentId}
+		SELECT * FROM COMMENTTABLE
+		WHERE COMMENT_ID = #{commentId}
 	</select>
 	
 	<select id="getCommentsByBlogsId" resultMap="COMMENTTABLE">
-		SELECT * FROM COMMENTTABLE WHERE BLOGS_ID = #{blogsId} LIMIT #{startRow}, #{endRow}
+		SELECT * FROM COMMENTTABLE
+		WHERE BLOGS_ID = #{blogsId}
+		ORDER BY CREATETIME DESC
+		LIMIT #{startRow}, #{endRow}
 	</select>
 	
 	<insert id="saveComment" parameterType="com.ykse.blogs.bean.Comment" useGeneratedKeys="true" keyProperty="COMMENT_ID">
@@ -24,7 +28,8 @@
 	</insert>
 	
 	<delete id="deleteComment" parameterType="int">
-		DELETE FROM COMMENTTABLE WHERE COMMENT_ID = #{commentId}
+		DELETE FROM COMMENTTABLE
+		WHERE COMMENT_ID = #{commentId}
 	</delete>
 
 	<update id="updateComment">

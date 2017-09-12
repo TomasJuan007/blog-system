@@ -12,8 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ykse.blogs.bean.User;
 import com.ykse.blogs.exception.BusinessException;
@@ -27,14 +27,14 @@ import net.sf.json.JSONObject;
  * 
  * <li>主要含：用户注册、修改用户信息</li>
  * 
- * @author dianyu.fang
- * @version $Id: UserController.java, v 0.1 2016年11月14日 下午4:26:50 dainyu.fang Exp $
+ * @author huangtao
+ * @version $Id: UserController.java, v 0.1 2016年11月14日 下午4:26:50 huangtao Exp $
  */
 @Controller
 @RequestMapping("/")
 public class UserController {  
 	
-    private final Logger LOG = LoggerFactory.getLogger(this.getClass());
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     
     @Autowired
     private UserService userService;
@@ -55,7 +55,6 @@ public class UserController {
      * 检查用户是否已经存在
      * 
      * @param userAccount
-     * @param model
      * @return
      */
     @RequestMapping(value = "/checkUser", method = RequestMethod.GET)
@@ -90,11 +89,14 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView("chpwd");   
         return modelAndView;
     }
-    
+
     /**
      * 保存修改的密码
-     * 
-     * @param model
+     *
+     * @param oldPwd
+     * @param newPwd
+     * @param rnewPassword
+     * @param session
      * @return
      */
     @RequestMapping(value="/savePsw", method=RequestMethod.POST, produces = "application/json; charset=utf-8")
@@ -122,10 +124,10 @@ public class UserController {
                 }
                 user.setUserPassword(MD5Util.getEncryptedPwd(newPwd));
              } catch (NoSuchAlgorithmException e) {
-                 LOG.error("", e);
+                 LOGGER.error("", e);
                  throw new BusinessException(e.getMessage());
              } catch (UnsupportedEncodingException e) {
-                 LOG.error("", e);
+                 LOGGER.error("", e);
                  throw new BusinessException(e.getMessage());
              }
              // 判断是否修改密码成功
@@ -173,10 +175,10 @@ public class UserController {
         try {
             user.setUserPassword(MD5Util.getEncryptedPwd(user.getUserPassword()));
         } catch (NoSuchAlgorithmException e) {
-             LOG.error("", e);
+             LOGGER.error("", e);
              throw new BusinessException(e.getMessage());
         } catch (UnsupportedEncodingException e) {
-             LOG.error("", e);
+             LOGGER.error("", e);
              throw new BusinessException(e.getMessage());
         }
         if(userService.saveUser(user)){
@@ -236,10 +238,21 @@ public class UserController {
      * 
      * @return
      */
-    @RequestMapping(value="/contact", method=RequestMethod.GET)    
-    public ModelAndView getContact(){      
+    @RequestMapping(value="/contact", method=RequestMethod.GET)
+    public ModelAndView getContact() {
         ModelAndView modelAndView = new ModelAndView("contact");
-        return modelAndView;    
+        return modelAndView;
     }
     
-}  
+    /**
+     *获取“个人中心”页面
+     * 
+     * @return
+     */
+    @RequestMapping(value="/center", method=RequestMethod.GET)
+    public ModelAndView getCenter() {
+        ModelAndView modelAndView = new ModelAndView("center");
+        return modelAndView;
+    }
+    
+}

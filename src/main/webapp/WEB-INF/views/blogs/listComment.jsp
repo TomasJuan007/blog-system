@@ -1,3 +1,4 @@
+<%@page import="com.ykse.blogs.bean.Blogs,com.ykse.blogs.bean.User"%>
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
@@ -9,33 +10,81 @@
 %>
 <ol class="breadcrumb">
 	<li><a href="index">首页</a></li>
-	<li><a href="<%=basePath%>listBlogs" data-history="repairOrder">所有博客</a></li>
-	<li class="active">${blogsTitle}</li>
+	<li><a href="listBlogs" data-history="repairOrder">所有博客</a></li>
+	<li class="active">${blogs.blogsTitle}</li>
 </ol>
 
-
-<form id="pagerForm" method="post" action="listBlogs/listComment">
+<form id="pagerForm" method="post" action="listComment">
+	<input type="hidden" name="blogsId" value="${blogs.blogsId }"/>
 	<input type="hidden" name="pageNum" value="${page.currentPage }"/>
 	<input type="hidden" name="numPerPage" id="numPerPage" value="${page.numPerPage }" />
-	<input type="hidden" name="totalCount" id="totalCount" value="${page.totalCount }" />
-
 </form>
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 style="text-align:center">${blogsTitle}</h1>
-		<pre style="margin:5px;line-height:1.4em;">${blogsContent}</pre>
+		<h1 style="text-align:center">${blogs.blogsTitle}</h1>
+		<div style="text-align: right;">
+			<a class="btn btn-success" href="listComment?blogsId=${blogs.blogsId}" data-ajax>刷&nbsp;&nbsp;新</a>
+			<a class="btn btn-success" onclick="window.scrollTo(0,document.body.scrollHeight-comment1.scrollHeight-comment2.scrollHeight-comment3.scrollHeight-navbar.scrollHeight);">评论区</a>
+			<a class="btn btn-danger" onclick="location.reload();">返回</a>
+		</div>
+		<pre style="margin:5px;line-height:1.4em;white-space:pre-wrap;">${blogs.blogsContent}</pre>
 		
-		<div class="row search-bar">
-			<div class="col-sm-11" style="text-align: right;">
-				<a class="btn btn-success"  data-toggle="modal" data-target="#modal-dialog" href="listBlogs/addComment?userId=${userId}&blogsId=${blogsId}">发表评论</a>									
+		<div class="col-sm-12" style="text-align: center;">
+			<script>
+			function addLike(blogsId) {
+				  var btn = document.getElementById("btn1");
+				  btn.value = btn.value.replace(/[^0-9]+/g, '');
+				  if (btn.className!="btn btn-success") {
+				    btn.value = parseInt(btn.value) + 1;
+				    btn.className = "btn btn-success";
+				    $.ajax({
+						url: '<%=basePath%>vote?blogsId='+blogsId+'&type=1'
+					})
+				  } else {
+				    btn.value = parseInt(btn.value) - 1;
+				    btn.className = "btn btn-warning";
+				    $.ajax({
+						url: '<%=basePath%>cancelVote?blogsId='+blogsId+'&type=1'
+					})
+				  }
+				  btn.value = '顶('+btn.value+')';
+				}
+			function addDislike(blogsId) {
+				  var btn = document.getElementById("btn2");
+				  btn.value = btn.value.replace(/[^0-9]+/g, '');
+				  if (btn.className!="btn btn-danger") {
+				    btn.value = parseInt(btn.value) + 1;
+				    btn.className = "btn btn-danger";
+				    $.ajax({
+						url: '<%=basePath%>vote?blogsId='+blogsId+'&type=2'
+					})
+				  } else {
+				    btn.value = parseInt(btn.value) - 1;
+				    btn.className = "btn btn-warning";
+				    $.ajax({
+						url: '<%=basePath%>cancelVote?blogsId='+blogsId+'&type=2'
+					})
+				  }
+				  btn.value = '踩('+btn.value+')';
+				}
+			</script>
+			<input class="btn btn-warning" id="btn1" type="button" onclick="addLike(${blogs.blogsId})" value="顶(${blogs.support })">
+			<input class="btn btn-warning" id="btn2" type="button" onclick="addDislike(${blogs.blogsId})" value="踩(${blogs.nonsupport })">
+		</div>
+		
+		<div class="row search-bar" id="comment1">
+			<div class="col-sm-12" style="text-align: right;">
+				<a class="btn btn-primary" data-toggle="modal" data-target="#modal-dialog" href="addComment?userId=${blogs.user.userId}&blogsId=${blogs.blogsId}">发表评论</a>
+				<a class="btn btn-success" href="listComment?blogsId=${blogs.blogsId}" data-ajax>刷&nbsp;&nbsp;新</a>
+				<a class="btn btn-success" onclick="window.scrollTo(0,0);">回顶部</a>
 			</div>
 		</div>
-		<table class="table table-hover td-relative">
+		<table class="table table-hover td-relative" id="comment2">
 			<thead>
 			<tr>
-				<th>用户</th>
 				<th>评论内容</th>
+				<th>用户</th>
 				<th>评论时间</th>
 				<th style="width:120px;">选择功能</th>
 			</tr>
@@ -43,12 +92,23 @@
 			<tbody>
 			<c:forEach items="${page.content}" var="cmt">
 				<tr>
-					<td>${cmt.user.userName }</td>
 					<td>${cmt.commentContent }</td>
+					<td>${cmt.user.userName }</td>
 					<td>${cmt.createTime }</td>
-					<td>
-						<a class="btn btn-danger" data-todo="ajaxTodo" title="确认该评论？" href="javascript:void(0);" onclick="deleteComment(${cmt.commentId})">删除评论</a>	
-					</td>					
+					
+					<%
+						User user = (User)session.getAttribute("User");
+						int userId = user.getUserId();
+						request.setAttribute("UserId", userId);
+					%>
+									
+					<c:choose>
+					<c:when test="${cmt.user.userId  == UserId}">
+						<td>
+							<a class="btn btn-danger" href="deleteComment?commentId=${cmt.commentId}" onclick="location.reload();" data-ajax>删除评论</a>
+						</td>
+					</c:when>
+					</c:choose>
 				</tr>
 			</c:forEach>
 			</tbody>
@@ -59,7 +119,7 @@
 </div>
 
 
-<div class="row search-bar">
+<div class="row search-bar" id="comment3">
 	<div class="col-sm-4">
 		当前总共 ${page.totalCount } 条数据
 	</div>
@@ -67,20 +127,3 @@
 		<div class="pagination" totalCount="${page.totalCount }"  numPerPage="${page.numPerPage }" pageNumShown="${page.totalPageNum }" currentPage="${page.currentPage }"></div>
 	</div>
 </div>
-<script type="text/javascript">
-function deleteComment(id){
-	$.ajax({
-			type: 'delete',
-			url: '<%=basePath%>listBlogs/deleteComment?commentId='+id,
-			dataType: 'text',
-			success:function(data){
-				if(data=="suc"){
-					alert("删除成功");
-					location.reload();
-				}
-			},
-			error:function(data){
-			}
-		});
-}
-</script>

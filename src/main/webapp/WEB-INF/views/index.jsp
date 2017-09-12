@@ -24,7 +24,7 @@
  	if(user != null){
  		((User) session.getAttribute("User")).getUserAccount();%>
 
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<div class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar">
 	<div class="container">
 		<div class="navbar-header">
 			<a class="navbar-brand " href="index" >我的主页</a>
@@ -40,39 +40,36 @@
 					</ul>
 				</li>
 			</ul>
+
+			<div class="col-md-8">
+				<iframe style="float: right;" width="420" scrolling="no" height="45" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=12&icon=4&num=3"></iframe>
+			</div>
+
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="chpwd" data-toggle="modal" data-target="#modal-dialog">修改密码</a></li>
+				<li><a href="center" data-history="repairOrder">个人中心</a></li>
 				<li><a href="logout">退出</a></li>
 			</ul>
 		</div>
 	</div>
 </div>
 
-
-
-
 <div class="container dwz-unit-box" id="container">
 
 	<!-- Main component for a primary marketing message or call to action -->
 	<div class="jumbotron">
 		<h1>Hello, <%= user.getUserName() %>！</h1>
-		<p>欢迎来到博客世界，让您更加热爱这妙不可言的时光与生活。</p>
+		<p font-family:楷体">欢迎来到博客世界，让您更加热爱这妙不可言的时光与生活。</p>
 		<p>
-			<a class="btn btn-lg btn-primary" href="listBlogs" data-history="repairOrder" role="button">查看博客</a>
+			<a class="btn btn-lg btn-primary" href="listOwnBlogs" data-history="repairOrder" role="button">我的博客</a>
+			<a class="btn btn-lg btn-primary" href="listBlogs" data-history="repairOrder" role="button">所有博客</a>
 		</p>
 	</div>
 	
 	<div class="bs-glyphicons">
-		<a href="userInfo" data-toggle="modal" data-target="#modal-dialog">
-			<span class="glyphicon glyphicon-user"></span>
-			<span class="glyphicon-class">我的信息</span>
-		</a>
-	
-		<a href="listBlogs/addBlogs" data-toggle="modal" data-target="#modal-dialog">
+		<a href="addBlogs" data-toggle="modal" data-target="#modal-dialog">
 			<span class="glyphicon glyphicon-edit"></span>
 			<span class="glyphicon-class">写博客</span>
 		</a>
-				
 	</div>
 	
 </div>

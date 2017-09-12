@@ -8,6 +8,8 @@
         <typeAlias alias="user" type="com.ykse.blogs.bean.User"/>
         <typeAlias alias="blogs" type="com.ykse.blogs.bean.Blogs"/>
         <typeAlias alias="comment" type="com.ykse.blogs.bean.Comment"/>
-    </typeAliases>  
+        <typeAlias alias="standpoint" type="com.ykse.blogs.bean.Standpoint"/>
+        <typeAlias alias="files" type="com.ykse.blogs.bean.Files"/>
+    </typeAliases>
 
 </configuration>

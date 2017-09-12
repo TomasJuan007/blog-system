@@ -9,8 +9,8 @@ import java.util.Arrays;
 /**
  * MD5密码加密工具类
  * 
- * @author dianyu.fang
- * @version $Id: MD5Util.java, v 0.1 2016年11月16日 上午11:11:33 dainyu.fang Exp $
+ * @author huangtao
+ * @version $Id: MD5Util.java, v 0.1 2016年11月16日 上午11:11:33 huangtao Exp $
  */
 public class MD5Util {
 

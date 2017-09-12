@@ -7,8 +7,8 @@ import com.ykse.blogs.bean.User;
  * 
  * <li>主要含：用户注册、用户登录、修改个人信息业务</li>
  * 
- * @author dianyu.fang
- * @version $Id: UserService.java, v 0.1 2016年11月14日 下午4:48:09 dainyu.fang Exp $
+ * @author huangtao
+ * @version $Id: UserService.java, v 0.1 2016年11月14日 下午4:48:09 huangtao Exp $
  */
 public interface UserService {
     

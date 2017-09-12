@@ -9,8 +9,8 @@ import org.springframework.web.context.WebApplicationContext;
 /**
  * SpringMVC测试基础类，用于加载Spring相关配置信息
  * 
- * @author dianyu.fang
- * @version $Id: SpringMVCTestCase.java, v 0.1 2016年11月16日 上午11:01:28 dainyu.fang Exp $
+ * @author huangtao
+ * @version $Id: SpringMVCTestCase.java, v 0.1 2016年11月16日 上午11:01:28 huangtao Exp $
  */
 @WebAppConfiguration
 @ContextConfiguration(locations = { "classpath:applicationContext.xml", "classpath:springmvc/spring-mvc.xml" })  

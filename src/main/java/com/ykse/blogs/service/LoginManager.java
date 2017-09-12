@@ -5,8 +5,8 @@ import java.util.Map;
 /**
  * 登录验证接口
  * 
- * @author dianyu.fang
- * @version $Id: LoginManager.java, v 0.1 2016年11月15日 下午4:20:56 dainyu.fang Exp $
+ * @author huangtao
+ * @version $Id: LoginManager.java, v 0.1 2016年11月15日 下午4:20:56 huangtao Exp $
  */
 public interface LoginManager {
     

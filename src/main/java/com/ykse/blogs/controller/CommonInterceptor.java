@@ -11,8 +11,8 @@ import com.ykse.blogs.bean.User;
 /**
  * 登录拦截器
  * 
- * @author dianyu.fang
- * @version $Id: CommonInterceptor.java, v 0.1 2016年11月16日 上午12:43:35 dainyu.fang Exp $
+ * @author huangtao
+ * @version $Id: CommonInterceptor.java, v 0.1 2016年11月16日 上午12:43:35 huangtao Exp $
  */
 public class CommonInterceptor extends HandlerInterceptorAdapter{
     
@@ -30,7 +30,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
      *    接着再从最后一个拦截器往回执行所有的afterCompletion() 
      */
     @Override
-    public boolean preHandle(HttpServletRequest request,    
+	public boolean preHandle(HttpServletRequest request,    
             HttpServletResponse response, Object handler) throws Exception {    
         User user =  (User)request.getSession().getAttribute("User");
         if(user == null){

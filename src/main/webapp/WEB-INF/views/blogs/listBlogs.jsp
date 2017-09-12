@@ -20,11 +20,23 @@
 
 	<div class="row search-bar">
 		<div class="col-sm-6">
-			<a class="btn btn-primary" data-toggle="modal" data-target="#modal-dialog" href="listBlogs/addBlogs">写博客</a>
+			<a class="btn btn-primary" data-toggle="modal" data-target="#modal-dialog" href="addBlogs">写博客</a>
 			<a class="btn btn-success" data-history="repairOrder" href="listBlogs">刷&nbsp;&nbsp;新</a>
 		</div>
 	</div>
+</form>
 
+<form id="pagerSearchForm" method="post" action="searchBlogs">
+	<div class="col-lg-6">
+		<div class="input-group" style="float:right; display:inline;">
+			<input type="text" name="keyword"/>
+			<select name="type">
+				<option value="0">按标题</option>
+				<option value="1">按内容</option>
+			</select>
+			<input type="submit" class="btn btn-success" data-history="repairOrder" value="搜索" />
+		</div>
+	</div>
 </form>
 
 <div class="row">
@@ -34,9 +46,9 @@
 			<thead>
 			<tr>
 				<th>题目</th>
-				<th>发帖时间</th>
 				<th>发帖人</th>
-				<th>总评论数</th>
+				<th>发帖时间</th>
+				<th>评论 /阅读/ 赞</th>
 				<th style="width:120px;">选择功能</th>
 			</tr>
 			</thead>
@@ -45,21 +57,30 @@
 
 				<tr>
 					<td>${ts.blogsTitle }</td>
-					<td>${ts.createTime }</td>
 					<td>${ts.user.userName }</td>
-					<td><span class="label label-success">${ts.commentCount }</span></td>
+					<td>${ts.createTime }</td>
 					<td>
-						<a class="btn btn-warning" href="listBlogs/listComment?blogsId=${ts.blogsId}" data-ajax>查看</a>	
+						<span class="label label-warning">${ts.commentCount }</span>
+						<span>/</span>
+						<span class="label label-success">${ts.viewCount }</span>
+						<span>/</span>
+						<span class="label label-danger">${ts.support }</span>
+					</td>
+					<td>
+						<a class="btn btn-success" href="listComment?blogsId=${ts.blogsId}" data-ajax>查看</a>	
+						<!-- 
 						<%
 							User user = (User)session.getAttribute("User");
 							int userId = user.getUserId();
 							request.setAttribute("UserId", userId);
-						%>				
+						%>
 						<c:choose>
-						<c:when test="${ts.user.userId  == UserId}">				
-							<a class="btn btn-warning" data-toggle="modal" data-target="#modal-dialog" href="listBlogs/updateBlogs?blogsId=${ts.blogsId}">修改</a>
+						<c:when test="${ts.user.userId  == UserId}">
+							<a class="btn btn-warning" data-toggle="modal" data-target="#modal-dialog" href="getBlogsInfo?blogsId=${ts.blogsId}">修改</a>
+							<a class="btn btn-danger" href="deleteBlog?blogsId=${ts.blogsId}" onclick="location.reload();" data-ajax>删除</a>
 						</c:when>
 						</c:choose>
+						 -->
  					</td>					
 				</tr>			
 			</c:forEach>
