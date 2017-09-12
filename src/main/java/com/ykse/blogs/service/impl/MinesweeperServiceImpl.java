@@ -65,6 +65,10 @@ public class MinesweeperServiceImpl {
         }
     }
 
+    public MinePitModel stamp(int lat, int lng) {
+        return map[lat][lng];
+    }
+
     public static void main(String[] args) {
         MinesweeperServiceImpl m = new MinesweeperServiceImpl();
         MinePitModel[][] result = m.generateMap();
@@ -76,7 +80,7 @@ public class MinesweeperServiceImpl {
             }
             System.out.println();
         }
-        System.out.println("The number of the generated bombs is: "+num);
+        System.out.println("The number of the generated bombs is: "+m.count);
         //play the bombs
         try {
             m.refreshMap(result);
@@ -84,5 +88,13 @@ public class MinesweeperServiceImpl {
             System.out.println("For your own good, pls don't mess with the BOMBS!");
             e.printStackTrace();
         }
+        //stamp lat2,lng2
+        String output;
+        if(result[1][1].isBomb()) {
+            output = "*";
+        }else{
+            output = String.valueOf(result[1][1].getBombsAround());
+        }
+        System.out.println("line2 row2: "+output);
     }
 }
