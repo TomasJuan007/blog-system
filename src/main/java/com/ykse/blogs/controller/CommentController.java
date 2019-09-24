@@ -96,7 +96,7 @@ public class CommentController {
     }
 
     @RequestMapping(value="/addComment", method=RequestMethod.GET)    
-    public ModelAndView addComment(Model model, String userId, String blogsId){
+    public ModelAndView addComment(Model model, String userId, String blogsId) {
         model.addAttribute("userId", userId);
         model.addAttribute("blogsId", blogsId);
         return new ModelAndView("/blogs/addComment");
@@ -104,7 +104,7 @@ public class CommentController {
 
     @ResponseBody
     @RequestMapping(value="/saveComment", method=RequestMethod.POST,produces = "application/json; charset=utf-8")    
-    public String setComment(String blogsId, String userId, String commentContent, HttpSession seesion){
+    public String setComment(String blogsId, String userId, String commentContent, HttpSession seesion) {
         int bid = (blogsId == null || "".equals(blogsId)) ? 1 : Integer.parseInt(blogsId);
         Integer uid = ((User)seesion.getAttribute("User")).getUserId();
         
@@ -115,7 +115,7 @@ public class CommentController {
         comment.setUser(user);
         comment.setCommentContent(commentContent);
         JSONObject result = new JSONObject();
-        if(commentService.saveComment(comment)){
+        if(commentService.saveComment(comment)) {
             result.put("message", "更改成功！");
             result.put("statusCode", "200");
             result.put("dialog", "true");
@@ -129,10 +129,10 @@ public class CommentController {
 
     @ResponseBody
     @RequestMapping(value="/deleteComment",produces = "application/json; charset=utf-8")    
-    public String deleteComment(String commentId){
+    public String deleteComment(String commentId) {
         Integer cid = (commentId == null || "".equals(commentId)) ? 0 : Integer.parseInt(commentId);
         JSONObject result = new JSONObject();
-        if(commentService.deleteComment(cid)){
+        if(commentService.deleteComment(cid)) {
             result.put("message", "更改成功！");
             result.put("statusCode", "200");
             result.put("dialog", "true");

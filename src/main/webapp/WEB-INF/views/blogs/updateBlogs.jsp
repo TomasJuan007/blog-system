@@ -11,12 +11,12 @@
 
 		<div class="form-group">
 			<label for="input-nickname">题目：</label>
-			<input type="text"  name="blogsTitle" value="<%=request.getAttribute("blogsTitle") %>" class="form-control" id="input-nickname" placeholder="请输入帖子题目" required minlength="2" maxlength="50">
+			<input type="text"  name="blogTitle" value="<%=request.getAttribute("blogTitle") %>" class="form-control" id="input-nickname" placeholder="请输入帖子题目" required minlength="2" maxlength="50">
 			<div class="help-block with-errors"></div>
 		</div>
 		<div class="form-group">
 			<label for="input-nickname">内容：</label>
-			<textarea type="textarea" name="blogsContent" style="width:100%;height:30%;" required minlength="2" maxlength="30000"><%=request.getAttribute("blogsContent") %></textarea>
+			<textarea type="textarea" name="blogContent" style="width:100%;height:30%;" required minlength="2" maxlength="30000"><%=request.getAttribute("blogContent") %></textarea>
 			<div class="help-block with-errors"></div>
 		</div>
 	</div>

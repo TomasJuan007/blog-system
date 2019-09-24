@@ -42,7 +42,7 @@
 			<tbody>
 			<c:forEach items="${page.content}" var="ts">
 				<tr>
-					<td>${ts.blogsTitle }</td>
+					<td>${ts.blogTitle }</td>
 					<td>${ts.createTime }</td>
 					<td>
 						<span class="label label-warning">${ts.commentCount }</span>

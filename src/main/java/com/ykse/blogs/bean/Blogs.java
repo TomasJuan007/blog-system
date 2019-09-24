@@ -6,9 +6,9 @@ public class Blogs {
     
 	private Integer blogsId;
 
-	private String blogsTitle;
+	private String blogTitle;
 
-	private String blogsContent;
+	private String blogContent;
 
 	private Integer viewCount;
 	
@@ -32,20 +32,20 @@ public class Blogs {
         this.blogsId = blogsId;
     }
     
-    public String getBlogsTitle() {
-        return blogsTitle;
+    public String getBlogTitle() {
+        return blogTitle;
     }
     
-    public void setBlogsTitle(String blogsTitle) {
-        this.blogsTitle = blogsTitle;
+    public void setBlogTitle(String blogTitle) {
+        this.blogTitle = blogTitle;
     }
     
-    public String getBlogsContent() {
-        return blogsContent;
+    public String getBlogContent() {
+        return blogContent;
     }
     
-    public void setBlogsContent(String blogsContent) {
-        this.blogsContent = blogsContent;
+    public void setBlogContent(String blogContent) {
+        this.blogContent = blogContent;
     }
      
     public Integer getViewCount() {

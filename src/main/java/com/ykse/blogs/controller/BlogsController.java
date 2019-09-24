@@ -31,8 +31,8 @@ public class BlogsController {
         ModelAndView modelAndView = new ModelAndView("/index");
 
         Blogs blogs = new Blogs();
-        blogs.setBlogsTitle(blogTitle);
-        blogs.setBlogsContent(blogContent);
+        blogs.setBlogTitle(blogTitle);
+        blogs.setBlogContent(blogContent);
         User user = (User)httpSession.getAttribute("User");
         blogs.setUser(user);
         blogsService.saveBlogs(blogs);
@@ -44,13 +44,13 @@ public class BlogsController {
     @RequestMapping(value = "/saveBlogs", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public String addBlogs(String blogTitle, String blogContent, HttpSession httpSession) {
         Blogs blogs = new Blogs();
-        blogs.setBlogsTitle(blogTitle);
-        blogs.setBlogsContent(blogContent);
+        blogs.setBlogTitle(blogTitle);
+        blogs.setBlogContent(blogContent);
         User user = (User)httpSession.getAttribute("User");
         blogs.setUser(user);
 
         JSONObject result = new JSONObject();
-        if(blogsService.saveBlogs(blogs)){
+        if(blogsService.saveBlogs(blogs)) {
             result.put("message", "保存成功！");
             result.put("statusCode", "200");
             result.put("dialog", "true");
@@ -88,17 +88,17 @@ public class BlogsController {
     }
 
     @RequestMapping(value="/getBlogsInfo", method=RequestMethod.GET)
-    public ModelAndView getInfo(String blogsId, HttpServletRequest request){
+    public ModelAndView getInfo(String blogsId, HttpServletRequest request) {
         Blogs blogs =  blogsService.getBlogsById(Integer.parseInt(blogsId));
         request.setAttribute("blogsId", blogs.getBlogsId());
-        request.setAttribute("blogsTitle", blogs.getBlogsTitle());
-        request.setAttribute("blogsContent", blogs.getBlogsContent());
+        request.setAttribute("blogTitle", blogs.getBlogTitle());
+        request.setAttribute("blogContent", blogs.getBlogContent());
         return new ModelAndView("/blogs/updateBlogs");
     }
 
     @RequestMapping(value="/listOwnBlogs")
     public ModelAndView getOwnBlogs(HttpServletRequest request, HttpSession session, String type) {
-        if(session.getAttribute("User") == null){
+        if(session.getAttribute("User") == null) {
             throw new BusinessException("会话过期,请重新登陆！");
         }
         User user = (User)session.getAttribute("User");
@@ -132,11 +132,11 @@ public class BlogsController {
     public String updateBlog(String blogTitle,String blogContent,int blogsId) {
         Blogs blogs = new Blogs();
         blogs.setBlogsId(blogsId);
-        blogs.setBlogsTitle(blogTitle);
-        blogs.setBlogsContent(blogContent);
+        blogs.setBlogTitle(blogTitle);
+        blogs.setBlogContent(blogContent);
 
         JSONObject result = new JSONObject();
-        if(blogsService.updateBlogs(blogs)){
+        if(blogsService.updateBlogs(blogs)) {
             result.put("message", "更改成功！");
             result.put("statusCode", "200");
             result.put("dialog", "true");
@@ -176,9 +176,9 @@ public class BlogsController {
 
         Blogs blogs = new Blogs();
         if ("0".equals(type)) {
-            blogs.setBlogsTitle(keyword);
+            blogs.setBlogTitle(keyword);
         }else{
-            blogs.setBlogsContent(keyword);
+            blogs.setBlogContent(keyword);
         }
         List<Blogs> list = blogsService.getByParam(blogs, startRow, endRow);
 
@@ -192,12 +192,12 @@ public class BlogsController {
     }
 
     @RequestMapping(value="/addBlogs", method=RequestMethod.GET)
-    public ModelAndView getModel(Model model){
+    public ModelAndView getAddBlogModal(Model model) {
         return new ModelAndView("blogs/addBlogs");
     }
 
     @RequestMapping(value="/editBlogs", method=RequestMethod.GET)
-    public ModelAndView getPage(Model model){
+    public ModelAndView getEditBlogModal(Model model) {
         return new ModelAndView("blogs/editor");
     }
 }

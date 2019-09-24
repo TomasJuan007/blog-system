@@ -56,7 +56,7 @@
 			<c:forEach items="${page.content}" var="ts">
 
 				<tr>
-					<td>${ts.blogsTitle }</td>
+					<td>${ts.blogTitle }</td>
 					<td>${ts.user.userName }</td>
 					<td>${ts.createTime }</td>
 					<td>

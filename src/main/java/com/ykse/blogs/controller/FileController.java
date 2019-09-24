@@ -62,7 +62,7 @@ public class FileController {
                                   @RequestParam MultipartFile file,
                                   HttpSession session) {
         //检查当前用户
-        if(session.getAttribute("User") == null){
+        if(session.getAttribute("User") == null) {
             throw new BusinessException("会话过期,请重新登陆！");
         }
         User user = (User)session.getAttribute("User");
@@ -112,7 +112,7 @@ public class FileController {
         ModelAndView modelAndView = new ModelAndView("/listFiles");
 
         //检查当前用户
-        if(session.getAttribute("User") == null){
+        if(session.getAttribute("User") == null) {
             throw new BusinessException("会话过期,请重新登陆！");
         }
         User user = (User)session.getAttribute("User");
@@ -144,7 +144,7 @@ public class FileController {
     }
 
     @RequestMapping(value="/uploadFile", method=RequestMethod.GET)
-    public ModelAndView uploadFile(Model model){
+    public ModelAndView uploadFile(Model model) {
         return new ModelAndView("file");
     }
 }

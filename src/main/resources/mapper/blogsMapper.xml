@@ -4,8 +4,8 @@
 <mapper namespace="com.ykse.blogs.dao.BlogsDao">
 	<resultMap id="BLOGSTABLE" type="com.ykse.blogs.bean.Blogs">
 		<id column="BLOGS_ID" property="blogsId" jdbcType="INTEGER" />
-		<result column="BLOGS_TITLE" property="blogsTitle" jdbcType="VARCHAR" />
-		<result column="BLOGS_CONTENT" property="blogsContent" jdbcType="VARCHAR" />
+		<result column="BLOGS_TITLE" property="blogTitle" jdbcType="VARCHAR" />
+		<result column="BLOGS_CONTENT" property="blogContent" jdbcType="VARCHAR" />
 		<result column="VIEW_COUNT" property="viewCount" jdbcType="INTEGER" />
 		<result column="COMMENTCOUNT" property="commentCount" jdbcType="INTEGER" />
 		<result column="SUPPORT" property="support" jdbcType="INTEGER" />
@@ -32,11 +32,11 @@
 		<if test="blogs.user != null">
 			and user_id = #{blogs.user.userId}
 		</if>
-		<if test="blogs.blogsTitle != null">
-			and BLOGS_TITLE like concat('%',#{blogs.blogsTitle},'%')
+		<if test="blogs.blogTitle != null">
+			and BLOGS_TITLE like concat('%',#{blogs.blogTitle},'%')
 		</if>
-		<if test="blogs.blogsContent != null">
-			and BLOGS_CONTENT like concat('%',#{blogs.blogsContent},'%')
+		<if test="blogs.blogContent != null">
+			and BLOGS_CONTENT like concat('%',#{blogs.blogContent},'%')
 		</if>
 	</sql>
 	
@@ -97,13 +97,13 @@
   	
 	<insert id="saveBlogs" parameterType="blogs" useGeneratedKeys="true" keyProperty="Blogs_ID">
 		INSERT INTO BLOGSTABLE(BLOGS_TITLE, BLOGS_CONTENT, CREATETIME, USER_ID)
-		VALUES(#{blogsTitle}, #{blogsContent}, now(), #{user.userId})
+		VALUES(#{blogTitle}, #{blogContent}, now(), #{user.userId})
 	</insert>
 	
    	<update id="updateBlogs" parameterType="blogs">
 		UPDATE BLOGSTABLE 
-		SET BLOGS_TITLE = #{blogsTitle}, 
-		BLOGS_CONTENT = #{blogsContent}
+		SET BLOGS_TITLE = #{blogTitle},
+		BLOGS_CONTENT = #{blogContent}
 		WHERE BLOGS_ID = #{blogsId}
 	</update>
 	

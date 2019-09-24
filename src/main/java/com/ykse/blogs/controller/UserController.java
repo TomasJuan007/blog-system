@@ -39,7 +39,7 @@ public class UserController {
     @RequestMapping(value = "/checkUser", method = RequestMethod.GET)
     @ResponseBody
     public String checkUser(String userAccount) {
-        if(userService.getUserByAccount(userAccount) != null){          
+        if(userService.getUserByAccount(userAccount) != null) {
             return "exist";
         } else{
             return "false";
@@ -47,33 +47,33 @@ public class UserController {
     }
 
     @RequestMapping(value="/index", method=RequestMethod.GET)    
-    public ModelAndView getIndexs(){
+    public ModelAndView getIndexs() {
         return new ModelAndView("index");
     }
 
     @RequestMapping(value="/chpwd", method=RequestMethod.GET)    
-    public ModelAndView getChpwdPage(Model model){
+    public ModelAndView getChpwdPage(Model model) {
         return new ModelAndView("chpwd");
     }
 
     @RequestMapping(value="/savePsw", method=RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
-    public String savePsw(String oldPwd, String newPwd, String rnewPassword, HttpSession session){
+    public String savePsw(String oldPwd, String newPwd, String rnewPassword, HttpSession session) {
         // 存放操作结果
         JSONObject result = new JSONObject();
         
         // 判断两次密码是否不一样
-        if(!newPwd.equals(rnewPassword)){
+        if(!newPwd.equals(rnewPassword)) {
             result.put("message", "两次密码不一样，请重新输入！");
             result.put("statusCode", "300");
             result.put("dialog", "closeCurrent");
             return result.toString();
         }
-        else if(session.getAttribute("User") != null){
+        else if(session.getAttribute("User") != null) {
              // 判断原密码是否输入错误 
              User user = (User)session.getAttribute("User");
              try {
-                if(!MD5Util.validPassword(oldPwd, user.getUserPassword())){
+                if(!MD5Util.validPassword(oldPwd, user.getUserPassword())) {
                     result.put("message", "原密码错误，请重新输入！");
                     result.put("statusCode", "300");
                     result.put("dialog", "closeCurrent");
@@ -85,9 +85,9 @@ public class UserController {
                  throw new BusinessException(e.getMessage());
              }
             // 判断是否修改密码成功
-             if(userService.changePsw(user)){
+             if(userService.changePsw(user)) {
                  // 更新session
-                 if(session.getAttribute("User") != null){
+                 if(session.getAttribute("User") != null) {
                      session.removeAttribute("User");
                  }
                  User users = userService.getUserById(user.getUserId());
@@ -105,9 +105,9 @@ public class UserController {
     }
 
     @RequestMapping(value="/userInfo", method=RequestMethod.GET)
-    public ModelAndView getUserInfo(Model model, HttpSession session){      
+    public ModelAndView getUserInfo(Model model, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("updateInfo");
-        if(session.getAttribute("User") != null){
+        if(session.getAttribute("User") != null) {
             User user = (User)session.getAttribute("User");
             model.addAttribute("user", user);
         }
@@ -115,16 +115,16 @@ public class UserController {
     }
 
     @RequestMapping(value="/saveUser", method=RequestMethod.POST)
-    public String saveUser(User user, HttpSession session){
+    public String saveUser(User user, HttpSession session) {
         try {
             user.setUserPassword(MD5Util.getEncryptedPwd(user.getUserPassword()));
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
              LOGGER.error("", e);
              throw new BusinessException(e.getMessage());
         }
-        if(userService.saveUser(user)){
+        if(userService.saveUser(user)) {
             // 更新session
-            if(session.getAttribute("User") != null){
+            if(session.getAttribute("User") != null) {
                 session.removeAttribute("User");
             }
             User users = userService.getUserByAccount(user.getUserAccount());
@@ -137,12 +137,12 @@ public class UserController {
 
     @RequestMapping(value="/updateUser", method=RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
-    public String updateUser(User user, Model model, HttpSession session){
+    public String updateUser(User user, Model model, HttpSession session) {
         // 存放操作结果
         JSONObject result = new JSONObject();
-        if(userService.updateUser(user)){
+        if(userService.updateUser(user)) {
             // 更新session
-            if(session.getAttribute("User") != null){
+            if(session.getAttribute("User") != null) {
                 session.removeAttribute("User");
             }
             User users = userService.getUserById(user.getUserId());
@@ -159,7 +159,7 @@ public class UserController {
     }
 
     @RequestMapping(value="/help", method=RequestMethod.GET)    
-    public ModelAndView getHelp(){
+    public ModelAndView getHelp() {
         return new ModelAndView("help");
     }
 

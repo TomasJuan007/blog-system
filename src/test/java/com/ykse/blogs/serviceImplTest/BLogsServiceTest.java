@@ -26,7 +26,7 @@ public class BLogsServiceTest extends SpringTestCase {
         Iterator<Blogs> it = blogsList.iterator();
         while (it.hasNext()) {
             Blogs blogs = (Blogs) it.next();
-            System.out.println(blogs.getBlogsId() + ":" + blogs.getBlogsTitle());
+            System.out.println(blogs.getBlogsId() + ":" + blogs.getBlogTitle());
         }
     }
 
@@ -53,7 +53,7 @@ public class BLogsServiceTest extends SpringTestCase {
     @Test
     public void getByParamTest() {
         Blogs blogs = new Blogs();
-        blogs.setBlogsContent("网");
+        blogs.setBlogContent("网");
         List<Blogs> list = blogsService.getByParam(blogs,0,5);
         Assert.assertNotNull(list);
     }

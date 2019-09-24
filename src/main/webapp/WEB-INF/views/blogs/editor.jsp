@@ -357,8 +357,8 @@ input{
     </div>
   </div>
   <div class="content">
-    <input type="text" name="blogsTitle" placeholder="标题" required minlength="2" maxlength="50">
-  	<textarea id="contentText" contenteditable="true" name="blogsContent" required minlength="2" maxlength="30000"></textarea>
+    <input type="text" name="blogTitle" placeholder="标题" required minlength="2" maxlength="50">
+  	<textarea id="contentText" contenteditable="true" name="blogContent" required minlength="2" maxlength="30000"></textarea>
   </div>
 </div>
 </form>

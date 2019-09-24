@@ -11,7 +11,7 @@
 <ol class="breadcrumb">
 	<li><a href="index">首页</a></li>
 	<li><a href="listBlogs" data-history="repairOrder">所有博客</a></li>
-	<li class="active">${blogs.blogsTitle}</li>
+	<li class="active">${blogs.blogTitle}</li>
 </ol>
 
 <form id="pagerForm" method="post" action="listComment">
@@ -22,13 +22,13 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 style="text-align:center">${blogs.blogsTitle}</h1>
+		<h1 style="text-align:center">${blogs.blogTitle}</h1>
 		<div style="text-align: right;">
 			<a class="btn btn-success" href="listComment?blogsId=${blogs.blogsId}" data-ajax>刷&nbsp;&nbsp;新</a>
 			<a class="btn btn-success" onclick="window.scrollTo(0,document.body.scrollHeight-comment1.scrollHeight-comment2.scrollHeight-comment3.scrollHeight-navbar.scrollHeight);">评论区</a>
 			<a class="btn btn-danger" onclick="location.reload();">返回</a>
 		</div>
-		<pre style="margin:5px;line-height:1.4em;white-space:pre-wrap;">${blogs.blogsContent}</pre>
+		<pre style="margin:5px;line-height:1.4em;white-space:pre-wrap;">${blogs.blogContent}</pre>
 		
 		<div class="col-sm-12" style="text-align: center;">
 			<script>

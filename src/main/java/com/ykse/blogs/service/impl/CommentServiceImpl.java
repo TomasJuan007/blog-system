@@ -22,7 +22,7 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-    public boolean saveComment(Comment comment){
+    public boolean saveComment(Comment comment) {
         if(commentDao.saveComment(comment) != 1)
             return false;
         int blogsId = comment.getBlogs().getBlogsId();

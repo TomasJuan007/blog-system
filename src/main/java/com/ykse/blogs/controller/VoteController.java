@@ -23,7 +23,7 @@ public class VoteController {
     @RequestMapping(value="/vote", method= RequestMethod.GET)
     public void vote(String blogsId, String type, HttpSession session) {
         //用户标识userId
-        if(session.getAttribute("User") == null){
+        if(session.getAttribute("User") == null) {
             throw new BusinessException("会话过期,请重新登陆！");
         }
         User user = (User)session.getAttribute("User");
@@ -31,7 +31,7 @@ public class VoteController {
         //博客标识blogsId
         int bid = (blogsId == null || "".equals(blogsId)) ? 0 : Integer.parseInt(blogsId);
         //顶踩标识type
-        if("".equals(type)||type==null){
+        if("".equals(type)||type==null) {
             throw new ParameterException("请求参数异常！", null);
         }
         int typeInt = Integer.parseInt(type);
@@ -43,7 +43,7 @@ public class VoteController {
     @RequestMapping(value="/cancelVote", method=RequestMethod.GET)
     public void cancelVote(String blogsId, String type, HttpSession session) {
         //用户标识userId
-        if(session.getAttribute("User") == null){
+        if(session.getAttribute("User") == null) {
             throw new BusinessException("会话过期,请重新登陆！");
         }
         User user = (User)session.getAttribute("User");
@@ -51,7 +51,7 @@ public class VoteController {
         //博客标识blogsId
         int bid = (blogsId == null || "".equals(blogsId)) ? 0 : Integer.parseInt(blogsId);
         //顶踩标识type
-        if("".equals(type)||type==null){
+        if("".equals(type)||type==null) {
             throw new ParameterException("请求参数异常！", null);
         }
         int typeInt = Integer.parseInt(type);

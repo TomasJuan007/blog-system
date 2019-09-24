@@ -20,7 +20,7 @@ public class LoginManagerImpl implements LoginManager{
     public Map<String,Object> login(String account, String psw) throws Exception{
         Map<String, Object> map = new HashMap<>();
         User user = userDao.getUserByAccount(account);
-        if(user == null){
+        if(user == null) {
             map.put("msg", "帐号不存在!");
         } else if(("".equals(psw) && user.getUserPassword() == null)
                 || MD5Util.validPassword(psw, user.getUserPassword())) {

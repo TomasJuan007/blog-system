@@ -55,7 +55,7 @@ public class BlogsDaoTest extends SpringTestCase {
 	@Test
 	public void getByParamTest() {
 		Blogs blogs = new Blogs();
-		blogs.setBlogsContent("网");
+		blogs.setBlogContent("网");
 		List<Blogs> list = blogsDao.getBlogsByParam(blogs,0,5);
 		Assert.assertNotNull(list);
 	}

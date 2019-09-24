@@ -139,7 +139,6 @@ public class FileEncryptionServiceImpl implements FileEncryptionService {
             // System.out.println("result: " + buf.toString().substring(8,24));// 16位的加密
             str = buf.toString().substring(8, 24);
         } catch (NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return str;

@@ -24,12 +24,12 @@ public class LoginController {
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping("/")
-    public ModelAndView getLogin(){
+    public ModelAndView getLogin() {
         return new ModelAndView("../../login");
     }
 
     @RequestMapping("/login")
-    public ModelAndView getLoginPage(){
+    public ModelAndView getLoginPage() {
         return new ModelAndView("../../login");
     }
 
@@ -47,7 +47,7 @@ public class LoginController {
             LOG.error("", e);
         }
         // 登录失败，弹框提醒
-        if(map.get("User") == null && map.get("msg") != null){
+        if(map.get("User") == null && map.get("msg") != null) {
             model.addAttribute("msg", map.get("msg"));
             return "../../login";
         }
@@ -61,10 +61,10 @@ public class LoginController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession session) {
-        if(session.getAttribute("User") != null){
+        if(session.getAttribute("User") != null) {
             session.removeAttribute("User");
         }
-        if(session.getAttribute("msg") != null){
+        if(session.getAttribute("msg") != null) {
             session.removeAttribute("msg");
         }
         return "../../login";

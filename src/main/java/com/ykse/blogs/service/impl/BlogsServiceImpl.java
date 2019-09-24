@@ -134,7 +134,7 @@ public class BlogsServiceImpl implements BlogsService {
 		double p = support / n;
 		double z = 1.96;
 		double rate = 0.0;
-		if(n>0){
+		if(n>0) {
 			double denominator = 1 + z*z/n;
 			double avg = p + z*z/2*n;
 			double deviation = z*Math.sqrt(p*(1-p)/n+z*z/4*n*n);
@@ -173,7 +173,7 @@ public class BlogsServiceImpl implements BlogsService {
 		double p = support / n;
 		double z = 1.96;
 		double rate = 0.0;
-		if(n>0){
+		if(n>0) {
 			double denominator = 1 + z*z/n;
 			double avg = p + z*z/2*n;
 			double deviation = z*Math.sqrt(p*(1-p)/n+z*z/4*n*n);

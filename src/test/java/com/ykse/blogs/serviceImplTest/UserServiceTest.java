@@ -19,19 +19,19 @@ public class UserServiceTest extends SpringTestCase {
     private UserService userService; 
 	
 	@Test
-    public void getUserByIdTest(){  
+    public void getUserByIdTest() {
         User user = userService.getUserById(1);  
         System.out.println(user.getUserName() + ":" + user.getUserPassword());
     }
 	
 	@Test
-    public void getUserByAccountTest(){  
+    public void getUserByAccountTest() {
         User user = userService.getUserByAccount("2");
         System.out.println(user.getUserName() + ":" + user.getUserPassword());
     }
 	
 	@Test
-    public void saveUserTest(){  
+    public void saveUserTest() {
 	    User user = new User();
 	    user.setUserAccount("8463@qq.com");
 	    user.setUserPassword("8888");
@@ -42,7 +42,7 @@ public class UserServiceTest extends SpringTestCase {
     }
 	
 	@Test
-    public void updateUserTest(){  
+    public void updateUserTest() {
 	    User user = new User();
         user.setUserId(1);
         user.setUserName("test");
@@ -51,7 +51,7 @@ public class UserServiceTest extends SpringTestCase {
     }
 	
 	@Test
-    public void changePswTest(){
+    public void changePswTest() {
 	    User user = new User();
 	    user.setUserId(1);
 	    user.setUserPassword("123456");

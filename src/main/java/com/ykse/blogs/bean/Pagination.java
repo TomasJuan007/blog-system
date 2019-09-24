@@ -17,7 +17,7 @@ public class Pagination<T> implements java.io.Serializable{
 
     private Integer totalCount;
 
-    public Pagination(){
+    public Pagination() {
         
     }
 
@@ -31,7 +31,7 @@ public class Pagination<T> implements java.io.Serializable{
         this.totalCount = totalCount;
     }
     
-    public void calculatePage(){
+    public void calculatePage() {
         if(totalCount == null || totalCount < 0) {
             totalPageNum = 1;
             totalCount = 0;
