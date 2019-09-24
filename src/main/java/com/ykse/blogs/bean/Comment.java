@@ -4,19 +4,14 @@ import java.sql.Timestamp;
 
 public class Comment {
     
-    /** 评论编号，主键 */
     private Integer         commentId;
     
-    /** 评论内容   */
     private String          commentContent;
     
-    /** 创建时间   */
     private Timestamp       createTime;
     
-    /** 发评论者   */
     private User            user;
     
-    /** 所属帖子   */
     private Blogs           blogs;
     
     public Integer getCommentId() {

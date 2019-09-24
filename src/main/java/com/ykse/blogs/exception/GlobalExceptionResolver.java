@@ -13,12 +13,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * 错误信息统一处理
- * 
- * @author huangtao
- * @version $Id: GlobalExceptionResolver.java, v 0.1 2016年11月17日 下午5:20:50 huangtao Exp $
- */
 @Component
 public class GlobalExceptionResolver implements HandlerExceptionResolver {
 
@@ -28,7 +22,7 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 		
 	    LOG.error("访问" + request.getRequestURI() + " 发生错误, 错误信息:" + ex.getMessage());	
-		Map<String, Object> model = new HashMap<String, Object>();  
+		Map<String, Object> model = new HashMap<>();
         model.put("exMsg", ex.getMessage());  
         
         // 根据不同错误跳转到定制化的错误页面  

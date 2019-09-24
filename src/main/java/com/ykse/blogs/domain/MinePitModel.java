@@ -1,8 +1,5 @@
-package com.ykse.blogs.service.impl;
+package com.ykse.blogs.domain;
 
-/**
- * Created by etomhua on 9/11/2017.
- */
 public class MinePitModel {
 
     private int lat;

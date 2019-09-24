@@ -1,4 +1,6 @@
-package com.ykse.blogs.service.impl;
+package com.ykse.blogs.service.impl.game;
+
+import com.ykse.blogs.domain.MinePitModel;
 
 import java.util.Random;
 

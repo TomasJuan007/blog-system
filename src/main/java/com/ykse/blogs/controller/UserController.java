@@ -22,14 +22,6 @@ import com.ykse.blogs.util.MD5Util;
 
 import net.sf.json.JSONObject;
 
-/**
- * 用户控制器
- * 
- * <li>主要含：用户注册、修改用户信息</li>
- * 
- * @author huangtao
- * @version $Id: UserController.java, v 0.1 2016年11月14日 下午4:26:50 huangtao Exp $
- */
 @Controller
 @RequestMapping("/")
 public class UserController {  
@@ -39,66 +31,31 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    
-    /**
-     * 获取用户注册页面
-     * 
-     * @return
-     */
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public ModelAndView getRegistePage() {    
-        ModelAndView modelAndView = new ModelAndView("../../register");
-        return modelAndView;
+    public ModelAndView getRegistePage() {
+        return new ModelAndView("../../register");
     }
-    
-    /**
-     * 检查用户是否已经存在
-     * 
-     * @param userAccount
-     * @return
-     */
+
     @RequestMapping(value = "/checkUser", method = RequestMethod.GET)
     @ResponseBody
     public String checkUser(String userAccount) {
         if(userService.getUserByAccount(userAccount) != null){          
             return "exist";
-        }
-        else{
+        } else{
             return "false";
         }
     }
 
-    /**
-     * 获取系统主页面
-     * 
-     * @return
-     */
     @RequestMapping(value="/index", method=RequestMethod.GET)    
-    public ModelAndView getIndexs(){      
-        ModelAndView modelAndView = new ModelAndView("index");
-        return modelAndView;    
-    }
-    
-    /**
-     * 获取修改用户密码页面
-     * 
-     * @return
-     */
-    @RequestMapping(value="/chpwd", method=RequestMethod.GET)    
-    public ModelAndView getChpwdPage(Model model){      
-        ModelAndView modelAndView = new ModelAndView("chpwd");   
-        return modelAndView;
+    public ModelAndView getIndexs(){
+        return new ModelAndView("index");
     }
 
-    /**
-     * 保存修改的密码
-     *
-     * @param oldPwd
-     * @param newPwd
-     * @param rnewPassword
-     * @param session
-     * @return
-     */
+    @RequestMapping(value="/chpwd", method=RequestMethod.GET)    
+    public ModelAndView getChpwdPage(Model model){
+        return new ModelAndView("chpwd");
+    }
+
     @RequestMapping(value="/savePsw", method=RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String savePsw(String oldPwd, String newPwd, String rnewPassword, HttpSession session){
@@ -123,14 +80,11 @@ public class UserController {
                     return result.toString();
                 }
                 user.setUserPassword(MD5Util.getEncryptedPwd(newPwd));
-             } catch (NoSuchAlgorithmException e) {
-                 LOGGER.error("", e);
-                 throw new BusinessException(e.getMessage());
-             } catch (UnsupportedEncodingException e) {
+             } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
                  LOGGER.error("", e);
                  throw new BusinessException(e.getMessage());
              }
-             // 判断是否修改密码成功
+            // 判断是否修改密码成功
              if(userService.changePsw(user)){
                  // 更新session
                  if(session.getAttribute("User") != null){
@@ -149,13 +103,8 @@ public class UserController {
         result.put("dialog", "closeCurrent");
         return result.toString();
     }
-    
-    /**
-     * 获取查看用户信息页面
-     * 
-     * @return
-     */
-    @RequestMapping(value="/userInfo", method=RequestMethod.GET)    
+
+    @RequestMapping(value="/userInfo", method=RequestMethod.GET)
     public ModelAndView getUserInfo(Model model, HttpSession session){      
         ModelAndView modelAndView = new ModelAndView("updateInfo");
         if(session.getAttribute("User") != null){
@@ -163,21 +112,13 @@ public class UserController {
             model.addAttribute("user", user);
         }
         return modelAndView;
-    }   
-    
-    /**
-     * 保存注册的用户信息
-     * 
-     * @return
-     */
-    @RequestMapping(value="/saveUser", method=RequestMethod.POST)    
+    }
+
+    @RequestMapping(value="/saveUser", method=RequestMethod.POST)
     public String saveUser(User user, HttpSession session){
         try {
             user.setUserPassword(MD5Util.getEncryptedPwd(user.getUserPassword()));
-        } catch (NoSuchAlgorithmException e) {
-             LOGGER.error("", e);
-             throw new BusinessException(e.getMessage());
-        } catch (UnsupportedEncodingException e) {
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
              LOGGER.error("", e);
              throw new BusinessException(e.getMessage());
         }
@@ -193,12 +134,7 @@ public class UserController {
         }
         return "../../login";
     }
-    
-    /**
-     * 保存修改的用户信息
-     * 
-     * @return
-     */
+
     @RequestMapping(value="/updateUser", method=RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String updateUser(User user, Model model, HttpSession session){
@@ -221,38 +157,20 @@ public class UserController {
         result.put("dialog", "closeCurrent");
         return result.toString();
     }
-    
-    /**
-     * 获取“查看帮助”页面
-     * 
-     * @return
-     */
+
     @RequestMapping(value="/help", method=RequestMethod.GET)    
-    public ModelAndView getHelp(){      
-        ModelAndView modelAndView = new ModelAndView("help");
-        return modelAndView;
+    public ModelAndView getHelp(){
+        return new ModelAndView("help");
     }
-    
-    /**
-     *获取“联系我们”页面
-     * 
-     * @return
-     */
+
     @RequestMapping(value="/contact", method=RequestMethod.GET)
     public ModelAndView getContact() {
-        ModelAndView modelAndView = new ModelAndView("contact");
-        return modelAndView;
+        return new ModelAndView("contact");
     }
-    
-    /**
-     *获取“个人中心”页面
-     * 
-     * @return
-     */
+
     @RequestMapping(value="/center", method=RequestMethod.GET)
     public ModelAndView getCenter() {
-        ModelAndView modelAndView = new ModelAndView("center");
-        return modelAndView;
+        return new ModelAndView("center");
     }
     
 }

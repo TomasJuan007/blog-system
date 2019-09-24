@@ -1,6 +1,6 @@
 package com.ykse.blogs.service;
 
-import com.ykse.blogs.service.impl.MinePitModel;
+import com.ykse.blogs.domain.MinePitModel;
 
 public interface MinesweeperService {
     MinePitModel[][] generateMap();

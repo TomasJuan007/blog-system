@@ -7,20 +7,15 @@ public class Pagination<T> implements java.io.Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    /** 结果集  */
-    private List<T> content = new ArrayList<T>();
+    private List<T> content = new ArrayList<>();
     
-    /** 页面大小  */
-    private Integer     numPerPage;
+    private Integer numPerPage;
 
-    /** 当前页  */
-    private Integer     currentPage;
+    private Integer currentPage;
 
-    /** 总页数  */
-    private Integer     totalPageNum;
+    private Integer totalPageNum;
 
-    /** 总记录数  */
-    private Integer     totalCount;
+    private Integer totalCount;
 
     
     public Pagination(){
@@ -37,16 +32,14 @@ public class Pagination<T> implements java.io.Serializable{
         this.totalCount = totalCount;
     }
     
-    /**
-     * 计算总页数
-     */
-    public void calcutePage(){
-        if(totalCount == null || totalCount < 0)
-        {
+    public void calculatePage(){
+        if(totalCount == null || totalCount < 0) {
             totalPageNum = 1;
             totalCount = 0;
+        } else {
+            totalPageNum = totalCount % numPerPage == 0
+                    ? totalCount / numPerPage : (totalCount / numPerPage + 1);
         }
-        else totalPageNum = totalCount % numPerPage == 0 ? totalCount / numPerPage : (totalCount / numPerPage + 1);   
     }
 
     public List<T> getContent() {

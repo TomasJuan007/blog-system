@@ -2,16 +2,12 @@ package com.ykse.blogs.bean;
 
 public class Standpoint {
 
-	/** 立场编号、主键 */
 	private Integer standpointId;
 	
-	/** 帖子编号 */
 	private Blogs blogs;
 
-    /** 用户编号 */
 	private User user;
 
-    /** 立场类型  */
 	private Integer type;
 
 	public Integer getStandpointId() {

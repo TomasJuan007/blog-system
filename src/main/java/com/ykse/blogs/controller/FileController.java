@@ -8,6 +8,7 @@ import com.ykse.blogs.exception.BusinessException;
 import com.ykse.blogs.util.FileEncryptUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,15 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.crypto.Cipher;
-import javax.crypto.CipherInputStream;
-import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Controller
@@ -33,27 +28,21 @@ public class FileController {
     @Autowired
     FilesDao filesDao;
 
-    /**
-     * 展示文件
-     *
-     * @param request
-     * @return
-     */
     @RequestMapping(value="/listFiles")
     public ModelAndView getFiles(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/listFiles");
 
         Pagination<Files> page = new Pagination<>();
-        String pageNum = request.getParameter("pageNum");
-        String numPerPage = request.getParameter("numPerPage");
-        Integer pagenum = (pageNum == null || pageNum == "")
-                ? 1 : Integer.parseInt(pageNum);
-        Integer numperpage = (numPerPage == null || numPerPage == "")
-                ? 10 : Integer.parseInt(numPerPage);
-        page.setCurrentPage(pagenum);
-        page.setNumPerPage(numperpage);
+        String pageNumStr = request.getParameter("pageNum");
+        String numPerPageStr = request.getParameter("numPerPage");
+        Integer pageNum = (pageNumStr == null || pageNumStr.equals(""))
+                ? 1 : Integer.parseInt(pageNumStr);
+        Integer numPerPage = (numPerPageStr == null || "".equals(numPerPageStr))
+                ? 10 : Integer.parseInt(numPerPageStr);
+        page.setCurrentPage(pageNum);
+        page.setNumPerPage(numPerPage);
         page.setTotalCount(filesDao.getFilesCount());
-        page.calcutePage();
+        page.calculatePage();
 
         int startRow = (page.getCurrentPage() - 1) * page.getNumPerPage();
         int endRow = page.getNumPerPage();
@@ -69,7 +58,6 @@ public class FileController {
                                   HttpServletRequest request,
                                   @RequestParam MultipartFile file,
                                   HttpSession session) {
-
         //检查当前用户
         if(session.getAttribute("User") == null){
             throw new BusinessException("会话过期,请重新登陆！");
@@ -88,7 +76,7 @@ public class FileController {
 
         try {
             //将上传文件写到磁盘
-            InputStream is = null;
+            InputStream is;
             is = file.getInputStream();
             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
             int i;
@@ -102,14 +90,6 @@ public class FileController {
             FileEncryptUtil fe = new FileEncryptUtil();
             String pass = userId.toString();
             fe.encrypt(serverFile, fileName, fe.md5s(pass)+fe.md5s(pass)+fe.md5s(pass));
-
-
-//            //持久化
-//            Files files = new Files();
-//            files.setBlobContent(data);
-//            files.setUser(user);
-//            files.setFileName(latestUploadPhoto);
-//            filesDao.saveBlob(files);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -125,7 +105,6 @@ public class FileController {
                                  HttpServletRequest request,
                                  String filesId,
                                  HttpSession session) {
-
         ModelAndView modelAndView = new ModelAndView("/listFiles");
 
         //检查当前用户
@@ -136,7 +115,6 @@ public class FileController {
         Integer userId = user.getUserId();
 
         try {
-
             //创建目录和文件
             String rootPath = request.getSession().getServletContext().getRealPath("/resources/");
             File dir = new File(rootPath + File.separator + "encrypt");
@@ -159,5 +137,10 @@ public class FileController {
         model.addAttribute("photo", "不知道");
 
         return modelAndView;
+    }
+
+    @RequestMapping(value="/uploadFile", method=RequestMethod.GET)
+    public ModelAndView uploadFile(Model model){
+        return new ModelAndView("file");
     }
 }

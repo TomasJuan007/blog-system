@@ -18,7 +18,7 @@ import javax.swing.JFileChooser;
  */
 public class FileEncryptUtil {
 
-    public static void main(String args[]) throws FileNotFoundException {
+    public static void main(String[] args) {
         FileEncryptUtil da = new FileEncryptUtil();
         String pass = "123456";
         String pass1 = pass.substring(0, 2);
@@ -63,8 +63,7 @@ public class FileEncryptUtil {
                     fos.write((int) bytOut[i]);
                 }
                 fos.close();
-            } else
-                ;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -142,9 +141,9 @@ public class FileEncryptUtil {
     private byte[] getKeyByStr(String str) {
         byte[] bRet = new byte[str.length() / 2];
         for (int i = 0; i < str.length() / 2; i++) {
-            Integer itg = new Integer(16 * getChrInt(str.charAt(2 * i))
-                    + getChrInt(str.charAt(2 * i + 1)));
-            bRet[i] = itg.byteValue();
+            int itg = 16 * getChrInt(str.charAt(2 * i))
+                    + getChrInt(str.charAt(2 * i + 1));
+            bRet[i] = (byte) itg;
         }
         return bRet;
     }
@@ -194,11 +193,11 @@ public class FileEncryptUtil {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(plainText.getBytes());
-            byte b[] = md.digest();
+            byte[] b = md.digest();
 
             int i;
 
-            StringBuffer buf = new StringBuffer("");
+            StringBuilder buf = new StringBuilder();
             for (int offset = 0; offset < b.length; offset++) {
                 i = b[offset];
                 if (i < 0)

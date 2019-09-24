@@ -11,39 +11,24 @@ import com.ykse.blogs.exception.BusinessException;
 import com.ykse.blogs.exception.ParameterException;
 import com.ykse.blogs.service.UserService;
 
-/**
- * 用户业务逻辑处理接口实现
- * 
- * @author huangtao
- * @version $Id: UserServiceImpl.java, v 0.1 2016年11月14日 下午4:49:21 huangtao Exp $
- */
 @Service  
 public class UserServiceImpl implements UserService {
 
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());
     
 	@Autowired
-    private UserDao userDao;  
+    private UserDao userDao;
 
-	/**
-	 * @see com.ykse.blogs.service.UserService#getUserById(java.lang.Integer)
-	 */
 	@Override
     public User getUserById(Integer userId) {
         return userDao.getUserById(userId);
     }
-    
-    /**
-     * @see com.ykse.blogs.service.UserService#getUserByAccount(java.lang.String)
-     */
+
 	@Override
     public User getUserByAccount(String userAccount){
         return userDao.getUserByAccount(userAccount);
     }
-    
-    /**
-     * @see com.ykse.blogs.service.UserService#saveUser(com.ykse.blogs.bean.User)
-     */
+
 	@Override
     public boolean saveUser(User user){
 	    if(userDao.getUserByAccount(user.getUserAccount()) != null){
@@ -56,10 +41,7 @@ public class UserServiceImpl implements UserService {
         }
         return true;
     }
-    
-    /**
-     * @see com.ykse.blogs.service.UserService#updateUser(com.ykse.blogs.bean.User)
-     */
+
 	@Override
     public boolean updateUser(User user){
         if(userDao.updateUser(user) <= 0){
@@ -68,10 +50,7 @@ public class UserServiceImpl implements UserService {
         }
         return true;
     }
-    
-    /**
-     * @see com.ykse.blogs.service.UserService#changePsw(com.ykse.blogs.bean.User)
-     */
+
 	@Override
     public boolean changePsw(User user){
         if(userDao.changePsw(user) <= 0){
@@ -80,5 +59,4 @@ public class UserServiceImpl implements UserService {
         }
         return true;
     }
-    
 }

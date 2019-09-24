@@ -94,26 +94,20 @@ public class BlogsServiceImpl implements BlogsService {
 
     @Override
     public boolean deleteBlog(Integer blogsId) {
-    	if(blogsDao.deleteBlogsById(blogsId) != 1)
-    		return false;
-    	return true;
-    }
+		return blogsDao.deleteBlogsById(blogsId) == 1;
+	}
     
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
     public boolean addCountById(int blogsId) {
-        if(blogsDao.addCountById(blogsId) != true)
-            return false;
-        return true;
-    }
+		return blogsDao.addCountById(blogsId);
+	}
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
     public boolean subtractCountById(int blogsId) {
-        if(blogsDao.subtractCountById(blogsId) != true)
-                return false;
-        return true;
-    }
+		return blogsDao.subtractCountById(blogsId);
+	}
 
 	@Override
 	@Transactional
@@ -139,14 +133,14 @@ public class BlogsServiceImpl implements BlogsService {
 		int nonsupport = blogs.getNonsupport();
 		
 		//请开始你的表演
-		Double n = (double) (support + nonsupport);
-		Double p = support / n;
-		Double z = 1.96;
-		Double rate = 0.0;
+		double n = (double) (support + nonsupport);
+		double p = support / n;
+		double z = 1.96;
+		double rate = 0.0;
 		if(n>0){
-			Double denominator = 1 + z*z/n;
-			Double avg = p + z*z/2*n;
-			Double deviation = z*Math.sqrt(p*(1-p)/n+z*z/4*n*n);		
+			double denominator = 1 + z*z/n;
+			double avg = p + z*z/2*n;
+			double deviation = z*Math.sqrt(p*(1-p)/n+z*z/4*n*n);
 			
 			rate += (avg - deviation) / denominator;
 		}
@@ -179,14 +173,14 @@ public class BlogsServiceImpl implements BlogsService {
 		int nonsupport = blogs.getNonsupport();
 		
 		//请开始你的表演
-		Double n = (double) (support + nonsupport);
-		Double p = support / n;
-		Double z = 1.96;
-		Double rate = 0.0;
+		double n = (double) (support + nonsupport);
+		double p = support / n;
+		double z = 1.96;
+		double rate = 0.0;
 		if(n>0){
-			Double denominator = 1 + z*z/n;
-			Double avg = p + z*z/2*n;
-			Double deviation = z*Math.sqrt(p*(1-p)/n+z*z/4*n*n);		
+			double denominator = 1 + z*z/n;
+			double avg = p + z*z/2*n;
+			double deviation = z*Math.sqrt(p*(1-p)/n+z*z/4*n*n);
 			
 			rate += (avg - deviation) / denominator;
 		}
