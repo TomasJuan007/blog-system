@@ -4,15 +4,15 @@ import java.sql.Timestamp;
 
 public class Comment {
     
-    private Integer         commentId;
+    private Integer commentId;
     
-    private String          commentContent;
+    private String commentContent;
     
-    private Timestamp       createTime;
+    private Timestamp createTime;
     
-    private User            user;
+    private User user;
     
-    private Blogs           blogs;
+    private Blogs blogs;
     
     public Integer getCommentId() {
         return commentId;

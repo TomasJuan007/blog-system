@@ -67,7 +67,7 @@ public class CommentController {
 
     @RequestMapping(value="/listOwnComment")
     public ModelAndView getOwnComments(String blogsId, HttpServletRequest request) {
-        int bid = (blogsId == null || blogsId.equals("")) ? 1 : Integer.parseInt(blogsId);
+        int bid = (blogsId == null || "".equals(blogsId)) ? 1 : Integer.parseInt(blogsId);
         Blogs blogs = blogsService.getBlogsById(bid);
         
         ModelAndView modelAndView = new ModelAndView("blogs/listOwnComment");
@@ -75,8 +75,8 @@ public class CommentController {
         
         String pageNumStr = request.getParameter("pageNum");
         String numPerPageStr = request.getParameter("numPerPage");
-        Integer pageNum = (pageNumStr == null || pageNumStr.equals(""))? 1 : Integer.parseInt(pageNumStr);
-        Integer numPerPage = (numPerPageStr == null || numPerPageStr.equals(""))? 10 : Integer.parseInt(numPerPageStr);
+        Integer pageNum = (pageNumStr == null || "".equals(pageNumStr))? 1 : Integer.parseInt(pageNumStr);
+        Integer numPerPage = (numPerPageStr == null || "".equals(numPerPageStr))? 10 : Integer.parseInt(numPerPageStr);
         page.setCurrentPage(pageNum);
         page.setNumPerPage(numPerPage);
         page.setTotalCount(blogs.getCommentCount());
@@ -105,7 +105,7 @@ public class CommentController {
     @ResponseBody
     @RequestMapping(value="/saveComment", method=RequestMethod.POST,produces = "application/json; charset=utf-8")    
     public String setComment(String blogsId, String userId, String commentContent, HttpSession seesion){
-        int bid = (blogsId == null || blogsId.equals("")) ? 1 : Integer.parseInt(blogsId);
+        int bid = (blogsId == null || "".equals(blogsId)) ? 1 : Integer.parseInt(blogsId);
         Integer uid = ((User)seesion.getAttribute("User")).getUserId();
         
         Comment comment = new Comment();
@@ -130,7 +130,7 @@ public class CommentController {
     @ResponseBody
     @RequestMapping(value="/deleteComment",produces = "application/json; charset=utf-8")    
     public String deleteComment(String commentId){
-        Integer cid = (commentId == null || commentId.equals("")) ? 0 : Integer.parseInt(commentId);
+        Integer cid = (commentId == null || "".equals(commentId)) ? 0 : Integer.parseInt(commentId);
         JSONObject result = new JSONObject();
         if(commentService.deleteComment(cid)){
             result.put("message", "更改成功！");

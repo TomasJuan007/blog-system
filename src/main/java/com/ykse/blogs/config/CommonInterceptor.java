@@ -8,7 +8,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.ykse.blogs.bean.User;
 
-public class CommonInterceptor extends HandlerInterceptorAdapter{
+public class CommonInterceptor extends HandlerInterceptorAdapter {
     
     public static final String LAST_PAGE = "com.alibaba.lastPage";
 

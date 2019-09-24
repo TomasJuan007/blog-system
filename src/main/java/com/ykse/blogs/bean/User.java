@@ -4,21 +4,21 @@ import java.sql.Timestamp;
 
 public class User {
 
-	private Integer        userId;
+	private Integer userId;
 
-    private String         userName;
+    private String userName;
 
-    private String         userAccount;
+    private String userAccount;
 
-    private String         userPassword;
+    private String userPassword;
 
-    private String         userPhone;
+    private String userPhone;
 
-    private String         userSex;
+    private String userSex;
 
-    private Timestamp      createTime;
+    private Timestamp createTime;
 
-    private Timestamp      updateTime;
+    private Timestamp updateTime;
 
     public Integer getUserId() {
         return userId;

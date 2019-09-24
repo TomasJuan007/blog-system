@@ -65,7 +65,7 @@
     </bean>
     
     <!-- 配置统一异常拦截器 -->
-    <bean id="exceptionResolver" class="com.ykse.blogs.exception.GlobalExceptionResolver"/>
+    <bean id="exceptionResolver" class="com.ykse.blogs.config.GlobalExceptionResolver"/>
 
 	<!-- 文件上传表单的视图解析器 -->
 	<bean id="multipartResolver"

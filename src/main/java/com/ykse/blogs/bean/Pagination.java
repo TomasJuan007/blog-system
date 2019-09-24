@@ -17,7 +17,6 @@ public class Pagination<T> implements java.io.Serializable{
 
     private Integer totalCount;
 
-    
     public Pagination(){
         
     }

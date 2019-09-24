@@ -1,4 +1,7 @@
-package com.ykse.blogs.util;
+package com.ykse.blogs.service.impl;
+
+import com.ykse.blogs.service.FileEncryptionService;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.security.MessageDigest;
@@ -13,20 +16,21 @@ import javax.swing.JFileChooser;
 /**
  * 本段代码参考http://blog.csdn.net/d46023097/article/details/6346954
  *
- * 文件名：FileEncryptUtil.<a href="http://lib.csdn.net/base/java" class='replace_word' title="Java 知识库" target='_blank' style='color:#df3434; font-weight:bold;'>Java </a>jdk：1.40以上 说明：文件加密 加密方法：三重des加密
+ * 文件名：FileEncryptionService.<a href="http://lib.csdn.net/base/java" class='replace_word' title="Java 知识库" target='_blank' style='color:#df3434; font-weight:bold;'>Java </a>jdk：1.40以上 说明：文件加密 加密方法：三重des加密
  * 加密过程：对选中的文件加密后在同文件夹下生成一个增加了".tdes" 扩展名的加密文件 解密过程：对选中的加密文件（必须有".tdes"扩展名）进行解密
  */
-public class FileEncryptUtil {
+@Service
+public class FileEncryptionServiceImpl implements FileEncryptionService {
 
     public static void main(String[] args) {
-        FileEncryptUtil da = new FileEncryptUtil();
+        FileEncryptionService da = new FileEncryptionServiceImpl();
         String pass = "123456";
         String pass1 = pass.substring(0, 2);
         String pass2 = pass.substring(2, 4);
         String pass3 = pass.substring(4);
-        File file = new File("D:\\graduation\\idea\\blogsystem\\target\\BlogsSystem-0.0.1-SNAPSHOT\\resources\\img\\001.gif");
+        File file = new File("001.gif");
         da.encrypt(file,"",da.md5s(pass1)+da.md5s(pass2)+da.md5s(pass3));
-        File EnFile = new File("D:\\graduation\\idea\\blogsystem\\target\\BlogsSystem-0.0.1-SNAPSHOT\\resources\\view\\001.gif");
+        File EnFile = new File("001.gif");
         da.decrypt(EnFile, da.md5s(pass1)+da.md5s(pass2)+da.md5s(pass3));
     }
 
@@ -36,6 +40,7 @@ public class FileEncryptUtil {
      * DES密码一 D368DFE03120B5DF DES密码二 92A8FD8FEC2F0746 DES密码三 输出：
      * 对输入的文件加密后，保存到同一文件夹下增加了".tdes"扩展名的文件中。
      */
+    @Override
     public void encrypt(File fileIn, String fileName, String sKey) {
         try {
             if (sKey.length() == 48) {
@@ -75,6 +80,7 @@ public class FileEncryptUtil {
      * DES密码一 D368DFE03120B5DF DES密码二 92A8FD8FEC2F0746 DES密码三 输出：
      * 对输入的文件解密后，保存到用户指定的文件中。
      */
+    @Override
     public void decrypt(File fileIn, String sKey) {
         try {
             if (sKey.length() == 48) {
@@ -108,6 +114,35 @@ public class FileEncryptUtil {
         } catch (Exception e) {
             System.out.println("解密错误！");
         }
+    }
+
+    @Override
+    public String md5s(String plainText) {
+        String str = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(plainText.getBytes());
+            byte[] b = md.digest();
+
+            int i;
+
+            StringBuilder buf = new StringBuilder();
+            for (int offset = 0; offset < b.length; offset++) {
+                i = b[offset];
+                if (i < 0)
+                    i += 256;
+                if (i < 16)
+                    buf.append("0");
+                buf.append(Integer.toHexString(i));
+            }
+            // System.out.println("result: " + buf.toString());// 32位的加密
+            // System.out.println("result: " + buf.toString().substring(8,24));// 16位的加密
+            str = buf.toString().substring(8, 24);
+        } catch (NoSuchAlgorithmException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return str;
     }
 
     /**
@@ -187,35 +222,5 @@ public class FileEncryptUtil {
             iRet = 15;
         return iRet;
     }
-
-    public String md5s(String plainText) {
-        String str = null;
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(plainText.getBytes());
-            byte[] b = md.digest();
-
-            int i;
-
-            StringBuilder buf = new StringBuilder();
-            for (int offset = 0; offset < b.length; offset++) {
-                i = b[offset];
-                if (i < 0)
-                    i += 256;
-                if (i < 16)
-                    buf.append("0");
-                buf.append(Integer.toHexString(i));
-            }
-            // System.out.println("result: " + buf.toString());// 32位的加密
-            // System.out.println("result: " + buf.toString().substring(8,
-            // 24));// 16位的加密
-            str = buf.toString().substring(8, 24);
-        } catch (NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return str;
-    }
-
 }
 

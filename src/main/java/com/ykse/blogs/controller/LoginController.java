@@ -36,7 +36,7 @@ public class LoginController {
     @RequestMapping(value = "/getIndex", method=RequestMethod.POST)
     public String login(Model model, String account, String password, HttpSession session) {
         // 判断账号或密码是否没填写
-        if(account.equals("") || password.equals(""))
+        if("".equals(account) || "".equals(password))
             return "../../login";
         
         // 判断登录是否成功

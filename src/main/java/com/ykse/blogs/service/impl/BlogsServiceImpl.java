@@ -81,14 +81,12 @@ public class BlogsServiceImpl implements BlogsService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public boolean updateBlogs(Blogs blogs) {
-    	
     	return blogsDao.updateBlogs(blogs);
     }
     
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public boolean updateViewCount(Blogs blogs) {
-    	
     	return blogsDao.updateViewCount(blogs);
     }
 
@@ -112,7 +110,6 @@ public class BlogsServiceImpl implements BlogsService {
 	@Override
 	@Transactional
 	public boolean vote(int blogsId, int userId, int type) {
-		
 		//计算并保存立场
 		Standpoint standpoint = new Standpoint();
 		Blogs blogs = new Blogs();
@@ -152,7 +149,6 @@ public class BlogsServiceImpl implements BlogsService {
 	@Override
 	@Transactional
 	public boolean cancelVote(int blogsId, int userId, int type) {
-		
 		//计算并删除立场
 		Standpoint standpoint = new Standpoint();
 		Blogs blogs = new Blogs();

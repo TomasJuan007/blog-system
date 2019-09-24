@@ -6,23 +6,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
-/**
- * MD5密码加密工具类
- * 
- * @author huangtao
- * @version $Id: MD5Util.java, v 0.1 2016年11月16日 上午11:11:33 huangtao Exp $
- */
 public class MD5Util {
 
     private static final String HEX_NUMS_STR = "0123456789ABCDEF";
     private static final Integer SALT_LENGTH = 12;
 
-    /**
-     * 将16进制字符串转换成字节数组
-     * 
-     * @param hex
-     * @return
-     */
     public static byte[] hexStringToByte(String hex) {
         int len = (hex.length() / 2);
         byte[] result = new byte[len];
@@ -35,14 +23,8 @@ public class MD5Util {
         return result;
     }
 
-    /**
-     * 将指定byte数组转换成16进制字符串
-     * 
-     * @param b
-     * @return
-     */
     public static String byteToHexString(byte[] b) {
-        StringBuffer hexString = new StringBuffer();
+        StringBuilder hexString = new StringBuilder();
         for (int i = 0; i < b.length; i++) {
             String hex = Integer.toHexString(b[i] & 0xFF);
             if (hex.length() == 1) {
@@ -53,15 +35,6 @@ public class MD5Util {
         return hexString.toString();
     }
 
-    /**
-     * 验证口令是否合法
-     * 
-     * @param password
-     * @param passwordInDb
-     * @return
-     * @throws NoSuchAlgorithmException
-     * @throws UnsupportedEncodingException
-     */
     public static boolean validPassword(String password, String passwordInDb)
             throws NoSuchAlgorithmException, UnsupportedEncodingException {
         // 将16进制字符串格式口令转换成字节数组
@@ -92,14 +65,6 @@ public class MD5Util {
         }
     }
 
-    /**
-     * 获得加密后的16进制形式口令
-     * 
-     * @param password
-     * @return
-     * @throws NoSuchAlgorithmException
-     * @throws UnsupportedEncodingException
-     */
     public static String getEncryptedPwd(String password)
             throws NoSuchAlgorithmException, UnsupportedEncodingException {
         // 声明加密后的口令数组变量
@@ -131,5 +96,4 @@ public class MD5Util {
         // 将字节数组格式加密后的口令转化为16进制字符串格式的口令
         return byteToHexString(pwd);
     }
-    
 }

@@ -5,7 +5,7 @@ import com.ykse.blogs.bean.Pagination;
 import com.ykse.blogs.bean.User;
 import com.ykse.blogs.dao.FilesDao;
 import com.ykse.blogs.exception.BusinessException;
-import com.ykse.blogs.util.FileEncryptUtil;
+import com.ykse.blogs.service.FileEncryptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +26,10 @@ import java.util.List;
 public class FileController {
 
     @Autowired
-    FilesDao filesDao;
+    private FilesDao filesDao;
+
+    @Autowired
+    private FileEncryptionService fileEncryptionService;
 
     @RequestMapping(value="/listFiles")
     public ModelAndView getFiles(HttpServletRequest request) {
@@ -35,7 +38,7 @@ public class FileController {
         Pagination<Files> page = new Pagination<>();
         String pageNumStr = request.getParameter("pageNum");
         String numPerPageStr = request.getParameter("numPerPage");
-        Integer pageNum = (pageNumStr == null || pageNumStr.equals(""))
+        Integer pageNum = (pageNumStr == null || "".equals(pageNumStr))
                 ? 1 : Integer.parseInt(pageNumStr);
         Integer numPerPage = (numPerPageStr == null || "".equals(numPerPageStr))
                 ? 10 : Integer.parseInt(numPerPageStr);
@@ -87,9 +90,10 @@ public class FileController {
             is.close();
             stream.close();
 
-            FileEncryptUtil fe = new FileEncryptUtil();
             String pass = userId.toString();
-            fe.encrypt(serverFile, fileName, fe.md5s(pass)+fe.md5s(pass)+fe.md5s(pass));
+            fileEncryptionService.encrypt(serverFile, fileName,
+                    fileEncryptionService.md5s(pass)+fileEncryptionService.md5s(pass)
+                            +fileEncryptionService.md5s(pass));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -126,10 +130,10 @@ public class FileController {
 //            {
 //                serverFile.delete();
 //            }
-            FileEncryptUtil fe = new FileEncryptUtil();
             String pass = userId.toString();
-            fe.decrypt(serverFile,fe.md5s(pass)+fe.md5s(pass)+fe.md5s(pass));
-
+            fileEncryptionService.decrypt(serverFile,
+                    fileEncryptionService.md5s(pass)+fileEncryptionService.md5s(pass)
+                            +fileEncryptionService.md5s(pass));
         } catch (Exception e) {
             e.printStackTrace();
         }
