@@ -16,7 +16,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request,    
             HttpServletResponse response, Object handler) throws Exception {    
         User user =  (User)request.getSession().getAttribute("User");
-        if(user == null) {
+        if (user == null) {
             request.getRequestDispatcher("login.jsp").forward(request, response);  
             return false;
         }  

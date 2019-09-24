@@ -31,11 +31,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
     public boolean saveUser(User user) {
-	    if(userDao.getUserByAccount(user.getUserAccount()) != null) {
+	    if (userDao.getUserByAccount(user.getUserAccount()) != null) {
 	        LOG.info("插入用户失败，用户已存在。");
 	        throw new ParameterException("插入用户失败，用户已存在。");
 	    }
-        if(userDao.saveUser(user) <= 0) {
+        if (userDao.saveUser(user) <= 0) {
             LOG.info("插入用户失败。");
             throw new BusinessException("插入用户失败。");
         }
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
     public boolean updateUser(User user) {
-        if(userDao.updateUser(user) <= 0) {
+        if (userDao.updateUser(user) <= 0) {
             LOG.info("更新用户信息失败。");
             throw new BusinessException("更新用户信息失败。");
         }
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
     public boolean changePsw(User user) {
-        if(userDao.changePsw(user) <= 0) {
+        if (userDao.changePsw(user) <= 0) {
             LOG.info("修改用户信息失败。");
             throw new BusinessException("修改用户信息失败。");
         }

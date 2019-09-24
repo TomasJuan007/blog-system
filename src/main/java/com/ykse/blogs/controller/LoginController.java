@@ -36,7 +36,7 @@ public class LoginController {
     @RequestMapping(value = "/getIndex", method=RequestMethod.POST)
     public String login(Model model, String account, String password, HttpSession session) {
         // 判断账号或密码是否没填写
-        if("".equals(account) || "".equals(password))
+        if ("".equals(account) || "".equals(password))
             return "../../login";
         
         // 判断登录是否成功
@@ -47,11 +47,10 @@ public class LoginController {
             LOG.error("", e);
         }
         // 登录失败，弹框提醒
-        if(map.get("User") == null && map.get("msg") != null) {
+        if (map.get("User") == null && map.get("msg") != null) {
             model.addAttribute("msg", map.get("msg"));
             return "../../login";
-        }
-        else{
+        } else {
             // 登录成功，设置session信息
             session.setAttribute("User", map.get("User"));
         }   
@@ -61,10 +60,10 @@ public class LoginController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession session) {
-        if(session.getAttribute("User") != null) {
+        if (session.getAttribute("User") != null) {
             session.removeAttribute("User");
         }
-        if(session.getAttribute("msg") != null) {
+        if (session.getAttribute("msg") != null) {
             session.removeAttribute("msg");
         }
         return "../../login";

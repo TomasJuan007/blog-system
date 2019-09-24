@@ -32,7 +32,7 @@ public class Pagination<T> implements java.io.Serializable{
     }
     
     public void calculatePage() {
-        if(totalCount == null || totalCount < 0) {
+        if (totalCount == null || totalCount < 0) {
             totalPageNum = 1;
             totalCount = 0;
         } else {

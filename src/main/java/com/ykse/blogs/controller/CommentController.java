@@ -115,7 +115,7 @@ public class CommentController {
         comment.setUser(user);
         comment.setCommentContent(commentContent);
         JSONObject result = new JSONObject();
-        if(commentService.saveComment(comment)) {
+        if (commentService.saveComment(comment)) {
             result.put("message", "更改成功！");
             result.put("statusCode", "200");
             result.put("dialog", "true");
@@ -132,7 +132,7 @@ public class CommentController {
     public String deleteComment(String commentId) {
         Integer cid = (commentId == null || "".equals(commentId)) ? 0 : Integer.parseInt(commentId);
         JSONObject result = new JSONObject();
-        if(commentService.deleteComment(cid)) {
+        if (commentService.deleteComment(cid)) {
             result.put("message", "更改成功！");
             result.put("statusCode", "200");
             result.put("dialog", "true");

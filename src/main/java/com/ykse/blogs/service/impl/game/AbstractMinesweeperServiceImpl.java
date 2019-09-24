@@ -19,11 +19,11 @@ public abstract class AbstractMinesweeperServiceImpl implements MinesweeperServi
 
     @Override
     public void refreshMap(MinePitModel[][] map) throws Exception {
-        if(map.length!=size || map[0].length!=size) throw new Exception();
+        if (map.length!=size || map[0].length!=size) throw new Exception();
         for (int i=0;i<size;i++) {
             for (int j = 0; j < size; j++) {
                 MinePitModel pit = map[i][j];
-                if(pit.isBomb())
+                if (pit.isBomb())
                     reportBombsToNeighbor(i,j);
             }
         }
@@ -41,7 +41,7 @@ public abstract class AbstractMinesweeperServiceImpl implements MinesweeperServi
     }
 
     private void addCount(int i, int j) {
-        if(i>=0 && i<size && j>=0 && j<size) {
+        if (i>=0 && i<size && j>=0 && j<size) {
             MinePitModel pit = map[i][j];
             pit.setBombsAround(pit.getBombsAround()+1);
             map[i][j] = pit;
@@ -78,9 +78,9 @@ public abstract class AbstractMinesweeperServiceImpl implements MinesweeperServi
 
         //stamp lat2,lng2
         String output;
-        if(result[1][1].isBomb()) {
+        if (result[1][1].isBomb()) {
             output = "*";
-        }else{
+        } else {
             output = String.valueOf(result[1][1].getBombsAround());
         }
         System.out.println("line2 row2: "+output);

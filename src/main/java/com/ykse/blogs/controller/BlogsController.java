@@ -50,7 +50,7 @@ public class BlogsController {
         blogs.setUser(user);
 
         JSONObject result = new JSONObject();
-        if(blogsService.saveBlogs(blogs)) {
+        if (blogsService.saveBlogs(blogs)) {
             result.put("message", "保存成功！");
             result.put("statusCode", "200");
             result.put("dialog", "true");
@@ -98,7 +98,7 @@ public class BlogsController {
 
     @RequestMapping(value="/listOwnBlogs")
     public ModelAndView getOwnBlogs(HttpServletRequest request, HttpSession session, String type) {
-        if(session.getAttribute("User") == null) {
+        if (session.getAttribute("User") == null) {
             throw new BusinessException("会话过期,请重新登陆！");
         }
         User user = (User)session.getAttribute("User");
@@ -136,7 +136,7 @@ public class BlogsController {
         blogs.setBlogContent(blogContent);
 
         JSONObject result = new JSONObject();
-        if(blogsService.updateBlogs(blogs)) {
+        if (blogsService.updateBlogs(blogs)) {
             result.put("message", "更改成功！");
             result.put("statusCode", "200");
             result.put("dialog", "true");
@@ -177,7 +177,7 @@ public class BlogsController {
         Blogs blogs = new Blogs();
         if ("0".equals(type)) {
             blogs.setBlogTitle(keyword);
-        }else{
+        } else {
             blogs.setBlogContent(keyword);
         }
         List<Blogs> list = blogsService.getByParam(blogs, startRow, endRow);

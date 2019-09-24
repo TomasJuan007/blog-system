@@ -23,7 +23,7 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
     public boolean saveComment(Comment comment) {
-        if(commentDao.saveComment(comment) != 1)
+        if (commentDao.saveComment(comment) != 1)
             return false;
         int blogsId = comment.getBlogs().getBlogsId();
         return blogsDao.addCountById(blogsId);
@@ -39,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
     public boolean deleteComment(Integer commentId) {
 	    Comment comment = commentDao.getCommentById(commentId);
 	    int blogsId = comment.getBlogs().getBlogsId();
-	    if(!blogsDao.subtractCountById(blogsId)) {
+	    if (!blogsDao.subtractCountById(blogsId)) {
             return false;
         }
         return commentDao.deleteComment(commentId) == 1;

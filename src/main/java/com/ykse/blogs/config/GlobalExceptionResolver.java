@@ -28,9 +28,9 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
         model.put("exMsg", ex.getMessage());  
         
         // 根据不同错误跳转到定制化的错误页面  
-        if(ex instanceof BusinessException) {
+        if (ex instanceof BusinessException) {
             return new ModelAndView("error-business", model);  
-        }else if(ex instanceof ParameterException) {
+        }else if (ex instanceof ParameterException) {
             return new ModelAndView("error-parameter", model);  
         } else {
             return new ModelAndView("error", model);  
