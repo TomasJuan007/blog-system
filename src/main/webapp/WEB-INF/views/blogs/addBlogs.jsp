@@ -16,7 +16,7 @@
 		</div>
 		<div class="form-group">
 			<label for="input-nickname">内容：</label>
-			<textarea type="textarea" name="blogContent" style="width:100%;height:30%;" required minlength="2" maxlength="30000"></textarea>
+			<textarea name="blogContent" style="width:100%;height:30%;" required minlength="2" maxlength="30000"></textarea>
 			<div class="help-block with-errors"></div>
 		</div>
 	</div>

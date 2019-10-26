@@ -1,4 +1,3 @@
-<jsp:include page="../../../resources/styles/default.jsp"></jsp:include>
 <%@page import="com.ykse.blogs.bean.Blogs,com.ykse.blogs.bean.User"%>
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

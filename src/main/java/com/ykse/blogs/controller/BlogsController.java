@@ -28,7 +28,7 @@ public class BlogsController {
     @ResponseBody
     @RequestMapping(value = "/submitBlogs", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public ModelAndView submitBlogs(String blogTitle, String blogContent, HttpSession httpSession) {
-        ModelAndView modelAndView = new ModelAndView("/index");
+        ModelAndView modelAndView = new ModelAndView("redirect:/index#listOwnBlogs");
 
         Blogs blogs = new Blogs();
         blogs.setBlogTitle(blogTitle);
@@ -64,7 +64,7 @@ public class BlogsController {
 
     @RequestMapping(value="/listBlogs")
     public ModelAndView getBlogs(HttpServletRequest request, String type) {
-        ModelAndView modelAndView = new ModelAndView("/blogs/listBlogs");
+        ModelAndView modelAndView = new ModelAndView("blogs/listBlogs");
 
         Pagination<Blogs> page = new Pagination<>();
         String pageNumStr = request.getParameter("pageNum");
@@ -93,7 +93,7 @@ public class BlogsController {
         request.setAttribute("blogsId", blogs.getBlogsId());
         request.setAttribute("blogTitle", blogs.getBlogTitle());
         request.setAttribute("blogContent", blogs.getBlogContent());
-        return new ModelAndView("/blogs/updateBlogs");
+        return new ModelAndView("blogs/updateBlogs");
     }
 
     @RequestMapping(value="/listOwnBlogs")
@@ -104,7 +104,7 @@ public class BlogsController {
         User user = (User)session.getAttribute("User");
         Integer userId = user.getUserId();
 
-        ModelAndView modelAndView = new ModelAndView("/blogs/listOwnBlogs");
+        ModelAndView modelAndView = new ModelAndView("blogs/listOwnBlogs");
 
         Pagination<Blogs> page = new Pagination<>();
         String pageNumStr = request.getParameter("pageNum");
@@ -159,7 +159,7 @@ public class BlogsController {
 
     @RequestMapping(value="/searchBlogs")
     public ModelAndView searchBlogs(HttpServletRequest request, String type, String keyword) {
-        ModelAndView modelAndView = new ModelAndView("/blogs/searchBlogs");
+        ModelAndView modelAndView = new ModelAndView("blogs/listBlogs");
 
         Pagination<Blogs> page = new Pagination<>();
         String pageNumStr = request.getParameter("pageNum");

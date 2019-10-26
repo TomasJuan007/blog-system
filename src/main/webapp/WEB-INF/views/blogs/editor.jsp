@@ -7,7 +7,6 @@
 <title>博客系统</title>
 <style type="text/css">
 
-/* fontawesome */
 [class*="fontawesome-"]:before {
   font-family: 'FontAwesome', sans-serif;
   font-size:21px;
@@ -17,7 +16,7 @@
 }
 
 body{
-  margin:0px;
+  margin:0;
   font-family: Arial, Helvetica, sans-serif;
   background:#E5EBEF;
 }
@@ -32,32 +31,29 @@ div .header{
 }
 
 div .sidebar .circles{
-  border-style:solid;
-  border-color:white;
   border-radius:50%;
-  border-width:5px;
+  border: 5px solid white;
   width:10px;
   height:10px;
   margin-top:30px;
   margin-left:15px;
   float:left;
   
-  box-shadow: 16px 0px 0px -5px #29343A,
-              16px 0px 0px 0px white,
-              32px 0px 0px -5px #29343A,
-              32px 0px 0px 0px white;
+  box-shadow: 16px 0 0 -5px #29343A,
+              16px 0 0 0 white,
+              32px 0 0 -5px #29343A,
+              32px 0 0 0 white;
   
   position:relative;
 }
+
 div .sidebar .exitMenu input{
   display:none;
 }
 
 div .sidebar .exitMenu label{
-  border-style:solid;
-  border-color:white;
   border-radius:50%;
-  border-width:5px;
+  border: 5px solid white;
   width:20px;
   height:20px;
   margin-left:-10px;
@@ -95,24 +91,11 @@ div .header .path p:hover{
 
 div .header .path p:not(:first-child):before{
   content: ">";
-  margin:0px 10px;
-	display:block-inline;
+  margin:0 10px;
+  display:inline-block;
   color:#456;
   font-weight:bold;
 }
-
-div .header .logo{
-  margin-top:10px;
-  margin-right:180px;
-  float:right;
-  font-size:25px;
-}
-
-div .header .logo:after {
-	content: "编辑器";
-  color:#2A4C6F;
-}
-
 
 div .sidebar{
   background:#29343A;
@@ -129,7 +112,6 @@ div .content{
   padding-right:80px;
 }
 
-
 .content input{
   font-size:40px;
   color: rgba(150,150,150, 0.8);
@@ -141,17 +123,19 @@ div .content{
 input:focus{
   background:white;
   border-radius:5px;
-  box-shadow:inset 0px 0px 5px 0px grey;
+  box-shadow:inset 0 0 5px 0 grey;
   text-shadow: none;
   color:#444;
 }
+
 input:hover{
   background:white;
   border-radius:5px;
-  box-shadow:inset 0px 0px 5px 0px grey;
+  box-shadow:inset 0 0 5px 0 grey;
   text-shadow: none;
   color:#444;
 }
+
 ::selection {
 background-color: #444;
 color: #ffffff;
@@ -179,15 +163,11 @@ color: #ffffff;
 
 .content #contentText:focus{
   background:white;
-  box-shadow: inset 0px 0px 4px -1px black;
+  box-shadow: inset 0 0 4px -1px black;
 }
 .content #contentText:hover{
   background:white;
-  box-shadow: inset 0px 0px 4px -1px black;
-}
-
-.textEditing{
-  margin-left:8px;
+  box-shadow: inset 0 0 4px -1px black;
 }
 
 .textEditing input{
@@ -195,19 +175,8 @@ color: #ffffff;
 }
 
 .textEditing span{
-  margin:0px;
-  margin-left:-5px;
+  margin: 0 0 0 -5px;
   cursor:pointer;
-}
-
-.textEditing #link{
-  display:inline-block;
-  position:absolute;
-  margin-top:17px;
-  width:0;
-  transition:.4s;
-  overflow:hide;
-  border:none;
 }
 
 .textEditing input:first-child + label span:after {
@@ -221,26 +190,24 @@ color: #ffffff;
 }
 
 .textEditing span:after {
-	content: "";
-	display:inline-block;
+  content: "";
+  display:inline-block;
 
-	width: 65px;
-	height: 50px;
-  
-  border-color:#B8C3CB;
-  border-width:1px;
-  border-style:solid;
-	background-color:#F2F6F8;
+  width: 65px;
+  height: 50px;
+
+  border: 1px solid #B8C3CB;
+  background-color:#F2F6F8;
 }
 
 .textEditing #linkLable span:after{
   background:#29343A;
   transition:.4s;
-  width:0px;
+  width:0;
 }
 
 .textEditing input:checked + label span:after {
-    background-color:#29343A;
+  background-color:#29343A;
   color:#fff;
 }
 
@@ -252,12 +219,8 @@ color: #ffffff;
   width:320px;
 }
 
-.textEditing #attachment:checked ~ #link {
-  width:300px;
-}
-
 .textEditing span:hover:after {
-    background-color:white;
+  background-color:white;
 }
 
 div .finishButton {
@@ -270,20 +233,18 @@ div .finishButton {
   background:#E5EBEF;
   transition:.3s ease;
   
-  box-shadow: 0px 0px 0px #fff, 0px 0px 5px #888;
+  box-shadow: 0 0 0 #fff, 0 0 5px #888;
 }
 
 .finishButton a{
     background-color: #999;
     border-radius: 7px;
-    border-width:1px;
-    border-color:#eee;
-    border-style:solid;
-  
-    color: #fff;
+  border: 1px solid #eee;
+
+  color: #fff;
     display: inline-block;
     margin-right: 20px;
-    padding: 15px 0px;
+    padding: 15px 0;
     width:130px;
     text-align:center;
     text-decoration: none;
@@ -291,20 +252,18 @@ div .finishButton {
 }
 
 .finishButton a:hover{
-   box-shadow:inset 0px 0px 3px black;
+   box-shadow:inset 0 0 3px black;
 }
 
 .finishButton button{
     background-color: #999;
     border-radius: 7px;
-    border-width:1px;
-    border-color:#eee;
-    border-style:solid;
-  
-    color: #fff;
+  border: 1px solid #eee;
+
+  color: #fff;
     display: inline-block;
     margin-right: 20px;
-    padding: 15px 0px;
+    padding: 15px 0;
     width:130px;
     text-align:center;
     text-decoration: none;
@@ -312,17 +271,14 @@ div .finishButton {
 }
 
 .finishButton button:hover{
-   box-shadow:inset 0px 0px 3px black;
+   box-shadow:inset 0 0 3px black;
 }
 
 #publish{
     background-color: #57D36B;
     margin-left:80px;
 }
-#save{
-    background-color: #62B1DF;
-    margin-left:10px;
-}
+
 #delete{
     background-color: #E37668;
     position:absolute;
@@ -343,7 +299,6 @@ input{
       <p onclick="history.go(-1);">个人中心</p>
       <p id="articleHeaderName">编辑器</p>
     </div>
-    <div class="logo"></div>
   </div>
   <div class="sidebar">
     <div class="circles"></div>

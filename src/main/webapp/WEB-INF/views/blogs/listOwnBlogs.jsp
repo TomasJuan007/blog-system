@@ -24,7 +24,6 @@
 			<a class="btn btn-success" data-history="repairOrder" href="listOwnBlogs">刷&nbsp;&nbsp;新</a>
 		</div>
 	</div>
-
 </form>
 
 <div class="row">
