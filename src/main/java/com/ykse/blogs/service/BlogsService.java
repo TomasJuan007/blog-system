@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface BlogsService {
 	Blogs getBlogsById(int blogsId);
-	List<Blogs> getBlogsAll(String type, int startRow, int endRow);
+	List<Blogs> getAllBlogs(int startRow, int endRow);
+	List<Blogs> getAllHeatBlogs(int startRow, int endRow);
 	Integer getBlogsCount();
 	List<Blogs> getBlogsByParam(Integer userId, String type, int startRow, int endRow);
 	List<Blogs> getByParam(Blogs blogs, int startRow, int endRow);

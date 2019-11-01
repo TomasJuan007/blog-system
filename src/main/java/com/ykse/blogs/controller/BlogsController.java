@@ -8,7 +8,6 @@ import com.ykse.blogs.service.BlogsService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,23 +25,8 @@ public class BlogsController {
     private BlogsService blogsService;
 
     @ResponseBody
-    @RequestMapping(value = "/submitBlogs", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-    public ModelAndView submitBlogs(String blogTitle, String blogContent, HttpSession httpSession) {
-        ModelAndView modelAndView = new ModelAndView("redirect:/index#listOwnBlogs");
-
-        Blogs blogs = new Blogs();
-        blogs.setBlogTitle(blogTitle);
-        blogs.setBlogContent(blogContent);
-        User user = (User)httpSession.getAttribute("User");
-        blogs.setUser(user);
-        blogsService.saveBlogs(blogs);
-
-        return modelAndView;
-    }
-
-    @ResponseBody
     @RequestMapping(value = "/saveBlogs", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-    public String addBlogs(String blogTitle, String blogContent, HttpSession httpSession) {
+    public String saveBlog(String blogTitle, String blogContent, HttpSession httpSession) {
         Blogs blogs = new Blogs();
         blogs.setBlogTitle(blogTitle);
         blogs.setBlogContent(blogContent);
@@ -63,7 +47,7 @@ public class BlogsController {
     }
 
     @RequestMapping(value="/listBlogs")
-    public ModelAndView getBlogs(HttpServletRequest request, String type) {
+    public ModelAndView getBlogList(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("blogs/listBlogs");
 
         Pagination<Blogs> page = new Pagination<>();
@@ -80,7 +64,7 @@ public class BlogsController {
 
         int startRow = (page.getCurrentPage() - 1) * page.getNumPerPage();
         int endRow = page.getNumPerPage();
-        List<Blogs> blogs = blogsService.getBlogsAll(type, startRow, endRow);
+        List<Blogs> blogs = blogsService.getAllBlogs(startRow, endRow);
         page.setContent(blogs);
         request.setAttribute("page", page);
 
@@ -88,7 +72,7 @@ public class BlogsController {
     }
 
     @RequestMapping(value="/getBlogsInfo", method=RequestMethod.GET)
-    public ModelAndView getInfo(String blogsId, HttpServletRequest request) {
+    public ModelAndView getBlogDetail(String blogsId, HttpServletRequest request) {
         Blogs blogs =  blogsService.getBlogsById(Integer.parseInt(blogsId));
         request.setAttribute("blogsId", blogs.getBlogsId());
         request.setAttribute("blogTitle", blogs.getBlogTitle());
@@ -97,7 +81,7 @@ public class BlogsController {
     }
 
     @RequestMapping(value="/listOwnBlogs")
-    public ModelAndView getOwnBlogs(HttpServletRequest request, HttpSession session, String type) {
+    public ModelAndView getOwnBlogList(HttpServletRequest request, HttpSession session, String type) {
         if (session.getAttribute("User") == null) {
             throw new BusinessException("会话过期,请重新登陆！");
         }
@@ -157,47 +141,8 @@ public class BlogsController {
         }
     }
 
-    @RequestMapping(value="/searchBlogs")
-    public ModelAndView searchBlogs(HttpServletRequest request, String type, String keyword) {
-        ModelAndView modelAndView = new ModelAndView("blogs/listBlogs");
-
-        Pagination<Blogs> page = new Pagination<>();
-        String pageNumStr = request.getParameter("pageNum");
-        String numPerPageStr = request.getParameter("numPerPage");
-        Integer pageNum = (pageNumStr == null || "".equals(pageNumStr))
-                ? 1 : Integer.parseInt(pageNumStr);
-        Integer numPerPage = (numPerPageStr == null || "".equals(numPerPageStr))
-                ? 10 : Integer.parseInt(numPerPageStr);
-        page.setCurrentPage(pageNum);
-        page.setNumPerPage(numPerPage);
-
-        int startRow = (page.getCurrentPage() - 1) * page.getNumPerPage();
-        int endRow = page.getNumPerPage();
-
-        Blogs blogs = new Blogs();
-        if ("0".equals(type)) {
-            blogs.setBlogTitle(keyword);
-        } else {
-            blogs.setBlogContent(keyword);
-        }
-        List<Blogs> list = blogsService.getByParam(blogs, startRow, endRow);
-
-        page.setTotalCount(list.size());
-        page.calculatePage();
-
-        page.setContent(list);
-        request.setAttribute("page", page);
-
-        return modelAndView;
-    }
-
     @RequestMapping(value="/addBlogs", method=RequestMethod.GET)
-    public ModelAndView getAddBlogModal(Model model) {
+    public ModelAndView getAddBlogModal() {
         return new ModelAndView("blogs/addBlogs");
-    }
-
-    @RequestMapping(value="/editBlogs", method=RequestMethod.GET)
-    public ModelAndView getEditBlogModal(Model model) {
-        return new ModelAndView("blogs/editor");
     }
 }

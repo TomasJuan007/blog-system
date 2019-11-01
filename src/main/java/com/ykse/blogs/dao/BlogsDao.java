@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.ykse.blogs.bean.Blogs;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface BlogsDao {
     Blogs getBlogsById(int blogsId);
     List<Blogs> getBlogsAll(@Param("startRow") int startRow, @Param("endRow") int endRow);

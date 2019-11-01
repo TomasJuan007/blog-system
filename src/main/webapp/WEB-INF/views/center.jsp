@@ -23,11 +23,11 @@
 			<span class="glyphicon glyphicon-briefcase"></span>
 			<span class="glyphicon-class">所有博客</span>
 		</a>
-		<a href="editBlogs">
+		<a href="/center/editor/editBlogs">
 			<span class="glyphicon glyphicon-edit"></span>
 			<span class="glyphicon-class">编辑器</span>
 		</a>
-		<a href="listBlogs?type=1" data-history>
+		<a href="/center/heat/listHeatBlogs" data-history>
 			<span class="glyphicon glyphicon-fire"></span>
 			<span class="glyphicon-class">热门博客</span>
 		</a>

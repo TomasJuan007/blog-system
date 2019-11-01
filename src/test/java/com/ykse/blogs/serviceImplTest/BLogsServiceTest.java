@@ -22,7 +22,7 @@ public class BLogsServiceTest extends SpringTestCase {
 
     @Test
     public void getUserByIdTest() {
-        List<Blogs> blogsList = blogsService.getBlogsAll(null, 0, 10);
+        List<Blogs> blogsList = blogsService.getAllBlogs(0, 10);
         Iterator<Blogs> it = blogsList.iterator();
         while (it.hasNext()) {
             Blogs blogs = (Blogs) it.next();

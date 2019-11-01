@@ -58,7 +58,8 @@
 
 	<!-- 自动扫描注解的bean -->
 	<context:component-scan base-package="com.ykse.blogs.service.impl"/>
-	
+	<context:component-scan base-package="com.ykse.blogs.dao"/>
+
 	<!--配置事务管理器(mybatis采用的是JDBC的事务管理器)-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"></property>

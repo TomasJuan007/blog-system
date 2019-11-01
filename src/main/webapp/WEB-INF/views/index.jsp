@@ -58,7 +58,7 @@
 	<!-- Main component for a primary marketing message or call to action -->
 	<div class="jumbotron">
 		<h1>Hello, <%= user.getUserName() %>！</h1>
-		<p font-family:楷体">欢迎来到博客世界，让您更加热爱这妙不可言的时光与生活。</p>
+		<p font-family: 楷体>欢迎来到博客世界，让您更加热爱这妙不可言的时光与生活。</p>
 		<p>
 			<a class="btn btn-lg btn-primary" href="listOwnBlogs" data-history="repairOrder" role="button">我的博客</a>
 			<a class="btn btn-lg btn-primary" href="listBlogs" data-history="repairOrder" role="button">所有博客</a>
