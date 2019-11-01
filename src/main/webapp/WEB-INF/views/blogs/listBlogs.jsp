@@ -26,16 +26,14 @@
 	</div>
 </form>
 
-<form id="pagerSearchForm" method="post" action="searchBlogs">
+<form id="pagerSearchForm" method="post" action="/center/heat/searchBlogs" style="float:right;">
 	<div class="col-lg-6">
-		<div class="input-group" style="float:right; display:inline;">
-			<input type="text" name="keyword"/>
-			<select name="type">
-				<option value="0">按标题</option>
-				<option value="1">按内容</option>
-			</select>
-			<input type="submit" class="btn btn-success" data-history="repairOrder" value="搜索" />
-		</div>
+		<input type="text" name="keyword"/>
+		<select name="type">
+			<option value="0">按标题</option>
+			<option value="1">按内容</option>
+		</select>
+		<input type="submit" class="btn btn-success" data-history="repairOrder" value="搜索" />
 	</div>
 </form>
 
@@ -67,7 +65,7 @@
 						<span class="label label-danger">${ts.support }</span>
 					</td>
 					<td>
-						<a class="btn btn-success" href="listComment?blogsId=${ts.blogsId}" data-ajax>查看</a>	
+						<a class="btn btn-success" href="/listComment?blogsId=${ts.blogsId}" data-ajax>查看</a>
 						<!-- 
 						<%
 							User user = (User)session.getAttribute("User");
