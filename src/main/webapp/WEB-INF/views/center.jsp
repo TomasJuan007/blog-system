@@ -39,6 +39,21 @@
 			<span class="glyphicon glyphicon-file"></span>
 			<span class="glyphicon-class">上传文件</span>
 		</a>
+		<a href="javascript:void(0)" onclick="setVisible()">
+			<span id="icon" class="glyphicon glyphicon-eye-close"></span>
+			<span class="glyphicon-class">天气预报</span>
+		</a>
+		<script>
+            function setVisible() {
+                if(getComputedStyle(document.getElementById("weather")).visibility === "visible") {
+                    document.getElementById("weather").style.visibility = "hidden";
+                    document.getElementById("icon").setAttribute("class", "glyphicon glyphicon-eye-open");
+                } else {
+                    document.getElementById("weather").style.visibility = "visible";
+                    document.getElementById("icon").setAttribute("class", "glyphicon glyphicon-eye-close");
+                }
+            }
+		</script>
 	</div>
 
 	<pre align="center" style="border:none;font-size:20px;font-family:楷体"><b><<旋转中心>></b></pre>

@@ -42,7 +42,7 @@
 			</ul>
 
 			<div class="col-md-8">
-				<iframe style="float: right;" width="420" scrolling="no" height="45" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=12&icon=4&num=3"></iframe>
+				<iframe id="weather" style="float: right;" width="420" scrolling="no" height="45" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=12&icon=4&num=3"></iframe>
 			</div>
 
 			<ul class="nav navbar-nav navbar-right">
