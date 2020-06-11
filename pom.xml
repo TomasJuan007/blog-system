@@ -16,6 +16,8 @@
         <junit.version>4.9</junit.version>
         <!-- mybatis版本号 -->
         <mybatis.version>3.2.7</mybatis.version>
+        <!-- 采用UTF-8构建 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
@@ -183,17 +185,17 @@
 
     </dependencies>
 
-	<build>  
-    	<plugins>  
-        <!-- 更新maven编译水平 -->  
-        	<plugin>  
-            	<groupId>org.apache.maven.plugins</groupId>  
-            	<artifactId>maven-compiler-plugin</artifactId>  
-            	<version>2.3.2</version>  
-            	<configuration>  
-                	<source>1.8</source>  
-                	<target>1.8</target>  
-            	</configuration>  
+	<build>
+    	<plugins>
+        <!-- 更新maven编译水平 -->
+        	<plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-compiler-plugin</artifactId>
+            	<version>2.3.2</version>
+            	<configuration>
+                	<source>1.8</source>
+                	<target>1.8</target>
+            	</configuration>
         	</plugin>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
@@ -206,8 +208,6 @@
                     <server>tomcat7</server>
                 </configuration>
             </plugin>
-
         </plugins>
 	</build>
-	
 </project>

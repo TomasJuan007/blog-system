@@ -1,10 +1,10 @@
 package com.ykse.blogs.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.servlet.http.HttpSession;
-
+import com.ykse.blogs.bean.User;
+import com.ykse.blogs.exception.BusinessException;
+import com.ykse.blogs.service.UserService;
+import com.ykse.blogs.util.MD5Util;
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ykse.blogs.bean.User;
-import com.ykse.blogs.exception.BusinessException;
-import com.ykse.blogs.service.UserService;
-import com.ykse.blogs.util.MD5Util;
-
-import net.sf.json.JSONObject;
+import javax.servlet.http.HttpSession;
+import java.security.NoSuchAlgorithmException;
 
 @Controller
 @RequestMapping("/")
@@ -79,7 +75,7 @@ public class UserController {
                     return result.toString();
                 }
                 user.setUserPassword(MD5Util.getEncryptedPwd(newPwd));
-             } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+             } catch (NoSuchAlgorithmException e) {
                  LOGGER.error("", e);
                  throw new BusinessException(e.getMessage());
              }
@@ -117,7 +113,7 @@ public class UserController {
     public String saveUser(User user, HttpSession session) {
         try {
             user.setUserPassword(MD5Util.getEncryptedPwd(user.getUserPassword()));
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+        } catch (NoSuchAlgorithmException e) {
              LOGGER.error("", e);
              throw new BusinessException(e.getMessage());
         }
