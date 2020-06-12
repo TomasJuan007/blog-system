@@ -32,7 +32,7 @@ public class CaptchaController {
     /**
      * 图片高
      */
-    private final int height = 20;
+    private final int height = 26;
     /**
      * 干扰线数量
      */
@@ -118,7 +118,7 @@ public class CaptchaController {
         g.setColor(new Color(secureRandom.nextInt(101),
                 secureRandom.nextInt(111),
                 secureRandom.nextInt(121)));
-        String rand = getRandomString(secureRandom.nextInt(randomString.length()));
+        String rand = getRandomString(secureRandom.nextInt(randomStrings.length()));
         randomString += rand;
         g.translate(secureRandom.nextInt(3),secureRandom.nextInt(3));
         g.drawString(rand, 13*i, 16);
