@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ykse.blogs.dao.WechatFavoriteDao">
+	<resultMap id="WECHAT_FAVORITE_INFO" type="com.ykse.blogs.bean.WechatFavoriteInfo">
+		<id column="ID_WECHAT_FAVORITE_INFO" property="idWechatFavoriteInfo" jdbcType="INTEGER" />
+		<result column="HASH" property="hash" jdbcType="VARCHAR" />
+		<result column="TITLE" property="title" jdbcType="VARCHAR" />
+		<result column="DATE_CREATED" property="dateCreated" jdbcType="TIMESTAMP" />
+		<result column="DATE_UPDATED" property="dateUpdated" jdbcType="TIMESTAMP" />
+		<association column="ID_WECHAT_FAVORITE_TAG" property="tags" select="com.ykse.blogs.dao.WechatFavoriteDao.getTagsById" />
+	</resultMap>
+
+	<resultMap id="WECHAT_FAVORITE_TAG" type="com.ykse.blogs.bean.WechatFavoriteInfo">
+		<id column="ID_WECHAT_FAVORITE_TAG" property="idWechatFavoriteTag" jdbcType="INTEGER" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+		WECHAT_FAVORITE_INFO.ID_WECHAT_FAVORITE_INFO,
+		WECHAT_FAVORITE_INFO.HASH,
+		WECHAT_FAVORITE_INFO.TITLE,
+		WECHAT_FAVORITE_INFO.DATE_CREATED,
+		WECHAT_FAVORITE_INFO.DATE_UPDATED,
+		WECHAT_FAVORITE_INFO.ID_WECHAT_FAVORITE_TAG,
+		WECHAT_FAVORITE_INFO.NAME
+  	</sql>
+	
+	<select id="getAll" resultMap="WECHAT_FAVORITE_INFO">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM WECHAT_FAVORITE_INFO
+		ORDER BY DATE_CREATED DESC
+    	LIMIT #{startRow}, #{endRow}      	 
+ 	</select>
+
+	<select id="getTagsById" resultMap="WECHAT_FAVORITE_TAG">
+		SELECT *
+		FROM WECHAT_FAVORITE_TAG
+		WHERE ID_WECHAT_FAVORITE_INFO = #{idWechatFavoriteInfo}
+	</select>
+	
+</mapper>
